@@ -1,0 +1,18 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи}{4}{section.1}%
+\contentsline {section}{\numberline {2}AMQP протокол}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Слои}{5}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Брокер сообщений}{6}{section.3}%
+\contentsline {section}{\numberline {4}RabbitMQ}{7}{section.4}%
+\contentsline {section}{\numberline {5}Header Exchange}{9}{section.5}%
+\contentsline {section}{\numberline {6}Программная реализация}{10}{section.6}%
+\contentsline {subsection}{\numberline {6.1}sender.py}{10}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}receiver.py}{11}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Dockerfile}{12}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}docker-compose.yaml}{12}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Результаты (консоль)}{15}{section.7}%
+\contentsline {section}{\numberline {8}Результаты (localhost)}{16}{section.8}%
+\contentsline {section}{Заключение}{18}{section*.3}%
+\contentsline {section}{Список источников}{19}{section*.4}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,1102 @@
+#+title: Индивидуальное домашнее задание №4
+#+subtitle: Вариант 21 (513020125)
+#+author: Михалец Мартин
+#+latex_header: \institute{Институт компьютерных наук и кибербезопасности}
+#+latex_header: \school{Высшая школа технологии искусственного интелекта}
+#+latex_header: \program{Направление 02.03.01 Математика и компьютерные науки}
+#+latex_header: \subject{Математическая Статистика}
+#+latex_header: \reviewertitle{}\reviewer{Малов Сергей Васильевич}
+#+date: 2025
+
+#+setupfile: setup.org
+#+property: header-args:R :session *R* :exports results :results replace latex :cache yes
+#+property: header-args:latex :exports results :results replace latex :noweb yes :cache yes
+
+#+latex: \sloppy
+#+latex: \pagenumbering{arabic}
+#+latex_header: \setlength{\textfloatsep}{0pt}
+
+#+latex: Михалец Мартин 5130201/20102 \hfill ИДЗ №4 \hfill Вариант 21 (513020125)
+#+begin_src R :results none :exports none
+library(moments)
+library(lmtest)
+library(car)
+library(ellipse)
+library(tikzDevice)
+options(tikzDefaultEngine = "xetex")
+options(tikzDocumentDeclaration = "\\documentclass[12pt]{article}")
+options(tikzMetricsDictionary = "./doc/.tikzMetricsDictionary")
+options(tikzXelatexPackages = c("\\usepackage{tikz}",
+                                "\\usepackage{pgfplots}"))
+options(tikzMetricPackages = c("\\usetikzlibrary{calc}"))
+options(tikzUnicodeMetricPackages = c("\\usetikzlibrary{calc}",
+                                      "\\usepackage{fontspec}",
+                                      "\\setmainfont{Times New Roman}",
+                                      "\\usepackage{xunicode}"))
+printf <- function(...) cat(sprintf(...))
+#+end_src
+
+* *Задание* 1:
+#+attr_latex: :width \textwidth
+[[./task1.png]]
+
+#+name: alpha-1
+#+begin_src R :results pp :exports none
+alpha <- 0.01
+#+end_src
+
+#+RESULTS[cdc0bd6ad70268e2a15767bd1005824ebb9a5e1a]: alpha-1
+: 0.01
+
+#+begin_src R :results none :exports none
+h <- 1.10
+x <- c(1, 5, 3, 4, 8, 6, 3, 6, 0, 2, 2, 2, 0, 8, 0, 2, 3, 8, 3, 6, 2,
+       2, 0, 4, 2, 9, 9, 6, 7, 1, 3, 3, 7, 4, 9, 5, 0, 9, 3, 4, 2, 7,
+       0, 2, 5, 3, 4, 0, 0, 7)
+y <- c(9.69, 9.28, 11.32, 7.00, 9.73, 7.96, 10.41, 8.37, 10.50, 14.79,
+       11.55, 9.53, 9.12, 11.24, 12.89, 12.05, 12.07, 11.89, 9.25,
+       11.96, 11.98, 9.95, 11.97, 11.74, 11.20, 10.07, 12.28, 12.39,
+       9.36, 10.42, 11.63, 10.49, 10.26, 10.75, 9.96, 10.32, 10.16,
+       11.59, 10.92, 11.77, 8.98, 11.07, 14.09, 9.00, 10.81, 10.24,
+       8.27, 11.62, 11.77, 11.58)
+#+end_src
+
+** Пункт a
+#+begin_src R :results none :exports none
+tikz("doc/results.tex", width = 7, height = 5)
+plot(x, y,
+     main = "Результаты эксперимента",
+     xlab = "\\(X\\)", ylab = "\\(Y\\)",
+     type = "n")
+grid()
+points(x, y, pch = 16, col = "blue")
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{results}
+#+end_figure
+
+*Формулировка линейной регрессионной модели*
+
+Линейная регрессионная модель зависимости \(Y\) от \(X\) имеет вид: \[
+Y = \beta_1 + \beta_2 X + \epsilon, \] где:
+- \(\beta_1\) --- параметр сдвига,
+- \(\beta_2\) --- параметр масштаба,
+- \(\epsilon\) --- случайная ошибка.
+
+*Построение МНК-оценок параметров*
+
+Метод наименьших квадратов (МНК) используется для нахождения оценок
+\(\hat{\beta_1}\) и \(\hat{\beta_2}\), которые минимизируют сумму
+квадратов остатков.
+
+#+begin_src R :results none :exports none
+model_null <- lm(y ~ 1)
+summary_null <- summary(model_null)
+coef_null <- coef(summary_null)
+confint_null <- confint(model_null)
+#+end_src
+
+#+begin_src R :results none :exports none
+model_lin <- lm(y ~ x)
+summary_lin <- summary(model_lin)
+coef_lin <- coef(summary_lin)
+confint_lin <- confint(model_lin)
+#+end_src
+
+#+name: lin-beta-1
+#+begin_src R :results pp :exports none
+round(coef(model_lin)[1], 4)
+#+end_src
+
+#+RESULTS[2c338678b118768678ace52890097378591a97c3]: lin-beta-1
+: 11.0081
+
+#+name: lin-beta-2
+#+begin_src R :results pp :exports none
+round(coef(model_lin)[2], 4)
+#+end_src
+
+#+RESULTS[52556388c4fe92b2f921b3734afe6147d247cdb9]: lin-beta-2
+: -0.0689
+
+#+name: lin-r-2
+#+begin_src R :results pp :exports none
+round(summary(model_lin)$r.squared, 4)
+#+end_src
+
+#+RESULTS[a825ca662341d7a66c0bf7c6b51f18a38446b0ba]: lin-r-2
+: 0.017
+
+#+begin_src latex
+\begin{displaymath}
+  \beta_1 = <<lin-beta-1()>>,\quad
+  \beta_2 = <<lin-beta-2()>>,\quad
+  R^2 \;\text{линейной модели:}\; <<lin-r-2()>>.
+\end{displaymath}
+#+end_src
+
+#+RESULTS[092ae2e920601ec8cebecee00471e2e923033abb]:
+#+begin_export latex
+\begin{displaymath}
+  \beta_1 = 11.0081,\quad
+  \beta_2 = -0.0689,\quad
+  R^2 \;\text{линейной модели:}\; 0.017.
+\end{displaymath}
+#+end_export
+
+#+begin_src R :results none :exports none
+tikz("doc/linear-regression.tex", width = 7, height = 5)
+plot(x, y,
+     main = "Результаты эксперимента",
+     xlab = "\\(X\\)", ylab = "\\(Y\\)",
+     type = "n")
+grid()
+points(x, y, pch = 16, col = "blue")
+abline(model_lin, col = "red", lwd = 2)
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{linear-regression}
+#+end_figure
+
+*Распределение точек относительно линии*
+
+Точки разбросаны, линия не отражает тренд, что говорит о плохом
+соответствии.
+
+*Наклон линии:* Линия близка к горизонтальной, зависимость слабая.
+
+Таким образом, Между \(X\) и \(Y\) нет линейной зависимости.  Линейная
+модель не подходит для описания данных.
+
+** Пункт b
+*Формулировка полиномиальной регрессионной модели*
+
+Полиномиальная регрессионная модель зависимости \(Y\) от \(X\) имеет
+вид: \[Y = \beta_1 + \beta_2 X + \beta_3 X^2 + \epsilon,\] где:
+- \(\beta_1\) --- параметр сдвига,
+- \(\beta_2\) --- линейный коэффициент при \(X\),
+- \(\beta_3\) --- квадратичный коэффициент при \(X^2\),
+- \(\epsilon\) --- случайная ошибка
+
+  #+begin_src R :results none :exports none
+model_poly <- lm(y ~ x + I(x^2))
+summary_poly <- summary(model_poly)
+coef_poly <- coef(summary_poly)
+confint_poly <- confint(model_poly)
+#+end_src
+
+#+name: poly-beta-1
+#+begin_src R :results pp :exports none
+round(coef(model_poly)[1], 4)
+#+end_src
+
+#+RESULTS[485c81e666db54e02b544b1b2206e4f03f830d49]: poly-beta-1
+: 11.5086
+
+#+name: poly-beta-2
+#+begin_src R :results pp :exports none
+round(coef(model_poly)[2], 4)
+#+end_src
+
+#+RESULTS[1108bc6f745883d78d439a7e8df55eef90abbee4]: poly-beta-2
+: -0.4751
+
+#+name: poly-beta-3
+#+begin_src R :results pp :exports none
+round(coef(model_poly)[3], 4)
+#+end_src
+
+#+RESULTS[6af5c6efa88d1eb8c8a5b802e0a97387afdaca00]: poly-beta-3
+: 0.0469
+
+#+name: poly-r-2
+#+begin_src R :results pp :exports none
+round(summary(model_poly)$r.squared, 4)
+#+end_src
+
+#+RESULTS[7f608afffe417e3bd79218af838da899d9556375]: poly-r-2
+: 0.0724
+
+#+begin_src R :results none :exports none
+tikz("doc/polynomial-regression.tex", width = 7, height = 5)
+plot(x, y,
+     main = "Полиномиальная регрессия",
+     xlab = "\\(X\\)", ylab = "\\(Y\\)",
+     type = "n")
+grid()
+points(x, y, pch = 16, col = "blue")
+x_vals <- seq(min(x), max(x), length.out = 100)
+y_pred <- predict(model_poly, newdata = data.frame(x = x_vals))
+lines(x_vals, y_pred, col = "red", lwd = 2)
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{polynomial-regression}
+#+end_figure
+
+Полиномиальная модель:
+#+begin_src latex
+\begin{displaymath}
+  \beta_1 = <<poly-beta-1()>>,\quad
+  \beta_2 = <<poly-beta-2()>>,\quad
+  \beta_3 = <<poly-beta-3()>>,\quad
+  R^2 \text{полиномиальной модели:} <<poly-r-2()>>.
+\end{displaymath}
+#+end_src
+
+#+RESULTS[ac91edd65b1a5a0aa7b5aa9c316661876d6f4c7b]:
+#+begin_export latex
+\begin{displaymath}
+  \beta_1 = 11.5086,\quad
+  \beta_2 = -0.4751,\quad
+  \beta_3 = 0.0469,\quad
+  R^2 \text{полиномиальной модели:} 0.0724.
+\end{displaymath}
+#+end_export
+
+*Распределение точек относительно линии:* Точки разбросаны, линия не
+отражает тренд, что говорит о плохом соответствии.
+
+*Низкий R^{2}* означает, что квадратичная модель плохо описывает связь
+между \(X\) и \(Y\).
+
+Результаты указывают на то, что квадратичная модель не подходит для
+описания данных.
+
+** Пункт c
+#+begin_src R :results none :exports none
+residuals_poly <- residuals(model_poly)
+
+x_min <- min(residuals_poly) - 1
+x_max <- max(residuals_poly) + 1
+x_vals <- seq(x_min, x_max, length = 200)
+
+norm_vals <- dnorm(x_vals, mean = mean(residuals_poly), sd = sd(residuals_poly))
+empirical_density <- density(residuals_poly)
+hist_data <- hist(residuals_poly, breaks = 10, plot = FALSE)
+y_max <- max(c(hist_data$density, norm_vals, empirical_density$y))
+
+tikz("doc/residuals-hist.tex", width = 7, height = 4.5)
+hist(residuals_poly,
+     breaks = 10,
+     freq = FALSE,
+     main = "Гистограмма остатков полиномиальной модели",
+     xlim = c(x_min, x_max),
+     ylim = c(0, y_max*1.05),
+     xlab = "Остатки",
+     ylab = "Плотность",
+     col = "lightblue",
+     border = "black")
+
+lines(x_vals, norm_vals, col = "red", lwd = 2)
+lines(empirical_density, col = "darkgreen", lwd = 2, lty = 2)
+
+legend("topright",
+       legend = c("Нормальное распределение", "Эмпирическая плотность"),
+       col = c("red", "darkgreen"),
+       lwd = 2,
+       lty = c(1, 2),
+       bty = "n")
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{residuals-hist}
+#+end_figure
+
+#+begin_src R :results none :exports none
+tikz("doc/residuals-qq.tex", width = 7, height = 4.5)
+qqnorm(residuals_poly,
+       main = "Q-Q график остатков",
+       pch = 16, col = "blue")
+grid()
+qqline(residuals_poly, col = "red", lwd = 2)
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{residuals-qq}
+#+end_figure
+
+*Проверка нормальности с помощью критерия \(\chi^2\)*
+
+Этапы:
+1. Гипотезы:
+   - \(H_0\): Остатки имеют нормальное распределение.
+   - \(H_1\): Остатки не имеют нормального распределения.
+2. Разделить данные на интервалы (бины): Используем те же интервалы,
+   что и в гистограмме.
+3. Рассчитать наблюдаемые (\(O_i\)) и ожидаемые (\(E_i\)) частоты:
+   - \(E_i = N \cdot P\) (для \(i\)-го интервала), где \(P\) ---
+     вероятность из нормального распределения \(N(\mu, \sigma^2)\).
+4. Вычислить статистику \(\chi^2\): \[\chi^2 = \sum \frac{(O_i -
+   E_i)^2}{E_i}.\]
+5. Сравнить с критическим значением \(\chi^2\): Если \(\chi^2 >
+   \chi^2_{\text{крит}}\), отвергаем \(H_0\).
+
+#+begin_src R :results none :exports none
+bp_test <- bptest(model_poly)
+#+end_src
+
+#+name: chi-2
+#+begin_src R :results pp :exports none
+round(bp_test$statistic, 4)
+#+end_src
+
+#+RESULTS[5cf5986e077accb92916d63b817d2d454e51c433]: chi-2
+: 1.2502
+
+#+name: crit
+#+begin_src R :results pp :exports none
+round(qchisq(1 - alpha, bp_test$parameter), 4)
+#+end_src
+
+#+RESULTS[1b45e27b1a5a22214b7a7aac353f47d6b99c9748]: crit
+: 9.2103
+
+#+name: p-value
+#+begin_src R :results pp :exports none
+round(bp_test$p.value, 4)
+#+end_src
+
+#+RESULTS[8ce2bd8672019b3b0864a3a65f1080616dd36fef]: p-value
+: 0.5352
+
+#+begin_src latex
+\begin{displaymath}
+  \mathcal{X}^2 = <<chi-2()>>,\quad
+  \text{Критическое значение}\; = <<crit()>>,\quad
+  p\text{-value} = <<p-value()>>.
+\end{displaymath}
+#+end_src
+
+#+RESULTS[0083a44651fb50cd0ecf7a5256493ddfd3b18044]:
+#+begin_export latex
+\begin{displaymath}
+  \mathcal{X}^2 = 1.2502,\quad
+  \text{Критическое значение}\; = 9.2103,\quad
+  p\text{-value} = 0.5352.
+\end{displaymath}
+#+end_export
+
+Не отвергаем \(H_0\): распределение нормальное
+
+*Визуально:* Остатки близки к нормальному распределению.
+
+*Статистически:* Критерий \(\chi^2\) не выявил значимых отклонений от
+нормальности на уровне \alpha = src_R{alpha}
+{{{results(@@latex:0.01@@)}}}.
+
+Предположение о нормальности ошибок выполняется.
+
+** Пункт d
+Частные интервалы строятся для каждого параметра отдельно, используя
+\(t\)-распределение.
+
+*Формула:* \[\hat{\beta_j} \pm t_{1-\alpha/2, n-p} \cdot
+SE(\hat{\beta_j}),\] где:
+- \(\hat{\beta_j}\) --- оценка параметра,
+- \(SE(\hat{\beta_j})\) --- стандартная ошибка параметра,
+- \(t_{1-\alpha/2}\) --- критическое значение \(t\)-распределения,
+- \(n\) --- число наблюдений,
+- \(p\) --- число параметров модели (для квадратичной модели \(p =
+  3\)).
+
+#+name: level
+#+begin_src R :results pp :exports none
+level <- 1 - alpha
+#+end_src
+
+#+RESULTS[87bbb30db6e9971eb3f0918cb4d2929740331892]: level
+: 0.99
+
+#+begin_src R :results none :exports none
+## Получаем оценки коэффициентов
+coef_est <- coef(model_poly)[c("x", "I(x^2)")]
+names(coef_est) <- c("beta2", "beta3")
+#+end_src
+
+#+name: cov-mat
+#+begin_src R :results pp :exports none
+## Ковариационная матрица оценок коэффициентов
+cov_matrix <- vcov(model_poly)[c("x", "I(x^2)"), c("x", "I(x^2)")]
+sprintf("% .4f & % .4f \\\\",
+        round(cov_matrix[,"x"     ], 4),
+        round(cov_matrix[,"I(x^2)"], 4))
+#+end_src
+
+#+RESULTS[42564cb4622114366fcc025f0f082a1375972560]: cov-mat
+:  0.0643 & -0.0068 \\
+: -0.0068 &  0.0008 \\
+
+#+begin_src R :results none :exports none
+## Кол-во параметров, уровень значимости, корректировка Бонферрони
+m <- 2 # количество интервалов (beta2, beta3)
+alpha_bonf <- alpha/m
+conf_level <- 1 - alpha_bonf
+
+## Квантиль t-распределения с df модели
+df_res <- df.residual(model_poly)
+t_crit <- qt(1 - alpha/2, df_res)
+t_crit_bonf <- qt(1 - alpha_bonf/2, df_res)
+
+## Строим доверительные интервалы для beta2 и beta3
+se <- sqrt(diag(cov_matrix))
+lower <- coef_est - t_crit*se
+upper <- coef_est + t_crit*se
+lower_bonf <- coef_est - t_crit_bonf*se
+upper_bonf <- coef_est + t_crit_bonf*se
+#+end_src
+
+*Доверительные интервалы (уровень src_R{level} {{{results(@@latex:0.99@@)}}}):*
+- Доверительный интервал для \(\beta_2\) (src_R{level*100}
+  {{{results(@@latex:99@@)}}}%): [src_R{sprintf("%.4f, %.4f",
+  round(lower[1], 4), round(upper[1], 4))}
+  {{{results(@@latex:-1.1556\, 0.2054@@)}}}]
+- Доверительный интервал для \(\beta_3\) (src_R{level*100}
+  {{{results(@@latex:99@@)}}}%): [src_R{sprintf("%.4f, %.4f",
+  round(lower[2], 4), round(upper[2], 4))}
+  {{{results(@@latex:-0.0282\, 0.1220@@)}}}]
+
+*Совместные доверительные интервалы*
+
+Совместные интервалы учитывают корреляцию между оценками параметров.
+Используем метод Бонферрони или \(F\)-распределение.
+
+*Метод Бонферрони*
+
+Формула: \[\hat{\beta_j} \pm t_{1-\alpha/(2k),n-p} \cdot
+SE(\hat{\beta_j}),\] где \(k = 2\) (число параметров \(\beta_2\) и
+\(\beta_3\)).
+
+#+begin_src R :results none :exports none
+## Параметры для F-распределения
+p <- m  # количество параметров
+df_res <- df.residual(model_poly)
+n <- length(model_poly$fitted.values)
+
+F_crit <- qf(1 - alpha, p, df_res)
+
+## Построим эллипс совместного доверительного интервала (F-распределение)
+## Радиус эллипса:
+radius <- sqrt(p*F_crit/df_res)
+
+ell <- ellipse(cov_matrix, centre = coef_est,
+               level = 1 - alpha, t = sqrt(F_crit*p/df_res))
+
+tikz("doc/combined-distribution-interval.tex", width = 7, height = 4.5)
+plot(ell, type = 'l', xlab = "\\(\\beta_2(X)\\)", ylab = "\\(\\beta_3(X)\\)",
+     main = "Совместный доверительный интервал для \\(\\beta_2\\) и \\(\\beta_3\\)")
+grid()
+points(coef_est[1], coef_est[2], pch = 19, col = "red")
+lines(ell, col = "blue", lwd = 2)
+legend("topright",
+       legend = c("Оценки параметров", "Совместный ДИ (F-распределение)"),
+       col = c("red", "blue"),
+       pch = c(19, NA),
+       lty = c(NA, 1),
+       lwd = c(NA, 2),
+       bty = "n")
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{combined-distribution-interval}
+#+end_figure
+
+Ковариационная матрица для \(\beta_2\) и \(\beta_3\):
+#+begin_src latex
+\begin{pmatrix}
+  <<cov-mat()>>
+\end{pmatrix}
+#+end_src
+
+#+RESULTS[9e3b37ae5a42cdb77bc22e67714bc54a45f60e9b]:
+#+begin_export latex
+\begin{pmatrix}
+  0.0643 & -0.0068 \\
+  -0.0068 &  0.0008 \\
+\end{pmatrix}
+#+end_export
+
+Совместные интервалы (Бонферрони):
+- \(\beta_2\): [src_R{sprintf("%.4f, %.4f", round(lower_bonf[1], 4),
+  round(upper_bonf[1], 4))} {{{results(@@latex:-1.2218\, 0.2716@@)}}}]
+- \(\beta_3\): [src_R{sprintf("%.4f, %.4f", round(lower[2], 4),
+  round(upper[2], 4))} {{{results(@@latex:-0.0282\, 0.1220@@)}}}]
+
+*Метод F-распределения*
+
+Формула: \[(\hat{\beta} - \beta)^T \cdot Cov(\hat{\beta})^{-1} \cdot
+(\hat{\beta} - \beta) \leq F_{1-\alpha, 2, n-p},\] где \(F_{1-\alpha,
+2, n-p}\) --- критическое значение \(F\)-распределения.
+
+#+name: cov-mat-full
+#+begin_src R :results pp :exports none
+cov_matrix_full <- vcov(model_poly)
+sprintf("% .4f & % .4f & % .4f \\\\",
+        round(cov_matrix_full[,1], 4),
+        round(cov_matrix_full[,2], 4),
+        round(cov_matrix_full[,3], 4))
+#+end_src
+
+#+RESULTS[76d2d302fc706e050a33dd7fd057f40b104b2b1b]: cov-mat-full
+:  0.2129 & -0.0935 &  0.0084 \\
+: -0.0935 &  0.0643 & -0.0068 \\
+:  0.0084 & -0.0068 &  0.0008 \\
+
+Полная ковариационная матрица:
+#+begin_src latex
+\begin{pmatrix}
+  <<cov-mat-full()>>
+\end{pmatrix}
+#+end_src
+
+#+RESULTS[05a08a2d68d7dcefa682fa5c26497b6c6d03e8fc]:
+#+begin_export latex
+\begin{pmatrix}
+  0.2129 & -0.0935 &  0.0084 \\
+  -0.0935 &  0.0643 & -0.0068 \\
+   0.0084 & -0.0068 &  0.0008 \\
+\end{pmatrix}
+#+end_export
+
+Вектор оценок параметров \([\beta_2, \beta_3]\): [src_R{sprintf("%.4f,
+  %.4f", round(coef_est[1], 4), round(coef_est[2], 4))}
+  {{{results(@@latex:-0.4751\, 0.0469@@)}}}]
+
+** Пункт e
+*Гипотеза линейности*
+- \(H_0\): Зависимость \(Y\) от \(X\) линейна (\(\beta_3 = 0\)).
+- \(H_1\): Зависимость нелинейна (\(\beta_3 \neq 0\)).
+
+*Гипотеза независимости*
+- \(H_0\): \(Y\) не зависит от \(X\) (\(\beta_2 = \beta_3 = 0\)).
+- \(H_1\): \(Y\) зависит от \(X\) (хотя бы один из \(\beta_2, \beta_3
+  \neq 0\)).
+
+*Проверка гипотезы линейности (\(H_0: \beta_3 = 0\)):*
+- \(t\)-статистика: src_R{round(summary(model_poly)$coefficients["I(x^2)", "t
+  value"], 4)} {{{results(@@latex:1.6758@@)}}}
+- \(p\)-значение:
+  src_R{round(summary(model_poly)$coefficients["I(x^2)", "Pr(>|t|)"],
+  4)} {{{results(@@latex:0.1004@@)}}}
+- Нет оснований отвергать гипотезу о линейности (src_R{paste0("\\(p >
+  ", alpha, "\\)")} {{{results(@@latex:\(p > 0.01\)@@)}}}).
+
+*Проверка гипотезы независимости (\(H_0: \beta_3 = 0\)):*
+- \(t\)-статистика: src_R{round(summary(model_poly)$coefficients["x",
+  "t value"], 4)} {{{results(@@latex:-1.8741@@)}}}
+- \(p\)-значение: src_R{round(summary(model_poly)$coefficients["x",
+  "Pr(>|t|)"], 4)} {{{results(@@latex:0.0671@@)}}}
+- Нет оснований отвергать гипотезу о независимости (src_R{paste0("\\(p >
+  ", alpha, "\\)")} {{{results(@@latex:\(p > 0.01\)@@)}}}).
+
+** Пункт f
+#+name: model-comp
+#+begin_src R :results pp :exports none
+paste(c("Нулевая", "Линейная", "Квадратная"),
+      round(c(AIC(model_null), AIC(model_lin), AIC(model_poly)), 4),
+      round(c(BIC(model_null), BIC(model_lin), BIC(model_poly)), 4),
+      sep = " & ",
+      collapse = " \\\\\n")
+#+end_src
+
+#+RESULTS[251d881494745cfc350a9ebf07f6e6b90c53dbb3]: model-comp
+: Нулевая & 185.0596 & 188.8837 \\
+: Линейная & 186.2028 & 191.9388 \\
+: Квадратная & 185.3011 & 192.9492
+
+Сравнение моделей по AIC и BIC:
+#+begin_src latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    <<model-comp()>> \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_src
+
+#+RESULTS[db9825ed54420983636f8b5963f0db112abca840]:
+#+begin_export latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Линейная & 186.2028 & 191.9388 \\
+    Квадратная & 185.3011 & 192.9492 \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_export
+
+Так как разница в AIC и BIC небольшая, можно сказать, что обе модели
+адекватны, но:
+- AIC слегка за квадратную,
+- BIC слегка за линейную.
+
+** Пункт g
+*Характер зависимости \(Y\) от \(X\)*
+- *Линейная модель:* src_R{paste0("\\[Y = ", round(coef_lin[1,1], 2),
+  " + (", round(coef_lin[2,1], 2), ")X,\\quad R^2 = ",
+  round(summary_lin$r.squared, 4), ".\\]")} {{{results(@@latex:\[Y = 11.01 + (-0.07)X\,\quad R^2 = 0.017.\]@@)}}}
+  - Крайне низкий \(R^2\) (src_R{round(summary_lin$r.squared*100, 1)}
+    {{{results(@@latex:1.7@@)}}}%) указывает на отсутствие линейной
+    зависимости.
+  - Коэффициент src_R{paste0("\\(\\beta_2 = ",
+    round(coef(model_lin)[2], 2), "\\)")} {{{results(@@latex:\(\beta_2 = -0.07\)@@)}}} статистически незначим (доверительный интервал
+    src_R{paste0("\\([", round(confint_lin["x", 1], 2), ", ",
+    round(confint_lin["x", 2], 2), "]\\)")}
+    {{{results(@@latex:\([-0.22\, 0.08]\)@@)}}} включает ноль).
+- *Квадратичная модель:* src_R{paste0("\\[Y = ", round(coef_poly[1,1],
+  2), " + (", round(coef_poly[2,1], 2), ")X + (",
+  round(coef_poly[3,1], 2), ")X^2,\\quad R^2 = ",
+  round(summary_poly$r.squared, 4), ".\\]")} {{{results(@@latex:\[Y = 11.51 + (-0.48)X + (0.05)X^2\,\quad R^2 = 0.0724.\]@@)}}}
+  - src_R{paste0("\\(R^2 = ", round(summary_poly$r.squared*100, 1),
+    "\\%\\)")} {{{results(@@latex:\(R^2 = 7.2\%\)@@)}}} показывает,
+    что модель объясняет лишь незначительную часть вариации.
+  - Коэффициенты:
+    - src_R{paste0("\\(\\beta_2 = ", round(coef(model_poly)[2], 2),
+      "\\)")} {{{results(@@latex:\(\beta_2 = -0.48\)@@)}}} (линейный
+      член): интервал src_R{paste0("\\([", round(confint_poly["x", 1],
+      2), ", ", round(confint_poly["x", 2], 2), "]\\)")}
+      {{{results(@@latex:\([-0.99\, 0.03]\)@@)}}} включает ноль.
+    - src_R{paste0("\\(\\beta_3 = ", round(coef(model_poly)[3], 2),
+      "\\)")} {{{results(@@latex:\(\beta_3 = 0.05\)@@)}}}
+      (квадратичный член): интервал src_R{paste0("\\([",
+      round(confint_poly["I(x^2)", 1], 2), ", ",
+      round(confint_poly["I(x^2)", 2], 2), "]\\)")}
+      {{{results(@@latex:\([-0.01\, 0.1]\)@@)}}} включает ноль.
+
+*Проверка гипотез*
+
+Остатки близки к нормальному распределению.  Критерий \(\chi^2\) не
+выявил значимых отклонений от нормальности на уровне
+src_R{paste0("\\(\\alpha = ", alpha, "\\)")}
+{{{results(@@latex:\(\alpha = 0.01\)@@)}}}.
+
+/Предположение о нормальности ошибок выполняется./
+
+*AIC/BIC*
+#+begin_src latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    <<model-comp()>> \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_src
+
+#+RESULTS[db9825ed54420983636f8b5963f0db112abca840]:
+#+begin_export latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Линейная & 186.2028 & 191.9388 \\
+    Квадратная & 185.3011 & 192.9492 \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_export
+
+- *Линейная модель* имеет более низкий BIC, чем квадратичная.
+- *Квадратная модель* имеет более низкий AIC, чем линейная.
+
+*Аномалии в результатах*
+- *Парадокс низкого \(R^2\):*
+  - Линейная модель объясняет менее 3% вариации, что ставит под
+    сомнение её практическую применимость.
+
+*Итоговый вывод*
+- *Отсутствие значимой связи:* Ни линейная, ни квадратичная модели не
+  демонстрируют статистически значимой зависимости \(Y\) от \(X\) на
+  уровне src_R{paste0("\\(\\alpha = ", alpha, "\\)")}
+  {{{results(@@latex:\(\alpha = 0.01\)@@)}}}.
+- *Рекомендации:*
+  - Проверить данные на наличие выбросов или ошибок.
+  - Рассмотреть другие предикторы или преобразования.
+  - Увеличить объем данных для повышения надежности тестов.
+
+* *Задание* 2:
+#+attr_latex: :width \textwidth
+[[./task2.png]]
+
+#+name: alpha-2
+#+begin_src R :results pp :exports none
+alpha1 <- 0.20
+#+end_src
+
+#+RESULTS[20e7ce5f80063a7c98ff3a9224953a41ad24dec9]: alpha-2
+: 0.2
+
+#+begin_src R :results none :exports none
+h <- 1.50
+a <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+       3, 3, 3)
+b <- c(1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 2,
+       2, 2, 2, 2, 3, 3, 3, 3, 3, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3,
+       3, 3, 3)
+y <- c(17.66, 18.72, 17.55, 16.30, 18.35, 14.71, 17.55, 17.56, 19.19,
+       17.21, 16.91, 15.89, 15.71, 16.21, 13.80, 14.71, 16.91, 15.29,
+       15.49, 16.83, 13.76, 16.94, 15.21, 14.31, 15.07, 10.86, 11.79,
+       11.99, 11.65, 12.52, 18.67, 20.56, 15.76, 17.73, 19.05, 17.40,
+       15.61, 18.64, 16.76, 18.04, 14.59, 18.01, 15.57, 17.20, 15.06)
+#+end_src
+
+** Пункт a
+*** Формулировка модели двухфакторного дисперсионного анализа
+Модель с взаимодействием факторов: \[Y_{ijk} = \mu + \alpha_i +
+\beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk},\] где:
+- \(Y_{ijk}\) --- наблюдаемое значение переменной \(Y\) для \(i\)-го
+  уровня фактора \(A\), \(j\)-го уровня фактора \(B\), \(k\)-го
+  повторения,
+- \(\mu\) --- общее среднее,
+- \(\alpha_i\) --- эффект \(i\)-го уровня фактора \(A\),
+- \(\beta_j\) --- эффект \(j\)-го уровня фактора \(B\),
+- \((\alpha \beta)_{ij}\) --- эффект взаимодействия факторов \(A\) и
+  \(B\),
+- \(\epsilon_{ijk} \sim N(0, \sigma^2)\) --- случайная ошибка.
+
+#+begin_src R :results none :exports none
+a <- factor(a)
+b <- factor(b)
+model <- lm(y ~ a * b)
+summary(model)
+#+end_src
+
+*** Построение МНК-оценок параметров
+Оценки параметров полной модели:
+\begin{verbatim}
+(Intercept)  17.7160
+a2           -1.8700
+a3            0.6380
+b2           -0.4720
+b3           -2.0120
+a2:b2        -0.3160
+a3:b2        -0.5920
+a2:b3        -2.0720
+a3:b3        -0.2560
+\end{verbatim}
+
+*** Несмещенная оценка дисперсии
+Несмещенная оценка дисперсии ошибок: src_R{paste0("\\[\\hat{\\sigma}^2
+= \\frac{SS_{\\text{res}}}{df_{\\text{res}}} = ",
+round(summary(model)$sigma^2, 4), ",\\]")}
+{{{results(@@latex:\[\hat{\sigma}^2 = \frac{SS_{\text{res}}}{df_{\text{res}}} = 1.5799\,\]@@)}}} где:
+- \(SS_{\text{res}}\) --- сумма квадратов остатков,
+- \(df_{\text{res}} = n - p\) --- степени свободы (\(n\) --- число
+  наблюдений, \(p\) --- число параметров).
+
+** Пункт b
+Сводная таблица средних значений \(Y\):
+#+begin_export latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{c|ccc} \toprule
+    $A \backslash B$ & 1 & 2 & 3 \\ \midrule
+    1 & 17.716 & 17.244 & 15.704 \\
+    2 & 15.846 & 15.058 & 11.762 \\
+    3 & 18.354 & 17.290 & 16.086 \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_export
+
+#+begin_src R :results none :exports none
+mat <- tapply(y, list(a, b), mean)
+
+tikz("doc/dependency.tex", width = 7, height = 4.5)
+matplot(
+  x = as.numeric(rownames(mat)), y = mat,
+  type = "b", pch = 1:3, col = 2:4,
+  xlab = "A", ylab = "Y",
+  main = "Зависимость Y от A при фиксированных B")
+legend("bottomright", legend = paste("B =", colnames(mat)), pch = 1:3, col = 2:4)
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{dependency}
+#+end_figure
+
+*Визуальная проверка аддитивности:*
+- Основная часть графика (особенно \(B = 1\) и \(B = 2\)) говорит в
+  пользу аддитивной модели, так как линии почти параллельны.
+- Однако при \(B = 3\) отклонения заметнее, поэтому взаимодействие не
+  исключено.
+
+** Пункт c
+#+begin_src R :results none :exports none
+res <- resid(model)
+
+# Диапазон по x
+x_min <- floor(min(res)) - 1
+x_max <- ceiling(max(res)) + 1
+x_vals <- seq(x_min, x_max, length = 200)
+
+# Гистограмма с плотностью
+tikz("doc/residuals-2.tex", width = 7, height = 4.5)
+hist(res, probability = TRUE, breaks = seq(x_min, x_max, by = 1.5),
+     col = "lightblue", border = "white",
+     main = "Гистограмма остатков (\\(h = 1.5\\))", xlab = "Остатки",
+     ylab = "Плотность", xlim = c(x_min, x_max), ylim = c(0, 0.4))
+
+# Плотность остатков
+lines(density(res), col = "red", lwd = 2)
+
+# Нормальное распределение с оценёнными параметрами
+x_vals <- seq(min(res), max(res), length = 100)
+curve(dnorm(x, mean = mean(res), sd = sd(res)),
+      col = "darkgreen", lwd = 2, add = TRUE, lty = 2)
+
+# Легенда
+legend("topright", legend = c("Плотность остатков", "Нормальное распределение"),
+       col = c("red", "darkgreen"), lty = c(1, 2), lwd = 2, bty = "n")
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{residuals-2}
+#+end_figure
+
+#+begin_src R :results none :exports none
+tikz("doc/qq-2.tex", width = 7, height = 4.5)
+qqnorm(resid(model), main = "Q-Q график остатков",
+       pch = 16, col = "blue")
+qqline(resid(model), col = "red", lwd = 2)
+dev.off()
+#+end_src
+
+#+attr_latex: :options [H]
+#+begin_figure
+\centering
+\input{qq-2}
+#+end_figure
+
+*Тест Шапиро-Уилка:* p-value = src_R{round(shapiro.test(resid(model))$p.value, 4)}
+{{{results(@@latex:0.7283@@)}}}
+
+*Не отвергаем \(H_0\):* p-value > \alpha = 0.2.
+
+*Результаты:*
+- Гистограмма: Распределение остатков близко к нормальному, совпадает
+  с наложенной кривой \(N(0, \sigma^2)\).
+- Q-Q график: Точки лежат вдоль линии \(y = x\), что подтверждает
+  нормальность.
+- Тест Шапиро-Уилка: гипотеза о нормальности не отвергается.
+
+** Пункт d
+#+name: anova-tbl
+#+begin_src R :results pp :exports none
+anov <- anova(model)
+paste(c("a", "b", "a:b", "Residuals"),
+      round(anov[,"Df"], 5),
+      round(anov[,"Sum Sq"], 5),
+      round(anov[,"Mean Sq"], 5),
+      sprintf("\\num{%.5f}", round(anov[,"F value"], 5)),
+      sprintf("\\num{%.5e}", anov[,"Pr(>F)"]),
+      sep = " & ",
+      collapse = " \\\\\n")
+#+end_src
+
+#+RESULTS[5905e40fcd4c9fdaa20d57c3df84e28bac3ee68f]: anova-tbl
+: a & 2 & 81.81136 & 40.90568 & \num{25.89082} & \num{1.07691e-07} \\
+: b & 2 & 62.13282 & 31.06641 & \num{19.66316} & \num{1.69202e-06} \\
+: a:b & 4 & 8.75332 & 2.18833 & \num{1.38508} & \num{2.58557e-01} \\
+: Residuals & 36 & 56.87748 & 1.57993 & \num{NA} & \num{NA}
+
+Таблица ANOVA:
+#+begin_src latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|ccccc} \toprule
+    & Df & Sum Sq & Mean Sq & F value & Pr(>F) \\ \midrule
+    <<anova-tbl()>> \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_src
+
+#+RESULTS[9c1cfb9503efd90352b083107703cc855d380afa]:
+#+begin_export latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|ccccc} \toprule
+    & Df & Sum Sq & Mean Sq & F value & Pr(>F) \\ \midrule
+    a & 2 & 81.81136 & 40.90568 & \num{25.89082} & \num{1.07691e-07} \\
+    b & 2 & 62.13282 & 31.06641 & \num{19.66316} & \num{1.69202e-06} \\
+    a:b & 4 & 8.75332 & 2.18833 & \num{1.38508} & \num{2.58557e-01} \\
+    Residuals & 36 & 56.87748 & 1.57993 & \num{NA} & \num{NA} \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_export
+
+*Результаты ANOVA*
+- Фактор \(A\): \[F = 25.89,\ p\text{-value} < 0.2 \ \rightarrow \
+  \text{значимо влияет на } Y.\]
+- Фактор \(B\): \[F = 19.66,\ p\text{-value} < 0.2 \ \rightarrow \
+  \text{значимо влияет на } Y.\]
+- Взаимодействие \(A \times B\): \[F = 1.38,\ p\text{-value} > 0.2 \
+  \rightarrow \ \text{незначимо влияет на } Y.\]
+- Вывод: На уровне значимости \(\alpha = 0.20\) факторы \(A\) и \(B\)
+  значимо влияют на отклик \(Y\), поскольку соответствующие p-значения
+  меньше 0.20.  В то же время, взаимодействие факторов \(A \times B\)
+  незначимо (\(p > 0.2\)).  Это означает, что влияние каждого из
+  факторов на \(Y\) не зависит от уровня другого фактора.  Это говорит
+  о том, что можно использовать аддитивную модель без взаимодействия.
+
+** Пункт e
+Для выбора оптимальной модели используются критерии:
+- AIC оценивает баланс между качеством подгонки модели и её
+  сложностью, накладывая штраф за избыточное количество параметров.
+- BIC работает аналогично AIC, но применяет более строгий штраф за
+  сложность, особенно при больших объемах данных.
+
+Сравниваем две модели:
+1. Полная модель (с взаимодействием): \[Y \sim A + B + A : B.\]
+2. Аддитивная модель (без взаимодействия): \[Y \sim A + B.\]
+
+#+name: model-comp-2
+#+begin_src R :results pp :exports none
+model_null <- lm(y ~ 1)
+model_a <- lm(y ~ a)
+model_b <- lm(y ~ b)
+model_add <- lm(y ~ a + b)
+paste(c("Константная", "Только A", "Только B", "Полная", "Аддитивная"),
+      round(c(AIC(model_null), AIC(model_a), AIC(model_b), AIC(model), AIC(model_add)), 4),
+      round(c(BIC(model_null), BIC(model_a), BIC(model_b), BIC(model), BIC(model_add)), 4),
+      sep = " & ",
+      collapse = " \\\\\n")
+#+end_src
+
+#+RESULTS[d5de6a2552c4fa0ab934d1499ab38cc63b029981]: model-comp-2
+: Константная & 200.9333 & 204.5467 \\
+: Только A & 182.6628 & 189.8895 \\
+: Только B & 189.1093 & 196.3359 \\
+: Полная & 158.2451 & 176.3118 \\
+: Аддитивная & 156.6867 & 167.5267
+
+#+begin_src latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    <<model-comp-2()>> \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_src
+
+#+RESULTS[e0fb1f2665cc7c1b535467524a6fa9d8e84fd70c]:
+#+begin_export latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Полная & 158.2451 & 176.3118 \\
+    Аддитивная & 156.6867 & 167.5267 \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_export
+
+*Вывод о сравнении моделей*
+
+- *Результаты AIC и BIC:*
+  - Полная модель имеет AIC = 158.2451, в то время как аддитивная
+    модель имеет AIC = 156.6867.  Это указывает на малое преимущество
+    аддитивной модели.
+  - Полная модель также имеет BIC = 176.3118, а аддитивная модель ---
+    BIC = 167.5267.  Разница подтверждает выбор аддитивной модели.
+- *Заключение:*
+  - Аддитивная модель *предпочтительнее*, так как она лучше соответствует
+    данным, что подтверждается меньшими значениями AIC и BIC.
+  - Взаимодействие оказалось незначимым.
+
+** Пункт f
+*** Основные эффекты факторов A и B
+- *Фактор A:* Оказал сильное статистически значимое влияние на \(Y\)
+  (\(F = 25.89, p < 0.2\)).
+- *Фактор B:* Также значимо влияет на \(Y\) (\(F = 19.66, p < 0.2\)).
+
+*** Взаимодействие факторов \(A \times B\)
+- *Статистическая значимость:* Взаимодействие значимо (\(F = 1.38, p <
+  0.2\)).
+- *Визуальное подтверждение:* График зависимости \(Y\) от \(A\) при
+  фиксированных \(B\) показывает отсутствие пересечение линий, причём
+  они почти параллельны, что указывает на аддитивность эффектов.
+
+*** Выбор оптимальной модели
+AIC/BIC:
+#+begin_src latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    <<model-comp-2()>> \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_src
+
+#+RESULTS[e0fb1f2665cc7c1b535467524a6fa9d8e84fd70c]:
+#+begin_export latex
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Полная & 158.2451 & 176.3118 \\
+    Аддитивная & 156.6867 & 167.5267 \\ \bottomrule
+  \end{tabular}
+\end{table}
+#+end_export
+
+Разница \(\Delta AIC = -1.55\) и \(\Delta BIC = -8.78\) указывает на
+преимущество аддитивной модели.
+
+Полная модель ложно учитывает взаимодействия, они не дают реального
+вклада, но увеличивают размерность и ухудшают обобщающую способность
+
+*** Нормальность остатков
+- Тест Шапиро-Уилка: \[p\text{-value} = 0.7283 \implies \text{гипотеза
+  о нормальности остатков не отвергается}.\]
+- Графическая проверка: Гистограмма остатков близка к нормальной
+  форме.
+- Q-Q график показывает совпадение точек с линией \(y = x\).
+
+*Рекомендации:* Для прогнозирования \(Y\) лучше не учитывать
+взаимодействие \(A \times B\), так как оно лишь усложняет модель.
+
+*Итоговый вывод*
+1. Аддитивная модель без взаимодействий предпочтительна по критериям
+   AIC/BIC и объясняет данные лучше полной.
+2. Нормальность остатков подтверждена тестами и графиками.
+
+*Рекомендации:*
+- Проверить данные на наличие выбросов для \(A=2\) и \(B=3\).
+- Использовать аддитивную модель для прогнозирования и анализа
+  эффектов.
+
+# Local Variables:
+# org-confirm-babel-evaluate: nil
+# org-export-async-init-file: "ox-init.el"
+# org-export-in-background: t
+# End:

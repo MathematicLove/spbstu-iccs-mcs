@@ -1,0 +1,34 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи}{4}{section.1}%
+\contentsline {section}{\numberline {2}Аннотация курса и разделов}{5}{section.2}%
+\contentsline {section}{\numberline {3}Теоретическая часть курса}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Базовые понятия}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Атаки идентификации и анонимизация данных}{6}{subsection.3.2}%
+\contentsline {paragraph}{\nonumberline Логический вывод и атаки идентификации.}{6}{paragraph*.4}%
+\contentsline {paragraph}{\nonumberline Повторная идентификация.}{6}{paragraph*.6}%
+\contentsline {paragraph}{\nonumberline Законодательные требования.}{6}{paragraph*.8}%
+\contentsline {subsection}{\numberline {3.3}Методы обезличивания данных}{7}{subsection.3.3}%
+\contentsline {paragraph}{\nonumberline Требования к методам.}{7}{paragraph*.10}%
+\contentsline {paragraph}{\nonumberline Обратимые методы.}{7}{paragraph*.12}%
+\contentsline {paragraph}{\nonumberline Необратимые методы.}{7}{paragraph*.14}%
+\contentsline {subsection}{\numberline {3.4}Концепция предположительной анонимности}{7}{subsection.3.4}%
+\contentsline {paragraph}{\nonumberline Модель угадывания.}{7}{paragraph*.16}%
+\contentsline {paragraph}{\nonumberline Границы по энтропии Реньи.}{7}{paragraph*.18}%
+\contentsline {paragraph}{\nonumberline Gaussian-модель.}{7}{paragraph*.20}%
+\contentsline {subsection}{\numberline {3.5}K-анонимность}{8}{subsection.3.5}%
+\contentsline {paragraph}{\nonumberline Определение.}{8}{paragraph*.22}%
+\contentsline {paragraph}{\nonumberline Обобщение и подавление.}{8}{paragraph*.24}%
+\contentsline {paragraph}{\nonumberline Минимальное обобщение.}{8}{paragraph*.26}%
+\contentsline {subsection}{\numberline {3.6}Дифференциальная конфиденциальность}{8}{subsection.3.6}%
+\contentsline {paragraph}{\nonumberline Определение.}{8}{paragraph*.28}%
+\contentsline {paragraph}{\nonumberline Механизмы.}{8}{paragraph*.30}%
+\contentsline {paragraph}{\nonumberline Свойства композиции.}{8}{paragraph*.32}%
+\contentsline {subsection}{\numberline {3.7}Оценка полезности и совместное применение}{8}{subsection.3.7}%
+\contentsline {paragraph}{\nonumberline Метрики для специфических методов.}{8}{paragraph*.34}%
+\contentsline {paragraph}{\nonumberline Метрики для $k$-анонимности.}{9}{paragraph*.36}%
+\contentsline {paragraph}{\nonumberline Совместное применение.}{9}{paragraph*.38}%
+\contentsline {section}{\numberline {4}Результаты аттестации по модулям}{10}{section.4}%
+\contentsline {section}{\numberline {5}Заключение}{12}{section.5}%
+\contentsline {section}{\numberline {6}Список источников}{13}{section.6}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

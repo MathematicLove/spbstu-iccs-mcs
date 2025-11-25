@@ -1,0 +1,2784 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{quote}
+МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ\\
+РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+Федеральное Государственное Автономное\\
+Образовательное Учреждение Высшего Образования «Санкт-Петербургский
+Политехнический\\
+Университет Петра Великого»\\
+Институт Компьютерных Наук и\\
+Кибербезопасности\\
+Высшая Школа Технологий Искусственного\\
+Интеллекта\\
+Направление: 02.03.01 Математика и\\
+Компьютерные Науки
+
+Теоретические основы баз данных\\
+Курсовая работа на тему «Электронная подача Заявления на поступление в
+ВУЗ»
+\end{quote}
+
+Студент,\\
+Группы 5130201/20002\\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Салимли А.
+
+Преподаватель,\\
+к.т.н., доц.
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Попов С.Г.
+
+«\_\_\_\_\_»\_\_\_\_\_\_\_\_\_\_\_ 2024 г.
+
+Санкт-Петербург, 2024 г.
+
+1
+
+\textbf{Содержание:}
+
+\textbf{1. \uline{Анализ предметной области.}} 3
+
+\begin{quote}
+1.1 \uline{Предметная область} 3
+
+1.2 \uline{Определения} 4
+
+1.3 \uline{Цели создания} 5
+
+1.4 \uline{ER-диаграмма} 5
+
+1.5 \uline{Описание сущностей и атрибутов} 7
+
+1.6 \uline{Схема объектов} 8
+\end{quote}
+
+\textbf{2. \uline{Проектирование базы данных}} 9
+
+\begin{quote}
+2.1 \uline{Атрибуты таблиц базы данных} 9
+
+2.2 \uline{Размеры полей} 11
+
+2.3 \uline{Заполнение базы данных} 14
+\end{quote}
+
+\textbf{3. \uline{Запросы}} 15
+
+\begin{quote}
+3.1 \uline{Дисциплина которую сдавал абитуриент А который поступал по
+направлению В} 15
+
+3.2 \uline{Число абитуриентов из института А} 16
+
+3.2.2 \uline{Число абитуриентов по каждому направлению института А} 16
+
+3.3 \uline{Число подавших абитуриентов с каждого института} 16
+
+3.4 \uline{Абитуриент с максимальным числом результата} 17
+
+3.5 \uline{Число направлений с одинаковым числом абитуриентов} 18
+
+3.6 \uline{Дисциплина по которой подано больше результатов чем у
+дисциплины А} 18
+
+3.7 \uline{Абитуриенты которые не подавались в институт А} 19
+
+3.8 \uline{Для всех институтов и всех дисциплин посчитать число
+абитуриентов} 19
+
+3.9 \uline{Explain запросов} 21
+\end{quote}
+
+\textbf{4. \uline{Заключение}} 24
+
+\textbf{5. \uline{Источники }}25
+
+\textbf{6. \uline{Приложение А}} 26
+
+\textbf{7. \uline{Приложение В}} 28
+
+2
+
+\textbf{1.Анализ предметной области}
+
+\textbf{1.1 Предметная область}
+
+Высшее учебное заведение (далее ВУЗ), имеет несколько самостоятельных
+учебных подразделений - институт.
+
+Институт в свою очередь, имеет направления подготовки, которые по
+желанию должен выбрать абитуриент.
+
+Абитуриент - претендент который подает заявление, на поступление в
+учебное заведение, например в ВУЗ, для получения высшего образования. В
+данном проекте рассматривается поступление абитуриента в один ВУЗ, по
+направлению подготовки, в котором заинтересован абитуриент.
+
+После успешной сдачи, единственного государственного экзамена (далее
+ЕГЭ), и сдачи вступительных испытаний, абитуриент подает заявку, которая
+содержит в себе - документы (например - паспорт РФ, аттестат, СНИЛС),
+результаты испытания и заявление, которое в свою очередь содержит в себе
+желаемую форму обучения, выбранное направление подготовки и основу
+обучения.
+
+После подачи всех документов и заявления, заявка абитуриента
+рассматривается, после чего, абитуриента уведомляют, о статусе
+зачисления (зачислен/ отклонен).
+
+Если абитуриент прошел все испытания и подал необходимые атрибуты
+заявления, его зачисляют в список студентов группы по направлению.
+
+3
+
+\textbf{1.2 Определения:}
+
+\textbf{Абитуриент} - желающий, который подает заявление на поступление
+в учебное заведение (например, вуз или институт) для получения высшего
+образования.
+
+\textbf{Претендент} - лицо желающее сдать документы\\
+\textbf{Аттестат} - официальный документ, выдаваемый после окончания
+среднего полного либо специального образовательного учреждения,
+подтверждающий получение базового образования или квалификации.
+
+\textbf{Форма обучения} - способ организации учебного процесса,
+определяющий время и место обучения для студента. Может включать очные
+(полный дневной режим), заочные\\
+(дистанционное обучение без регулярного посещения учебных занятий) и
+вечерние (занятия проводятся после рабочего дня) формы обучения.
+
+\textbf{Институт} - самостоятельное образовательное подразделение вуза,
+специализирующееся на определенной области знаний.
+
+\textbf{ВУЗ} - высшее учебное заведение, предлагающее программы
+образования и научных исследований на более высоком уровне, чем среднее
+образование. Направления - сферы знаний или профессиональных областей
+обучения, в которых студент может выбрать специализацию для своего
+будущего образования и карьеры.
+
+\textbf{Студент} - лицо, которое учится в высшем учебном заведении и
+получает образование в рамках программы обучения.
+
+\textbf{Вступительные экзамены} - испытания или тесты, составленные
+учебным заведением, чтобы оценить знания и навыки абитуриента для
+определения его способности и пригодности к поступлению на обучение.
+
+\textbf{Общее количество баллов} - сумма набранных очков или оценок,
+назначенных за\\
+выполнение заданий или успешное прохождение экзаменов. Оно может
+использоваться для определения успеха абитуриента при поступлении или
+для измерения его академической успеваемости в течение обучения.
+
+\textbf{Университет} - высшее учебное заведение, где готовят
+специалистов по фундаментальным и прикладным наукам и как правило
+осуществляют научно-исследовательские работы. \textbf{Паспорт} -
+основной документ удостоверяющий личность гражданина на территории
+страны его рождения. (В нашем случае РФ)\\
+\textbf{ФИО} - Фамилия Имя Отчество (последнее если есть).
+
+\textbf{Единый государственный экзамен (ЕГЭ)} --- это
+стандартизированный экзамен, который проводят в конце обучения в школе,
+лицее, гимназии и других учреждениях общего среднего образования. В ходе
+этого экзамена оцениваются знания учащихся по основным школьным
+дисциплинам. Результаты ЕГЭ используются для приёма в вузы и другие
+образовательные учреждения.
+
+4
+
+\textbf{1.3 Цели создания:}
+
+1.Построение списков абитуриентов в реальном масштабе времени (1 час по
+мин.образования).
+
+2.Автоматизированная система рассмотрения заявлений на поступления в
+ВУЗ.
+
+3.Онлайн информирование (Информирование абитуриента о состоянии
+документов и статуса зачисления). 4.Круглосуточный прием заявлений на
+поступления.
+
+\textbf{1.4 ER-диаграмма:}
+
+1. Абитуриент выбирает направление\\
+2. Конкретный институт ведет подготовку по выбранному абитуриентом
+направлению\\
+3. Абитуриент сдает ЕГЭ и вступительные испытания на основе дисциплин,
+которые необходимы для выбранного направления\\
+4. Абитуриент подает заявку\\
+5. Заявка в свою очередь содержит заявление\\
+6. Заявка так же имеет статус (зачисления)
+
+5
+
+\includegraphics[width=16.4375in,height=7.49028in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image1.png}
+
+Рис. 1 ER-Диаграмм
+
+6
+
+\textbf{1.5 Описание сущностей и атрибутов}
+
+1.\textbf{Абитуриент} - претендент , который подает заявление на
+поступление в учебное
+
+\begin{quote}
+заведение (например, вуз или институт) для получения высшего
+образования.
+
+\emph{Атрибуты:}
+
+• \emph{Имя}
+
+• \emph{Фамилия}
+
+• \emph{Отчество}
+
+• \emph{Дата рождения}
+
+• \emph{Статус зачисления}
+\end{quote}
+
+2. \textbf{Дисциплина} - часть учебного плана, самостоятельный предмет с
+аттестацией.
+
+\begin{quote}
+\emph{Атрибуты:}
+
+• \emph{Название}
+\end{quote}
+
+3. \textbf{Документ} - материальный объект с зафиксированной на нем
+информацией в виде текста,
+
+звукозаписи или изображения.
+
+\begin{quote}
+\emph{Атрибуты:}
+
+• \emph{Название}
+
+• \emph{Принадлежность}
+\end{quote}
+
+4. \textbf{Результат испытания} - оценка знаний абитуриента по
+конкретной дисциплине.
+
+\begin{quote}
+Принадлежность абитуриенту
+
+\emph{Атрибуты:}
+
+• \emph{Дисциплина}
+
+• \emph{Тип}
+
+• \emph{Баллы}
+\end{quote}
+
+5. \textbf{Направление подготовки} - образовательная программа,
+ориентированная на
+
+приобретение определенного набора знаний и навыков в определенной сфере.
+
+\begin{quote}
+\emph{Атрибуты:}
+
+• \emph{Название}
+
+• \emph{Код}
+
+• \emph{Институт}
+\end{quote}
+
+6. \textbf{Институт} - подразделение ВУЗа, образовательное учреждение,
+где проводится подготовка
+
+специалистов в определенных областях знаний и профессиональных навыков.
+
+\begin{quote}
+\emph{Атрибуты:}
+
+•\emph{Название института, директор}
+
+•\emph{Адрес института, номер телефона}
+\end{quote}
+
+7
+
+\begin{quote}
+\textbf{1.6 Схема объектов:}
+\end{quote}
+
+\includegraphics[width=6.93333in,height=2.24028in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image2.png}
+
+Рис.2 Схема объектов
+
+\begin{quote}
+\textbf{Описание схемы объектов:}\\
+У абитуриентов несколько результатов испытаний по дисциплинам, результат
+всегда по одной дисциплине.
+
+Направления подготовки требуют набор из нескольких дисциплин.
+
+В одном институте несколько направлений.
+
+Каждый абитуриент выбирает несколько направлений.
+
+И каждый абитуриент предоставляет несколько документов.
+\end{quote}
+
+8
+
+\textbf{2. Проектирование базы данных}
+
+На рисунке \uline{3} и \uline{4}, изображены схемы баз данных на русском
+и на английском языке соответственно, число сверху слева таблицы
+обозначаент приоритет заполнения таблицы, чем меньше число, тем выше
+приоритет заполнения. Сверху справа таблицы, число обозначающее
+количество записей.
+
+\textbf{2.1 Атрибуты таблиц базы данных:}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_дисциплины
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+subject\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+название
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 1: Subject
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_статус\_зачисления
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+enrollment\_status\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+название
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 2: Enrollment\_Status
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_документа
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+document\_type\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+название
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 3: Document\_Type
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_института
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+department\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+название
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+номер телефона
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+phone\_number
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+адрес
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+address
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+TEXT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+директор
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+head\_master\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 4: Department
+
+9
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_абитуриента
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+имя
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+first\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+фамилия
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+last\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+отчество
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+middle\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+дата\_рождения
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+birth\_date
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+DATE
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+статус\_зачисления
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+enrollment\_status\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Enrollment\_Status. enrollment\_status\_id
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 5: Enrollee
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_направление
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+specialty\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+название
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+name
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+код
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+code
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+VARCHAR
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_институт
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+department\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & Department.department\_id \\
+\bottomrule()
+\end{longtable}
+
+Таблица 6: Specialty
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+id\_документ\_абитуриента & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+document\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_абитуриент
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Enrollee.enrollee\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_документ
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+document\_type\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Document\_Type. document\_type\_id
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 7: Document
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_результата
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+achievment\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_абитуриент
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Enrollee.enrollee\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_дисциплина
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+subject\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Subject.subject\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+балл\_вступительные
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+inner\_result
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+балл\_егэ
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ege\_result
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 8: Achievment
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_выбор
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+choice\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_абитуриент
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Enrollee.enrollee\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Id\_направление
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+specialty\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Specialty.specialty\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+приоритет
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+priority\_index
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 9: Choice
+
+10
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Имя на англ.
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Тип ключа
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Ссылка
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+дисциплина\_направление\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+subject\_requirement\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+PK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_дисциплина
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+subject\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Subject.subject\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+id\_направление
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+specialty\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+FK
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Specialty.specialty\_id
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+минимальный\_балл\_егэ
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ege\_minimal\_result
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+минимальный\_балл\_вступительные
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+inner\_minimal\_result
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+INT
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+-
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Таблица 10: Subject\_Requirement
+
+\textbf{2.2 Размеры полей}
+
+Так как все названия института, направлений и дисциплин не превышают 50
+символов, был использован тип VARCHAR(50).
+
+Для фамилии имени отчества абитуриента, директора был использован так же
+тип VARCHAR но диапазон символов ФИО по отдельности был увеличен до
+VARCHAR(80).
+
+Номера телефонов не могут превышать 20 символов, поэтому был использован
+тип VARCHAR(20).
+
+Статус зачисления хранится в формате чисел от 1 до 2, где 1 - отклонено,
+2 - зачислен. Следовательно был взят тип INT UNSIGNED NOT NULL.
+
+Все личные документы имеют свой уникальный номер и не могут быть меньше
+или равны нулю, поэтому для документов был взят тип INT UNSIGNED NOT
+NULL.
+
+PK и FK, инициалы ключей, сокращено от primary key и foreign key.
+Foreign key нужн для ссылок на другие таблицы и их поля, а primary key
+используется для уникальной\\
+идентификации записей в таблице. Он гарантирует, что каждая запись имеет
+уникальное значение primary key, что обеспечивает целостность данных и
+упрощает процессы поиска, сортировки и связывания данных. PK так же
+указан в таблицах в столбце \emph{«тип ключа»} и в схеме базы данных.
+
+11
+
+\includegraphics[width=16.38889in,height=6.91111in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image3.png}
+
+Рис. 3 Схема базы данных на русском
+
+12
+
+\includegraphics[width=16.36528in,height=7.32917in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image4.png}
+
+Рис. 4 Схема базы данных на английско
+
+13
+
+\textbf{2.3 Заполнение таблиц базы данных:}
+
+Для заполнения таблиц базы данных была реализована программа в ИСР
+Visual Studio Code на языке Python (v. 3.9.4), код представлен в
+приложении В. С помощью библиотеки mysql.connector, VS Code подключается
+к базе данных, через имя пользователя, пароль, хост и порт. (По
+стандарту хост = «127.0.0.1», а порт = «3306». Были созданы массивы\\
+заполненные именами, фамилиями и отчествами, так же список содержащий
+статус зачисления, список содержащий названия институтов и список
+содержащий названия направлений и дисциплин, даты рождения
+генирировались «случайно» с помощью\\
+библиотеки random и datetime и метода timedelta .
+
+Заполнения осуществлялись с помощью команд - INSERT INTO «название
+таблицы». После успешного заполнения, выводится строка об успешном
+заполнении.
+
+В случае неудачного заполнения и/ или неудачного подключения, выводится
+сообщения благодаря методу try.
+
+В таблице 1 указан результат заполнения таблиц:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Таблица}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Записи}
+\end{minipage} \\
+\midrule()
+\endhead
+Achievement & 799680 \\
+Choice & 600124 \\
+Department & 11 \\
+Document & 400622 \\
+Document\_Type & 3 \\
+Enrollee & 200000 \\
+Enrollment\_Status & 2 \\
+Specialty & 10 \\
+Subject & 11 \\
+Subject\_Requirement & 34 \\
+\bottomrule()
+\end{longtable}
+
+Таб. 1
+
+14
+
+\textbf{3. Запросы}
+
+1. Найти дисциплину который сдавал абитуриент А который поступал по
+направлению В 2. Из института А посчитать число абитуриентов\\
+2.2 Из института А посчитать число по каждому направлению\\
+3. С каждого института найти число подавших абитуриентов\\
+4. Найти абитуриента с максимальным числом результата поступления\\
+5. Число направлений с одинаковым числом абитуриентов\\
+6. Найти дисциплину по которой подано больше результатов чем у
+дисциплины А 7. Найти абитуриентов которые не подавались в институт А\\
+8. Для всех институтов и всех дисциплин посчитать число абитуриентов
+
+Время работы запросов определялось по результатам работы команды explain
+
+для каждого запроса и выводом времени к консоль.
+
+\textbf{3.1 Дисциплина которую сдавал абитуриент А который поступал по}
+
+\textbf{направлению B.}
+
+select S.subject\_id, S.name\\
+from Choice C\\
+join Achievment A on C.enrollee\_id = A.enrollee\_id\\
+join Specialty Sp on C.specialty\_id = Sp.specialty\_id\\
+join Subject\_Requirement SR on Sp.specialty\_id = SR.specialty\_id and
+SR.subject\_id = A.subject\_id\\
+join Subject S on SR.subject\_id = S.subject\_id\\
+where C.enrollee\_id = 3 and C.specialty\_id = 10;
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+subject\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+Name
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+32 & 32Литература \\
+33 & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Музыка
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.1 (Время запроса - 0.0024 сек)
+
+15
+
+\textbf{3.2 Количество абитуриентов из института А}
+
+select S.department\_id, count(DISTINCT C.enrollee\_id) from Choice C\\
+join Specialty S on C.specialty\_id = S.specialty\_id\\
+where S.department\_id = 1;
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+department\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+count(DISTINCT C.enrollee\_id)
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+1 & 101609 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.2 (Время запроса - 0.20 сек.)
+
+\textbf{3.2.2 Для института А посчитать число абитуриентов по каждому}
+
+\textbf{направлению}
+
+select C.specialty\_id, count(DISTINCT C.enrollee\_id) from Choice C\\
+join Specialty S on C.specialty\_id = S.specialty\_id where
+S.department\_id = 3\\
+group by C.specialty\_id;
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+specialty\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+count(DISTINCT C.enrollee\_id)
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+2 & 59792 \\
+10 & 59545 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.2.2 (Время запроса - 0.18 сек.)
+
+\textbf{3.3 Число подавших абитуриентов с каждого института}
+
+select D.name as department\_name, count(DISTINCT C.enrollee\_id) as
+enrollee\_count from Department D\\
+left join Specialty S on S.department\_id = D.department\_id\\
+left join Choice C on C.specialty\_id = S.specialty\_id\\
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+department\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_count
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИКНК
+\end{quote}
+\end{minipage} & 101609 \\
+\bottomrule()
+\end{longtable}
+
+16
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+ГИ
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+132109
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ФизМех
+\end{quote}
+\end{minipage} & 0 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИБСиБ
+\end{quote}
+\end{minipage} & 60380 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИПММ
+\end{quote}
+\end{minipage} & 0 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИММиТ
+\end{quote}
+\end{minipage} & 60264 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИЭ
+\end{quote}
+\end{minipage} & 60179 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИСИ
+\end{quote}
+\end{minipage} & 0 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ЯИ
+\end{quote}
+\end{minipage} & 60166 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИФКиС
+\end{quote}
+\end{minipage} & 0 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИПМЭиТ
+\end{quote}
+\end{minipage} & 60622 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.3 (Время запроса - 0.62 сек.)
+
+\begin{quote}
+\includegraphics[width=5.94028in,height=3.11806in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image5.png}
+\end{quote}
+
+Гистограмма к запросу 3.3
+
+\textbf{3.4 Абитуриент с максимальным числом результата поступления}
+
+select C.enrollee\_id, C.specialty\_id, sum(greatest(A.ege\_result,
+A.inner\_result)) as result\\
+from Choice C\\
+join Subject\_Requirement SR on C.specialty\_id = SR.specialty\_id\\
+join Achievment A on A.enrollee\_id = C.enrollee\_id and A.subject\_id =
+SR.subject\_id\\
+group by C.specialty\_id, C.enrollee\_id\\
+having result = (select max(result) from (select
+sum(greatest(A.ege\_result, A.inner\_result)) as result from Choice C\\
+join Subject\_Requirement SR on C.specialty\_id = SR.specialty\_id
+
+17
+
+\begin{quote}
+join Achievment A on A.enrollee\_id = C.enrollee\_id and A.subject\_id =
+SR.subject\_id group by C.enrollee\_id, C.specialty\_id) results );
+\end{quote}
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+specialty\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+result
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+406697 & 10 & 384 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.4(Время запроса - 0.52 сек.)
+
+\textbf{3.5 Направления с одинаковым числом абитуриентов}
+
+select enrollees\_count, count(enrollees\_count) as specialty\_count
+from (select count(DISTINCT C.enrollee\_id) enrollees\_count from Choice
+C\\
+join Specialty S on C.specialty\_id = S.specialty\_id\\
+where C.priority\_index = 2\\
+group by S.specialty\_id) as counts\\
+group by enrollees\_count;
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_count
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+specialty\_count
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+16102 & 1 \\
+16053 & 1 \\
+15991 & 1 \\
+16076 & 1 \\
+16055 & 1 \\
+15918 & 1 \\
+15821 & 1 \\
+16286 & 1 \\
+16088 & 1 \\
+15760 & 1 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.5(Время запроса 0.45 сек.)
+
+\textbf{3.6 Дисциплина по которой подано больше результатов чем у
+дисциплины}
+
+\textbf{А}
+
+select A.subject\_id, count(A.enrollee\_id) as count
+
+18
+
+from Achievment A\\
+group by A.subject\_id\\
+having count \textgreater{} (select count(A.enrollee\_id)\\
+from Achievment A\\
+where A.subject\_id = 10
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+subject\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+count
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+29 & 72839 \\
+30 & 73179 \\
+33 & 72973 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.6(Время запроса 0.52 сек.)
+
+\textbf{3.7 Абитуриенты не подавшие в институт А}
+
+select E.last\_name, E.first\_name\\
+from Enrollee E\\
+where E.enrollee\_id not in (select distinct C.enrollee\_id from
+Enrollee\\
+join Choice C on C.enrollee\_id = Enrollee.enrollee\_id left join
+Specialty S on C.specialty\_id = S.specialty\_id where S.department\_id
+= 2);
+
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+first\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+last\_name
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Салимли
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Айзек
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Кузнецов
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Игорь
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\ldots.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\ldots..
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Ваганова
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Ольга
+\end{quote}
+\end{minipage} \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.7 (67891 строк) (Время запроса 0.64 сек.)
+
+\textbf{3.8 Число абитуриентов для института и дисциплин.}
+
+select\\
+S.name as subject\_name,\\
+D.name as department\_name,\\
+(select count(distinct C.enrollee\_id)
+
+19
+
+from Specialty Sp\\
+left join Choice C on Sp.specialty\_id = C.specialty\_id\\
+join Subject\_Requirement SR on SR.specialty\_id = Sp.specialty\_id
+where Sp.department\_id = D.department\_id\\
+and SR.subject\_id = S.subject\_id\\
+) as enrollee\_count\\
+from\\
+Subject S\\
+cross join Department D\\
+group by\\
+S.subject\_id,\\
+D.department\_id,\\
+S.name,\\
+D.name;\\
+Результат запроса:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+subject\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+department\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+enrollee\_count
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Математика
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИКНК
+\end{quote}
+\end{minipage} & 101609 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\ldots..
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\ldots.
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+\ldots.
+\end{quote}
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Литература
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ГИ
+\end{quote}
+\end{minipage} & 132109 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+Экономика
+\end{quote}
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ГИ
+\end{quote}
+\end{minipage} & 60622 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.8(а) (121 строка) (Время запроса 0.51 сек)
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+department\_name
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+count(distinct specialty\_id)
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИКНК
+\end{quote}
+\end{minipage} & 2 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ГИ
+\end{quote}
+\end{minipage} & 3 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИБСиБ
+\end{quote}
+\end{minipage} & 1 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИММИТ
+\end{quote}
+\end{minipage} & 1 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИЭ
+\end{quote}
+\end{minipage} & 1 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ЯИ
+\end{quote}
+\end{minipage} & 1 \\
+\begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+ИПМЭиТ
+\end{quote}
+\end{minipage} & 1 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.8(б)(Время запроса - 0.081 сек.)
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+specialty\_id
+\end{quote}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\begin{quote}
+subject\_id
+\end{quote}
+\end{minipage} \\
+\midrule()
+\endhead
+3 & 28 \\
+\bottomrule()
+\end{longtable}
+
+20
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+3
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+24
+\end{minipage} \\
+\midrule()
+\endhead
+3 & 33 \\
+3 & 26 \\
+\bottomrule()
+\end{longtable}
+
+Запрос 3.8(в)(Время запроса - 0.073 сек.)
+
+\begin{quote}
+\includegraphics[width=6.17361in,height=4.69444in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image6.png}
+\end{quote}
+
+Диаграмма к запросу 8(а).
+
+21
+
+3.4 Explain
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.90417in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image7.png}
+\end{quote}
+
+explain запроса 1.
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.55972in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image8.png}
+\end{quote}
+
+explain запроса 2.
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.55139in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image9.png}
+\end{quote}
+
+explain запроса 2.1.
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.57778in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image10.png}
+\end{quote}
+
+explain запроса 3.
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.95556in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image11.png}
+\end{quote}
+
+explain запроса 4.
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.51667in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image12.png}
+\end{quote}
+
+explain запроса 5.
+
+\begin{quote}
+\includegraphics[width=6.72361in,height=0.52639in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image13.png}
+\end{quote}
+
+explain запроса 6.
+
+\begin{quote}
+\includegraphics[width=6.75in,height=0.62083in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image14.png}
+\end{quote}
+
+explain запроса 7.
+
+\begin{quote}
+\includegraphics[width=6.75in,height=0.68056in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image15.png}
+\end{quote}
+
+explain запроса 8 (а).
+
+\begin{quote}
+\includegraphics[width=6.75in,height=0.42222in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image16.png}
+\end{quote}
+
+22
+
+explain запроса 8 (б).
+
+\includegraphics[width=6.74167in,height=0.525in]{vertopal_e10bcc6bb2d94c13a919fc6b381d6db8/media/image17.png}
+
+explain запроса 8 (в).
+
+23
+
+\textbf{4. Заключение}
+
+В рамках курсовой работы, были получены навыки работы с MySQL 3.8.
+изучен синтаксис и особенности языков определения и манипулирования
+данными. Также были получены навыки построения ER-диаграммы, диаграммы
+объектов и навыки проектирования баз данных, анализа и вывода команды
+explain.
+
+В рамках разработки базы данных ``Электронная подача заявления на
+поступление в ВУЗ'': •Разработана ER-диаграмма, которая описывает
+процессы, протекающие в предметной области, а также схема объектов.
+
+\begin{quote}
+•На основе построенных диаграмм была спроектирована и реализована схема
+базы данных.
+
+•База данных, была заполнена случайными данными, сгенерированными
+программой на языке Python 3.9. (\uline{Приложение В}). Заполненная база
+данных содержит порядка 200000 записей.
+
+•Реализованы 9 запросов к базе данных, так же к каждому запросу приложен
+вывод explain метода.
+\end{quote}
+
+Сложным запросом оказался запрос 4. Запрос работает больше 1000мс.
+Остальные запросы выполняются с приемлемым временем работы.
+
+24
+
+\textbf{5. Источники}
+
+\begin{quote}
+1.Документация pgMustard --- визуализатора результатов EXPLAIN
+{[}Электронный ре- сурс{]}. -- URL:
+https://www.pgmustard.com/docs/explain (дата обращения: 3.05.2024).
+
+2.https://andpop.ru/courses/db\_books/Dubua.pdf (дата обращения:
+15.05.2024).
+\end{quote}
+
+25
+
+\begin{quote}
+\textbf{6. Приложение А}
+
+\# 1) найти дисциплину который сдавал абитуриент А который поступал по
+направлению В\\
+\textbf{select} S.subject\_id, S.name\\
+\textbf{from} Choice C\\
+\textbf{join} Achievment A \textbf{on} C.enrollee\_id = A.enrollee\_id\\
+\textbf{join} Specialty Sp \textbf{on} C.specialty\_id =
+Sp.specialty\_id\\
+\textbf{join} Subject\_Requirement SR \textbf{on} Sp.specialty\_id =
+SR.specialty\_id \textbf{and} SR.subject\_id = A.subject\_id\\
+\textbf{join} Subject S \textbf{on} SR.subject\_id = S.subject\_id\\
+\textbf{where} C.enrollee\_id = \textbf{457322and} C.specialty\_id =
+\textbf{3};
+
+\# 2) из института А посчитать число абитуриентов\\
+\textbf{select} S.department\_id, \textbf{count}(\textbf{DISTINCT}
+C.enrollee\_id) \textbf{from} Choice C\\
+\textbf{join} Specialty S \textbf{on} C.specialty\_id = S.specialty\_id
+\textbf{where} S.department\_id = \textbf{1};
+
+\# 2.2) для института А посчитать число абитуриентов по каждому
+направлению\textbf{select} C.specialty\_id,
+\textbf{count}(\textbf{DISTINCT} C.enrollee\_id)\\
+\textbf{from} Choice C\\
+\textbf{join} Specialty S \textbf{on} C.specialty\_id =
+S.specialty\_id\\
+\textbf{where} S.department\_id = \textbf{1}\\
+\textbf{groupby} C.specialty\_id;
+
+\# 3) с каждого института число подавших абитуриентов + к этому
+гистограмму\textbf{select} D.name \textbf{as} department\_name,
+\textbf{count}(\textbf{DISTINCT} C.enrollee\_id) \textbf{as}\\
+enrollee\_count\\
+\textbf{from} Department D\\
+\textbf{leftjoin} Specialty S \textbf{on} S.department\_id =
+D.department\_id\\
+\textbf{leftjoin} Choice C \textbf{on} C.specialty\_id =
+S.specialty\_id\\
+\textbf{groupby} D.department\_id;
+
+\# 4) найти абитуриента с максимальным числом результата поступления\\
+\textbf{select} C.enrollee\_id, C.specialty\_id,
+\textbf{sum}(\textbf{greatest}(A.ege\_result,\\
+A.inner\_result)) \textbf{as} result\\
+\textbf{from} Choice C\\
+\textbf{join} Subject\_Requirement SR \textbf{on} C.specialty\_id =
+SR.specialty\_id\\
+\textbf{join} Achievment A \textbf{on} A.enrollee\_id = C.enrollee\_id
+\textbf{and} A.subject\_id = SR.subject\_id\\
+\textbf{groupby} C.specialty\_id, C.enrollee\_id\\
+\textbf{having} result = (\textbf{selectmax}(result) \textbf{from}
+(\textbf{selectsum}(\textbf{greatest}(A.ege\_result, A.inner\_result))
+\textbf{as} result\\
+\textbf{from} Choice C\\
+\textbf{join} Subject\_Requirement SR \textbf{on} C.specialty\_id =
+SR.specialty\_id\\
+\textbf{join} Achievment A \textbf{on} A.enrollee\_id = C.enrollee\_id
+\textbf{and} A.subject\_id = SR.subject\_id\\
+\textbf{groupby} C.enrollee\_id, C.specialty\_id) results);
+
+\# 5) число направлений с одинаковым числом абитуриентов\\
+\textbf{select} enrollees\_count, \textbf{count}(enrollees\_count)
+\textbf{as} specialty\_count \textbf{from}
+(\textbf{selectcount}(\textbf{DISTINCT} C.enrollee\_id)
+enrollees\_count\\
+\textbf{from} Choice C\\
+\textbf{join} Specialty S \textbf{on} C.specialty\_id =
+S.specialty\_id\\
+\textbf{where} C.priority\_index = \textbf{2}\\
+\textbf{groupby} S.specialty\_id) \textbf{as} counts\\
+\textbf{groupby} enrollees\_count;
+\end{quote}
+
+26
+
+\begin{quote}
+\# 6) найти дисциплину по которой подано больше результатов чем у
+дисциплины A \textbf{select} A.subject\_id,
+\textbf{count}(A.enrollee\_id) \textbf{as} count\\
+\textbf{from} Achievment A\\
+\textbf{groupby} A.subject\_id\\
+\textbf{having} count \textgreater{}
+(\textbf{selectcount}(A.enrollee\_id)\\
+\textbf{from} Achievment A\\
+\textbf{where} A.subject\_id = \textbf{23}\\
+\textbf{groupby} A.subject\_id);
+
+\# 7) найти абитуриентов которые не подавались в институт A
+\textbf{select} E.last\_name, E.first\_name\\
+\textbf{from} Enrollee E\\
+\textbf{where} E.enrollee\_id \textbf{notin} (\textbf{selectdistinct}
+C.enrollee\_id \textbf{from} Enrollee\\
+\textbf{join} Choice C \textbf{on} C.enrollee\_id =
+Enrollee.enrollee\_id \textbf{leftjoin} Specialty S \textbf{on}
+C.specialty\_id = S.specialty\_id \textbf{where} S.department\_id =
+\textbf{2});
+
+\# 8) для всех институтов и всех дисциплин посчитать число
+абитуриентов\textbf{select} S.name \textbf{as} subject\_name, D.name
+\textbf{as} department\_name, \textbf{count}(\textbf{distinct}
+C.enrollee\_id) \textbf{as} enrollee\_count\\
+\textbf{from} Subject S\\
+\textbf{crossjoin} Department D\\
+\textbf{leftjoin} Specialty Sp \textbf{on} D.department\_id =
+Sp.department\_id\\
+\textbf{leftjoin} Subject\_Requirement SR \textbf{on} S.subject\_id =
+SR.subject\_id \textbf{and} Sp.specialty\_id = SR.specialty\_id\\
+\textbf{leftjoin} Choice C \textbf{on} Sp.specialty\_id =
+C.specialty\_id\\
+\textbf{groupby} S.subject\_id, D.department\_id;
+
+\textbf{select} D.name \textbf{as} department\_name,
+\textbf{count}(\textbf{distinct} specialty\_id) \textbf{from} Specialty
+S\\
+\textbf{join} Department D \textbf{on} S.department\_id =
+D.department\_id\\
+\textbf{groupby} D.department\_id;
+
+\textbf{select} S.specialty\_id, SR.subject\_id\\
+\textbf{from} Subject\_Requirement SR\\
+\textbf{join} Specialty S \textbf{on} SR.specialty\_id = S.specialty\_id
+\textbf{where} department\_id = \textbf{4}
+\end{quote}
+
+27
+
+\begin{quote}
+\textbf{7. Приложение В}
+
+\textbf{importrandom}\\
+\textbf{fromdatetimeimport} datetime, timedelta
+
+\textbf{importmysql.connector}
+
+\textbf{defgenerate\_random\_date}(start\_year, end\_year):\\
+start\_date = datetime(year=start\_year, month=\textbf{1},
+day=\textbf{1})\\
+end\_date = datetime(year=end\_year, month=\textbf{12},
+day=\textbf{31})\\
+delta = end\_date - start\_date\\
+random\_date = start\_date + timedelta(days=random.randint(\textbf{0},
+delta.days)) \textbf{return}
+random\_date.strftime(\textquotesingle\%Y-\%m-\%d\textquotesingle)
+
+\textbf{defgenerate\_random\_name}(names):\\
+\textbf{return} random.choice(names)
+
+\textbf{defgenerate\_random\_phone\_number}():\\
+\textbf{return} random.randint(\textbf{1000000000}, \textbf{9999999999})
+
+\textbf{defgenerate\_random\_result}():\\
+\textbf{return} random.randint(\textbf{1}, \textbf{100})
+
+\textbf{defget\_existing\_enrollee\_ids}(cursor):\\
+"""Получает существующие enrollee\_id из таблицы Enrollee."""
+cursor.execute("SELECT enrollee\_id FROM Enrollee")\\
+\textbf{return} {[}row{[}\textbf{0}{]} \textbf{for} row \textbf{in}
+cursor.fetchall(){]}
+
+\textbf{defget\_existing\_department\_ids}(cursor):\\
+"""Получает существующие department\_id из таблицы Department."""
+cursor.execute("SELECT department\_id FROM Department")\\
+\textbf{return} {[}row{[}\textbf{0}{]} \textbf{for} row \textbf{in}
+cursor.fetchall(){]}
+
+ENROLLEE\_COUNT = \textbf{200}\_000
+
+\textbf{with} mysql.connector.connect(\\
+host=\textquotesingle127.0.0.1\textquotesingle,\\
+user=\textquotesingle root\textquotesingle,\\
+password=\textquotesingle Ayzek123321\textquotesingle,\\
+database=\textquotesingle student\_admission\textquotesingle,\\
+port=\textquotesingle3306\textquotesingle) \textbf{as} connection:\\
+\textbf{ifnot} connection.is\_connected():\\
+\textbf{print}("Not connected. Bye")\\
+exit(\textbf{1})
+
+cursor = connection.cursor()\\
+connection.autocommit = False
+
+first\_names = {[}\textquotesingle Айзек\textquotesingle,
+\textquotesingle Петя\textquotesingle,
+\textquotesingle Виктор\textquotesingle,
+\textquotesingle Михаил\textquotesingle,
+\textquotesingle Ланита\textquotesingle,
+\textquotesingle Игорь\textquotesingle,
+\textquotesingle Светлана\textquotesingle,
+\textquotesingle Ирина\textquotesingle,
+\textquotesingle Ольга\textquotesingle,
+\textquotesingle Владимир\textquotesingle{]}\\
+last\_names = {[}\textquotesingle Салимли\textquotesingle,
+\textquotesingle Григорьев\textquotesingle,
+\textquotesingle Кузнецов\textquotesingle,
+\textquotesingle Капустин\textquotesingle,
+\textquotesingle Сильванович\textquotesingle,
+\textquotesingle Маликовн\textquotesingle,
+\textquotesingle Бакинец\textquotesingle,
+\textquotesingle Долгов\textquotesingle,
+\textquotesingle Непомнящих\textquotesingle,
+\textquotesingle Истов\textquotesingle{]}\\
+middle\_names = {[}\textquotesingle Петрович\textquotesingle,
+\textquotesingle Владимирович\textquotesingle,
+\textquotesingle Александрович\textquotesingle,
+\textquotesingle Геннадьевич\textquotesingle,
+\textquotesingle Михайлович\textquotesingle,
+\textquotesingle Павлович\textquotesingle,
+\textquotesingle Алексеевич\textquotesingle,
+\textquotesingle Викторович\textquotesingle,
+\textquotesingle Иванович\textquotesingle,
+\textquotesingle Рустамович\textquotesingle{]}
+
+adrespoly = {[}\textquotesingle Политехническая 29\textquotesingle,
+\textquotesingle Гидротехников 2\textquotesingle,
+\textquotesingle Политехническая 21\textquotesingle,
+\textquotesingle Обручевых 1\textquotesingle, \textquotesingle Гжатская
+4\textquotesingle,\textquotesingle Политехническая
+34\textquotesingle,\textquotesingle Новороссийская
+50\textquotesingle,\textquotesingle Верности
+5\textquotesingle,\textquotesingle Гражданский пр.
+7\textquotesingle,\textquotesingle Верности
+4\textquotesingle,\textquotesingle Непокоренных 6\textquotesingle{]}\\
+document\_types = {[}\textquotesingle Паспорт\textquotesingle,
+\textquotesingle СНИЛС\textquotesingle,
+\textquotesingle Аттестат\textquotesingle{]}
+\end{quote}
+
+28
+
+\begin{quote}
+department\_names = {[}\textquotesingle ИКНК\textquotesingle,
+\textquotesingle ГИ\textquotesingle,
+\textquotesingle ФизМех\textquotesingle,
+\textquotesingle ИБСиБ\textquotesingle,
+\textquotesingle ИМПП\textquotesingle,
+\textquotesingle ИММиТ\textquotesingle,
+\textquotesingle ИЭ\textquotesingle,
+\textquotesingle ИСИ\textquotesingle,
+\textquotesingle ЯИ\textquotesingle,
+\textquotesingle ИФКиС\textquotesingle,
+\textquotesingle ИПМЭиТ\textquotesingle{]}\\
+subject\_names = {[}\textquotesingle Математика\textquotesingle,
+\textquotesingle Физика\textquotesingle,
+\textquotesingle Химия\textquotesingle,
+\textquotesingle Биология\textquotesingle,
+\textquotesingle English\textquotesingle,
+\textquotesingle История\textquotesingle,
+\textquotesingle География\textquotesingle,\\
+\textquotesingle Информатика\textquotesingle,
+\textquotesingle Экономика\textquotesingle,
+\textquotesingle Литература\textquotesingle,
+\textquotesingle Музыка\textquotesingle{]} specialty\_names =
+{[}\textquotesingle МКН\textquotesingle,
+\textquotesingle ПИ\textquotesingle,
+\textquotesingle ПМиФ\textquotesingle,
+\textquotesingle БФ\textquotesingle,
+\textquotesingle БИ\textquotesingle,
+\textquotesingle РиОС\textquotesingle,\\
+\textquotesingle ЗР\textquotesingle,
+\textquotesingle МС\textquotesingle,
+\textquotesingle ЯЭ\textquotesingle,
+\textquotesingle Эко\textquotesingle{]}\\
+specialty\_ids = range(\textbf{1}, len(specialty\_names) + \textbf{1})
+
+\# Вставка данных в таблицу Subject\\
+query = "INSERT INTO Subject (name) VALUES (\%s)" \textbf{for}
+subject\_name \textbf{in} subject\_names:\\
+cursor.execute(query, (subject\_name,))
+
+query = "INSERT INTO Enrollment\_Status (name) VALUES (\%s)"
+\textbf{for} status \textbf{in} {[}"added", "cancelled"{]}:\\
+cursor.execute(query, (status,))
+
+cursor.execute("SELECT enrollment\_status\_id FROM Enrollment\_Status")
+existing\_status\_ids = {[}row{[}\textbf{0}{]} \textbf{for} row
+\textbf{in} cursor.fetchall(){]}\\
+cursor.execute("SELECT subject\_id FROM Subject")\\
+existing\_subject\_ids = {[}row{[}\textbf{0}{]} \textbf{for} row
+\textbf{in} cursor.fetchall(){]}
+
+\# Вставка данных в таблицу Enrollee\\
+query = ("INSERT INTO Enrollee (first\_name, last\_name, middle\_name,
+birth\_date, enrollment\_status\_id)"\\
+"VALUES (\%s, \%s, \%s, \%s, \%s)")\\
+cursor.executemany(query, tuple(\\
+(first\_name := generate\_random\_name(first\_names),\\
+last\_name := generate\_random\_name(last\_names),\\
+middle\_name := generate\_random\_name(middle\_names),\\
+birth\_date := generate\_random\_date(\textbf{1980}, \textbf{2005}),\\
+status := random.choice(existing\_status\_ids)) \textbf{for} i
+\textbf{in}\\
+range(ENROLLEE\_COUNT)\\
+))
+
+\# Вставка данных в таблицу Department\\
+query = "INSERT INTO Department (name, phone\_number, address,
+headmaster\_name) VALUES (\%s, \%s, \%s, \%s)"\\
+\textbf{for} i, dept\_name \textbf{in}enumerate(department\_names):\\
+phone\_number = generate\_random\_phone\_number()\\
+address = random.choice(adrespoly)\\
+headmaster\_name = generate\_random\_name(last\_names)
+
+cursor.execute(query, (dept\_name, phone\_number, address,
+headmaster\_name))
+
+\# Вставка данных в таблицу Document\_Type\\
+query = "INSERT INTO Document\_Type (name) VALUES (\%s)" \textbf{for}
+document\_type\_name \textbf{in} document\_types:\\
+cursor.execute(query, (document\_type\_name,))
+
+\# Вставка данных в таблицу Specialty\\
+existing\_department\_ids = get\_existing\_department\_ids(cursor)\\
+query = "INSERT INTO Specialty (department\_id, code, name) VALUES (\%s,
+\%s, \%s)"\\
+\textbf{for} i \textbf{in}range(len(specialty\_names)): \# Используем
+len(specialty\_names), чтобы цикл не выходил за пределы списка\\
+\# Выбор случайного существующего department\_id
+\end{quote}
+
+29
+
+\begin{quote}
+department\_id = random.choice(existing\_department\_ids)
+specialty\_code = f"Code\_\{i + 1\}"\\
+specialty\_name = specialty\_names{[}i{]}
+
+cursor.execute(query, (department\_id, specialty\_code,
+specialty\_name))
+
+\# Получение существующих enrollee\_id из таблицы Enrollee\\
+existing\_enrollee\_ids = get\_existing\_enrollee\_ids(cursor)\\
+\textbf{ifnot} existing\_enrollee\_ids:\\
+\textbf{raiseValueError}("No existing enrollee\_id found in the Enrollee
+table")
+
+cursor.execute("SELECT document\_type\_id FROM Document\_Type")
+existing\_document\_type\_ids = {[}row{[}\textbf{0}{]} \textbf{for} row
+\textbf{in} cursor.fetchall(){]}
+
+\# Вставка данных в таблицу Document\\
+query = "INSERT INTO Document (enrollee\_id, document\_type\_id) VALUES
+(\%s, \%s)"\\
+\textbf{defdocs}():\\
+\textbf{for} enrollee\_id \textbf{in} existing\_enrollee\_ids:\\
+\# Вставка для каждого абитуриента по 1-3 документа\\
+document\_count = random.randint(\textbf{1}, \textbf{3})\\
+\textbf{for} document\_type\_id \textbf{in}
+random.sample(existing\_document\_type\_ids, document\_count):\\
+\textbf{yield} enrollee\_id, document\_type\_id\\
+cursor.executemany(query, tuple(docs()))
+
+\# Вставка данных в таблицу Achievment\\
+query = ("INSERT INTO Achievment (enrollee\_id, subject\_id,
+ege\_result, inner\_result)"\\
+"VALUES (\%s, \%s, \%s, \%s)")\\
+\textbf{defachievments}():\\
+\textbf{for} enrollee\_id \textbf{in} existing\_enrollee\_ids:\\
+\# Вставка для каждого абитуриента по 3-5 результатов испытаний
+\textbf{for} subject\_id \textbf{in}
+random.sample(existing\_subject\_ids,\\
+random.randint(\textbf{3}, \textbf{5})):\\
+ege\_result = generate\_random\_result()\\
+inner\_result = generate\_random\_result()\\
+\textbf{yield} enrollee\_id, subject\_id, ege\_result, inner\_result
+cursor.executemany(query, tuple(achievments()))
+
+\# Вставка данных в таблицу Choice\\
+query = "INSERT INTO Choice (enrollee\_id, specialty\_id,
+priority\_index) VALUES (\%s, \%s, \%s)"\\
+\textbf{defchoices}():\\
+\textbf{for} enrollee\_id \textbf{in} existing\_enrollee\_ids:\\
+\# Вставка для каждого абитуриента по 1-5 выборов\\
+\textbf{for} j, specialty\_id
+\textbf{in}enumerate(random.sample(specialty\_ids,
+random.randint(\textbf{1}, \textbf{5}))):\\
+priority\_index = j + \textbf{1}\\
+\textbf{yield} enrollee\_id, specialty\_id, priority\_index\\
+cursor.executemany(query, tuple(choices()))
+
+\# Вставка данных в таблицу Subject\_Requirement\\
+query = ("INSERT INTO Subject\_Requirement (subject\_id, specialty\_id,
+ege\_minimal\_result, inner\_minimal\_result)"\\
+"VALUES (\%s, \%s, \%s, \%s)")\\
+\textbf{for} specialty\_id \textbf{in} specialty\_ids:\\
+\textbf{for} subject\_id \textbf{in}
+random.sample(existing\_subject\_ids, random.randint(\textbf{3},
+\textbf{4})):
+\end{quote}
+
+30
+
+\begin{quote}
+ege\_minimal\_result = generate\_random\_result()\\
+inner\_minimal\_result = generate\_random\_result()\\
+cursor.execute(query, (subject\_id, specialty\_id, ege\_minimal\_result,
+inner\_minimal\_result))
+
+connection.commit()\\
+\textbf{print}("Данные успешно заполнены.")
+
+\textbf{print}("Соединение с базой данных закрыто.")
+\end{quote}
+
+31
+
+\end{document}

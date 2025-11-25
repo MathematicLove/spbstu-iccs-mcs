@@ -1,0 +1,31 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи}{4}{section.1}%
+\contentsline {section}{\numberline {2}Задача 1 — зависимость $Y$ от $X$}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Линейная модель}{6}{subsection.2.1}%
+\contentsline {paragraph}{\nonumberline Оценки МНК.}{6}{paragraph*.4}%
+\contentsline {paragraph}{\nonumberline Сумма квадратов остатков.}{6}{paragraph*.6}%
+\contentsline {paragraph}{\nonumberline Объяснённая дисперсия.}{6}{paragraph*.8}%
+\contentsline {paragraph}{\nonumberline Критерий информативности.}{6}{paragraph*.10}%
+\contentsline {subsection}{\numberline {2.2}Квадратичная модель}{7}{subsection.2.2}%
+\contentsline {paragraph}{\nonumberline Оценки МНК.}{7}{paragraph*.12}%
+\contentsline {paragraph}{\nonumberline Сумма квадратов остатков.}{7}{paragraph*.14}%
+\contentsline {paragraph}{\nonumberline AIC.}{7}{paragraph*.16}%
+\contentsline {subsection}{\numberline {2.3}Доверительные интервалы (99 \%)}{8}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Совместный доверительный эллипсоид (99 \%)}{8}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Проверка гипотез}{8}{subsection.2.5}%
+\contentsline {paragraph}{\nonumberline Линейность ($H_0:\beta _3=0$).}{8}{paragraph*.18}%
+\contentsline {paragraph}{\nonumberline Независимость ($H_0:\beta _2=0$).}{8}{paragraph*.20}%
+\contentsline {subsection}{\numberline {2.6}Анализ остатков}{9}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Итог задачи 1}{9}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Задача 2 — влияние факторов $A$ и $B$}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Статистическая модель}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}F-тесты для факторов и взаимодействия}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Информационные критерии}{10}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Визуальное взаимодействие}{10}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Разложение сумм квадратов}{10}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Проверка взаимодействия}{11}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Анализ остатков}{11}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Итог задачи 2}{11}{subsection.3.8}%
+\contentsline {section}{Заключение}{12}{section*.21}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

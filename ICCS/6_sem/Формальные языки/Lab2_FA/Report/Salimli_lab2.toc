@@ -1,0 +1,15 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи}{4}{section.1}%
+\contentsline {section}{\numberline {2}Математическое описание}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Конечный автомат}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Язык распознаваемый автоматом}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Регулярное выражение}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Граф НКА}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Граф ДКА}{8}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Программная реализация}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Lib.hs}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Main.hs}{13}{subsection.3.2}%
+\contentsline {section}{Заключение}{15}{section*.3}%
+\contentsline {section}{Список литературы}{16}{section*.4}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,36 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи}{4}{section.1}%
+\contentsline {section}{\numberline {2}Математическое описание. Задача №1}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Вариационный ряд, ЭФР, гистограмма}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Выборочные характеристики}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Подробные оценки параметра \(\lambda \)}{6}{subsection.2.3}%
+\contentsline {paragraph}{\nonumberline Оценка максимального правдоподобия.}{6}{paragraph*.4}%
+\contentsline {paragraph}{\nonumberline Оценка методом моментов.}{6}{paragraph*.6}%
+\contentsline {paragraph}{\nonumberline Нормальное приближение для \(\hat \lambda \).}{6}{paragraph*.8}%
+\contentsline {subsection}{\numberline {2.4}Асимптотический доверительный интервал (\(\alpha _1=0.002\))}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Критерий \(\chi ^{2}\). Простая гипотеза}{7}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Критерий \(\chi ^{2}\). Сложная гипотеза}{7}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Наиболее мощный критерий (Неймана–Пирсона)}{7}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Графический результат: Задача №1}{8}{section.3}%
+\contentsline {section}{\numberline {4}Программный результат: Задача №1}{9}{section.4}%
+\contentsline {section}{\numberline {5}Математическое описание. Задача №2}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Вариационный ряд}{10}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Выборочные характеристики}{10}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Подробные оценки параметра \(\lambda \)}{10}{subsection.5.3}%
+\contentsline {paragraph}{\nonumberline MLE.}{10}{paragraph*.10}%
+\contentsline {paragraph}{\nonumberline Метод моментов.}{10}{paragraph*.12}%
+\contentsline {paragraph}{\nonumberline Смещение.}{10}{paragraph*.14}%
+\contentsline {subsection}{\numberline {5.4}Доверительный интервал (\(\alpha _2=0.001\))}{10}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Критерий Колмогорова (фрагмент таблицы)}{10}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Критерий \(\chi ^{2}\). Простая гипотеза}{11}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Критерий \(\chi ^{2}\). Сложная гипотеза}{11}{subsection.5.7}%
+\contentsline {subsection}{\numberline {5.8}Наиболее мощный критерий (Н-П)}{11}{subsection.5.8}%
+\contentsline {section}{\numberline {6}Графический результат: Задача №2}{12}{section.6}%
+\contentsline {section}{\numberline {7}Программный результат: Задача №2}{13}{section.7}%
+\contentsline {section}{Заключение}{14}{section*.15}%
+\contentsline {section}{Приложение А}{15}{section*.18}%
+\contentsline {subsection}{Скрипт задачи №1}{15}{section*.19}%
+\contentsline {section}{Приложение B}{18}{section*.20}%
+\contentsline {subsection}{Скрипт задачи №2}{18}{section*.21}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

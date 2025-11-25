@@ -1,0 +1,6 @@
+begin
+    for i := 5, 1, -2 do
+        write(i)
+    od
+end
+

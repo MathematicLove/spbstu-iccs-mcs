@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="scenePane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.algorithm.fxlab.LiveTheGameController">
+   <children>
+      <AnchorPane fx:id="gridPane" layoutX="13.0" layoutY="54.0" prefHeight="440.0" prefWidth="440.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="228.0" AnchorPane.topAnchor="54.0" />
+
+      <Button layoutX="566.0" layoutY="16.0" mnemonicParsing="false" onAction="#pressedRUN" prefHeight="26.0" prefWidth="120.0" text="Запуск ✅" textFill="#237c2f" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="16.0">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="566.0" layoutY="56.0" mnemonicParsing="false" onAction="#pressedGenerate" prefHeight="26.0" prefWidth="120.0" text="Случайно 🔀" textFill="#237c2f" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="56.0">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="566.0" layoutY="95.0" mnemonicParsing="false" onAction="#pressedClear" prefHeight="26.0" prefWidth="120.0" text="Очистить 🧹" textFill="RED" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="95.0">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="512.0" layoutY="456.0" mnemonicParsing="false" onAction="#exit" prefHeight="24.0" prefWidth="174.0" text="Выйти ❌" textFill="RED" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
+         <font>
+            <Font name="Times New Roman Bold" size="13.0" />
+         </font>
+      </Button>
+
+      <Label layoutX="10.0" layoutY="20.0" text="Ширина:" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="tGridW" layoutX="60.0" layoutY="20.0" prefWidth="50.0" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="20.0" />
+      <Label layoutX="120.0" layoutY="20.0" text="Итерации:" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="20.0" />
+      <TextField fx:id="Titer" layoutX="180.0" layoutY="20.0" prefWidth="50.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="20.0" />
+
+      <Label fx:id="checking" layoutX="247.0" layoutY="20.0" prefHeight="17.0" prefWidth="307.0" text="Пока все нормально 😄" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="20.0" />
+   </children>
+</AnchorPane>

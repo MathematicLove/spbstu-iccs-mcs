@@ -1,0 +1,14 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Фаззинг}{4}{section.1}%
+\contentsline {section}{\numberline {2}Этапы фаззинга}{5}{section.2}%
+\contentsline {section}{\numberline {3}Метод серого ящика}{6}{section.3}%
+\contentsline {section}{\numberline {4}Санитайзеры}{7}{section.4}%
+\contentsline {section}{\numberline {5}Типы фаззеров}{8}{section.5}%
+\contentsline {subsection}{\numberline {5.1}На основе грамматики}{8}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}На основе мутаций}{9}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}На основе покрытия кода}{10}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Построение грамматики по данным}{11}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Проблемы фаззинга}{12}{section.6}%
+\contentsline {section}{Заключение}{13}{section*.3}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

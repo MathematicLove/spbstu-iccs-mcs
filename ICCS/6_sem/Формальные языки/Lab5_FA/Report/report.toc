@@ -1,0 +1,14 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Математическое описание}{4}{section.1}%
+\contentsline {paragraph}{\nonumberline Причина изменения:}{4}{paragraph*.4}%
+\contentsline {paragraph}{\nonumberline Сделанное преобразование:}{4}{paragraph*.6}%
+\contentsline {section}{\numberline {2}LL(k)-грамматики}{5}{section.2}%
+\contentsline {section}{\numberline {3}Множества FIRST и FOLLOW}{6}{section.3}%
+\contentsline {section}{\numberline {4}Левый анализатор LL(1)}{7}{section.4}%
+\contentsline {section}{\numberline {5}Семантические действия}{9}{section.5}%
+\contentsline {section}{\numberline {6}Программная реализация}{12}{section.6}%
+\contentsline {section}{\numberline {7}Результаты программы}{22}{section.7}%
+\contentsline {section}{Заключение}{25}{section*.7}%
+\contentsline {section}{Список литературы}{26}{section*.8}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

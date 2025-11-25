@@ -1,0 +1,5 @@
+begin
+    for k := 1, -10 do
+        write(k)
+    od
+end

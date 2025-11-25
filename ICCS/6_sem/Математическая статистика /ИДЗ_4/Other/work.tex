@@ -1,0 +1,606 @@
+% Intended LaTeX compiler: xelatex
+\documentclass[12pt]{spbstu-task}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xunicode}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\institute{Институт компьютерных наук и кибербезопасности}
+\school{Высшая школа технологии искусственного интелекта}
+\program{Направление 02.03.01 Математика и компьютерные науки}
+\subject{Математическая Статистика}
+\reviewertitle{}\reviewer{Малов Сергей Васильевич}
+\usepackage{array}
+\usepackage{float}
+\usepackage{romannum}
+\setmainfont{Times New Roman}
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase,Mapping=tex-text}
+\newcommand*{\myref}[2]{\hyperref[{#1}]{{#2}~\ref*{#1}}}
+\newcommand{\hlabel}{\phantomsection\label}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}}
+\setlength{\abovecaptionskip}{5pt}
+\setlength{\belowcaptionskip}{0pt}
+\hypersetup{hidelinks}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\usepackage{dsfont}
+\usepackage[makeroom]{cancel}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\setlength{\textfloatsep}{0pt}
+\setcounter{secnumdepth}{3}
+\author{Михалец Мартин}
+\date{2025}
+\title{Индивидуальное домашнее задание №4\\\medskip
+\large Вариант 21 (513020125)}
+\hypersetup{
+ pdfauthor={Михалец Мартин},
+ pdftitle={Индивидуальное домашнее задание №4},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.4 (Org mode 9.7.25)}, 
+ pdflang={English}}
+\usepackage{biblatex}
+\addbibresource{~/documents/bib/biblio.bib}
+\begin{document}
+
+\sloppy
+\pagenumbering{arabic}
+Михалец Мартин 5130201/20102 \hfill ИДЗ №4 \hfill Вариант 21 (513020125)
+\section{\textbf{Задание} 1:}
+\label{sec:orgc069df6}
+\begin{center}
+\includegraphics[width=\textwidth]{./task1.png}
+\end{center}
+\subsection{Пункт a}
+\label{sec:org12aca2d}
+\begin{figure}[H]
+\centering
+\input{results}
+\end{figure}
+
+\textbf{Формулировка линейной регрессионной модели}
+
+Линейная регрессионная модель зависимости \(Y\) от \(X\) имеет вид: \[
+Y = \beta_1 + \beta_2 X + \epsilon, \] где:
+\begin{itemize}
+\item \(\beta_1\) --- параметр сдвига,
+\item \(\beta_2\) --- параметр масштаба,
+\item \(\epsilon\) --- случайная ошибка.
+\end{itemize}
+
+\textbf{Построение МНК-оценок параметров}
+
+Метод наименьших квадратов (МНК) используется для нахождения оценок
+\(\hat{\beta_1}\) и \(\hat{\beta_2}\), которые минимизируют сумму
+квадратов остатков.
+
+\begin{displaymath}
+  \beta_1 = 11.0081,\quad
+  \beta_2 = -0.0689,\quad
+  R^2 \;\text{линейной модели:}\; 0.017.
+\end{displaymath}
+
+\begin{figure}[H]
+\centering
+\input{linear-regression}
+\end{figure}
+
+\textbf{Распределение точек относительно линии}
+
+Точки разбросаны, линия не отражает тренд, что говорит о плохом
+соответствии.
+
+\textbf{Наклон линии:} Линия близка к горизонтальной, зависимость слабая.
+
+Таким образом, Между \(X\) и \(Y\) нет линейной зависимости.  Линейная
+модель не подходит для описания данных.
+\subsection{Пункт b}
+\label{sec:orgdaca360}
+\textbf{Формулировка полиномиальной регрессионной модели}
+
+Полиномиальная регрессионная модель зависимости \(Y\) от \(X\) имеет
+вид: \[Y = \beta_1 + \beta_2 X + \beta_3 X^2 + \epsilon,\] где:
+\begin{itemize}
+\item \(\beta_1\) --- параметр сдвига,
+\item \(\beta_2\) --- линейный коэффициент при \(X\),
+\item \(\beta_3\) --- квадратичный коэффициент при \(X^2\),
+\item \(\epsilon\) --- случайная ошибка
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\input{polynomial-regression}
+\end{figure}
+
+Полиномиальная модель:
+\begin{displaymath}
+  \beta_1 = 11.5086,\quad
+  \beta_2 = -0.4751,\quad
+  \beta_3 = 0.0469,\quad
+  R^2 \text{полиномиальной модели:} 0.0724.
+\end{displaymath}
+
+\textbf{Распределение точек относительно линии:} Точки разбросаны, линия не
+отражает тренд, что говорит о плохом соответствии.
+
+\textbf{Низкий R\textsuperscript{2}} означает, что квадратичная модель плохо описывает связь
+между \(X\) и \(Y\).
+
+Результаты указывают на то, что квадратичная модель не подходит для
+описания данных.
+\subsection{Пункт c}
+\label{sec:orge3d0a2b}
+\begin{figure}[H]
+\centering
+\input{residuals-hist}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\input{residuals-qq}
+\end{figure}
+
+\textbf{Проверка нормальности с помощью критерия \(\chi^2\)}
+
+Этапы:
+\begin{enumerate}
+\item Гипотезы:
+\begin{itemize}
+\item \(H_0\): Остатки имеют нормальное распределение.
+\item \(H_1\): Остатки не имеют нормального распределения.
+\end{itemize}
+\item Разделить данные на интервалы (бины): Используем те же интервалы,
+что и в гистограмме.
+\item Рассчитать наблюдаемые (\(O_i\)) и ожидаемые (\(E_i\)) частоты:
+\begin{itemize}
+\item \(E_i = N \cdot P\) (для \(i\)-го интервала), где \(P\) ---
+вероятность из нормального распределения \(N(\mu, \sigma^2)\).
+\end{itemize}
+\item Вычислить статистику \(\chi^2\): \[\chi^2 = \sum \frac{(O_i -
+   E_i)^2}{E_i}.\]
+\item Сравнить с критическим значением \(\chi^2\): Если \(\chi^2 >
+   \chi^2_{\text{крит}}\), отвергаем \(H_0\).
+\end{enumerate}
+
+\begin{displaymath}
+  \mathcal{X}^2 = 1.2502,\quad
+  \text{Критическое значение}\; = 9.2103,\quad
+  p\text{-value} = 0.5352.
+\end{displaymath}
+
+Не отвергаем \(H_0\): распределение нормальное
+
+\textbf{Визуально:} Остатки близки к нормальному распределению.
+
+\textbf{Статистически:} Критерий \(\chi^2\) не выявил значимых отклонений от
+нормальности на уровне \(\alpha\) = 
+0.01.
+
+Предположение о нормальности ошибок выполняется.
+\subsection{Пункт d}
+\label{sec:orga54edb4}
+Частные интервалы строятся для каждого параметра отдельно, используя
+\(t\)-распределение.
+
+\textbf{Формула:} \[\hat{\beta_j} \pm t_{1-\alpha/2, n-p} \cdot
+SE(\hat{\beta_j}),\] где:
+\begin{itemize}
+\item \(\hat{\beta_j}\) --- оценка параметра,
+\item \(SE(\hat{\beta_j})\) --- стандартная ошибка параметра,
+\item \(t_{1-\alpha/2}\) --- критическое значение \(t\)-распределения,
+\item \(n\) --- число наблюдений,
+\item \(p\) --- число параметров модели (для квадратичной модели \(p =
+  3\)).
+\end{itemize}
+
+\textbf{Доверительные интервалы (уровень 0.99):}
+\begin{itemize}
+\item Доверительный интервал для \(\beta_2\) (
+99\%): [
+-1.1556, 0.2054]
+\item Доверительный интервал для \(\beta_3\) (
+99\%): [
+-0.0282, 0.1220]
+\end{itemize}
+
+\textbf{Совместные доверительные интервалы}
+
+Совместные интервалы учитывают корреляцию между оценками параметров.
+Используем метод Бонферрони или \(F\)-распределение.
+
+\textbf{Метод Бонферрони}
+
+Формула: \[\hat{\beta_j} \pm t_{1-\alpha/(2k),n-p} \cdot
+SE(\hat{\beta_j}),\] где \(k = 2\) (число параметров \(\beta_2\) и
+\(\beta_3\)).
+
+\begin{figure}[H]
+\centering
+\input{combined-distribution-interval}
+\end{figure}
+
+Ковариационная матрица для \(\beta_2\) и \(\beta_3\):
+\begin{pmatrix}
+  0.0643 & -0.0068 \\
+  -0.0068 &  0.0008 \\
+\end{pmatrix}
+
+Совместные интервалы (Бонферрони):
+\begin{itemize}
+\item \(\beta_2\): [-1.2218, 0.2716]
+\item \(\beta_3\): [-0.0282, 0.1220]
+\end{itemize}
+
+\textbf{Метод F-распределения}
+
+Формула: \[(\hat{\beta} - \beta)^T \cdot Cov(\hat{\beta})^{-1} \cdot
+(\hat{\beta} - \beta) \leq F_{1-\alpha, 2, n-p},\] где \(F_{1-\alpha,
+2, n-p}\) --- критическое значение \(F\)-распределения.
+
+Полная ковариационная матрица:
+\begin{pmatrix}
+  0.2129 & -0.0935 &  0.0084 \\
+  -0.0935 &  0.0643 & -0.0068 \\
+   0.0084 & -0.0068 &  0.0008 \\
+\end{pmatrix}
+
+Вектор оценок параметров \([\beta_2, \beta_3]\): [
+  -0.4751, 0.0469]
+\subsection{Пункт e}
+\label{sec:orgaf35a36}
+\textbf{Гипотеза линейности}
+\begin{itemize}
+\item \(H_0\): Зависимость \(Y\) от \(X\) линейна (\(\beta_3 = 0\)).
+\item \(H_1\): Зависимость нелинейна (\(\beta_3 \neq 0\)).
+\end{itemize}
+
+\textbf{Гипотеза независимости}
+\begin{itemize}
+\item \(H_0\): \(Y\) не зависит от \(X\) (\(\beta_2 = \beta_3 = 0\)).
+\item \(H_1\): \(Y\) зависит от \(X\) (хотя бы один из \(\beta_2, \beta_3
+  \neq 0\)).
+\end{itemize}
+
+\textbf{Проверка гипотезы линейности (\(H_0: \beta_3 = 0\)):}
+\begin{itemize}
+\item \(t\)-статистика: 1.6758
+\item \(p\)-значение:
+0.1004
+\item Нет оснований отвергать гипотезу о линейности (\(p > 0.01\)).
+\end{itemize}
+
+\textbf{Проверка гипотезы независимости (\(H_0: \beta_2 = 0\)):}
+\begin{itemize}
+\item \(t\)-статистика: -1.8741
+\item \(p\)-значение: 0.0671
+\item Нет оснований отвергать гипотезу о независимости (\(p > 0.01\)).
+\end{itemize}
+\subsection{Пункт f}
+\label{sec:orgb3cb446}
+Сравнение моделей по AIC и BIC:
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Линейная & 186.2028 & 191.9388 \\
+    Квадратная & 185.3011 & 192.9492 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+Так как разница в AIC и BIC небольшая, можно сказать, что обе модели
+адекватны, но:
+\begin{itemize}
+\item AIC слегка за квадратную,
+\item BIC слегка за линейную.
+\end{itemize}
+\subsection{Пункт g}
+\label{sec:org7a97cb4}
+\textbf{Характер зависимости \(Y\) от \(X\)}
+\begin{itemize}
+\item \textbf{Линейная модель:} \[Y = 11.01 + (-0.07)X,\quad R^2 = 0.017.\]
+\begin{itemize}
+\item Крайне низкий \(R^2\) (
+1.7\%) указывает на отсутствие линейной
+зависимости.
+\item Коэффициент \(\beta_2 = -0.07\) статистически незначим (доверительный интервал
+
+\([-0.22, 0.08]\) включает ноль).
+\end{itemize}
+\item \textbf{Квадратичная модель:} \[Y = 11.51 + (-0.48)X + (0.05)X^2,\quad R^2 = 0.0724.\]
+\begin{itemize}
+\item \(R^2 = 7.2\%\) показывает,
+что модель объясняет лишь незначительную часть вариации.
+\item Коэффициенты:
+\begin{itemize}
+\item \(\beta_2 = -0.48\) (линейный
+член): интервал 
+\([-0.99, 0.03]\) включает ноль.
+\item \(\beta_3 = 0.05\)
+(квадратичный член): интервал 
+\([-0.01, 0.1]\) включает ноль.
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\textbf{Проверка гипотез}
+
+Остатки близки к нормальному распределению.  Критерий \(\chi^2\) не
+выявил значимых отклонений от нормальности на уровне
+
+\(\alpha = 0.01\).
+
+\emph{Предположение о нормальности ошибок выполняется.}
+
+\textbf{AIC/BIC}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Линейная & 186.2028 & 191.9388 \\
+    Квадратная & 185.3011 & 192.9492 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{itemize}
+\item \textbf{Линейная модель} имеет более низкий BIC, чем квадратичная.
+\item \textbf{Квадратная модель} имеет более низкий AIC, чем линейная.
+\end{itemize}
+
+\textbf{Аномалии в результатах}
+\begin{itemize}
+\item \textbf{Парадокс низкого \(R^2\):}
+\begin{itemize}
+\item Линейная модель объясняет менее 3\% вариации, что ставит под
+сомнение её практическую применимость.
+\end{itemize}
+\end{itemize}
+
+\textbf{Итоговый вывод}
+\begin{itemize}
+\item \textbf{Отсутствие значимой связи:} Ни линейная, ни квадратичная модели не
+демонстрируют статистически значимой зависимости \(Y\) от \(X\) на
+уровне 
+\(\alpha = 0.01\).
+\item \textbf{Рекомендации:}
+\begin{itemize}
+\item Проверить данные на наличие выбросов или ошибок.
+\item Рассмотреть другие предикторы или преобразования.
+\item Увеличить объем данных для повышения надежности тестов.
+\end{itemize}
+\end{itemize}
+\section{\textbf{Задание} 2:}
+\label{sec:org69c4c03}
+\begin{center}
+\includegraphics[width=\textwidth]{./task2.png}
+\end{center}
+\subsection{Пункт a}
+\label{sec:orgc954c3a}
+\subsubsection{Формулировка модели двухфакторного дисперсионного анализа}
+\label{sec:org86aff1a}
+Модель с взаимодействием факторов: \[Y_{ijk} = \mu + \alpha_i +
+\beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk},\] где:
+\begin{itemize}
+\item \(Y_{ijk}\) --- наблюдаемое значение переменной \(Y\) для \(i\)-го
+уровня фактора \(A\), \(j\)-го уровня фактора \(B\), \(k\)-го
+повторения,
+\item \(\mu\) --- общее среднее,
+\item \(\alpha_i\) --- эффект \(i\)-го уровня фактора \(A\),
+\item \(\beta_j\) --- эффект \(j\)-го уровня фактора \(B\),
+\item \((\alpha \beta)_{ij}\) --- эффект взаимодействия факторов \(A\) и
+\(B\),
+\item \(\epsilon_{ijk} \sim N(0, \sigma^2)\) --- случайная ошибка.
+\end{itemize}
+\subsubsection{Построение МНК-оценок параметров}
+\label{sec:orga0bcff0}
+Оценки параметров полной модели:
+\begin{verbatim}
+(Intercept)  17.7160
+a2           -1.8700
+a3            0.6380
+b2           -0.4720
+b3           -2.0120
+a2:b2        -0.3160
+a3:b2        -0.5920
+a2:b3        -2.0720
+a3:b3        -0.2560
+\end{verbatim}
+\subsubsection{Несмещенная оценка дисперсии}
+\label{sec:org9861127}
+Несмещенная оценка дисперсии ошибок: 
+\[\hat{\sigma}^2 = \frac{SS_{\text{res}}}{df_{\text{res}}} = 1.5799,\] где:
+\begin{itemize}
+\item \(SS_{\text{res}}\) --- сумма квадратов остатков,
+\item \(df_{\text{res}} = n - p\) --- степени свободы (\(n\) --- число
+наблюдений, \(p\) --- число параметров).
+\end{itemize}
+\subsection{Пункт b}
+\label{sec:org071f9e8}
+Сводная таблица средних значений \(Y\):
+\begin{table}[H]
+  \centering
+  \begin{tabular}{c|ccc} \toprule
+    $A \backslash B$ & 1 & 2 & 3 \\ \midrule
+    1 & 17.716 & 17.244 & 15.704 \\
+    2 & 15.846 & 15.058 & 11.762 \\
+    3 & 18.354 & 17.290 & 16.086 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\input{dependency}
+\end{figure}
+
+\textbf{Визуальная проверка аддитивности:}
+\begin{itemize}
+\item Основная часть графика (особенно \(B = 1\) и \(B = 2\)) говорит в
+пользу аддитивной модели, так как линии почти параллельны.
+\item Однако при \(B = 3\) отклонения заметнее, поэтому взаимодействие не
+исключено.
+\end{itemize}
+\subsection{Пункт c}
+\label{sec:org6a23c9c}
+\begin{figure}[H]
+\centering
+\input{residuals-2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\input{qq-2}
+\end{figure}
+
+\textbf{Тест Шапиро-Уилка:} p-value = 
+0.7283
+
+\textbf{Не отвергаем \(H_0\):} p-value > \(\alpha\) = 0.2.
+
+\textbf{Результаты:}
+\begin{itemize}
+\item Гистограмма: Распределение остатков близко к нормальному, совпадает
+с наложенной кривой \(N(0, \sigma^2)\).
+\item Q-Q график: Точки лежат вдоль линии \(y = x\), что подтверждает
+нормальность.
+\item Тест Шапиро-Уилка: гипотеза о нормальности не отвергается.
+\end{itemize}
+\subsection{Пункт d}
+\label{sec:org3539406}
+Таблица ANOVA:
+\begin{table}[H]
+  \centering
+  \begin{tabular}{l|ccccc} \toprule
+    & Df & Sum Sq & Mean Sq & F value & Pr(>F) \\ \midrule
+    a & 2 & 81.81136 & 40.90568 & \num{25.89082} & \num{1.07691e-07} \\
+    b & 2 & 62.13282 & 31.06641 & \num{19.66316} & \num{1.69202e-06} \\
+    a:b & 4 & 8.75332 & 2.18833 & \num{1.38508} & \num{2.58557e-01} \\
+    Residuals & 36 & 56.87748 & 1.57993 & \num{NA} & \num{NA} \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Результаты ANOVA}
+\begin{itemize}
+\item Фактор \(A\): \[F = 25.89,\ p\text{-value} < 0.2 \ \rightarrow \
+  \text{значимо влияет на } Y.\]
+\item Фактор \(B\): \[F = 19.66,\ p\text{-value} < 0.2 \ \rightarrow \
+  \text{значимо влияет на } Y.\]
+\item Взаимодействие \(A \times B\): \[F = 1.38,\ p\text{-value} > 0.2 \
+  \rightarrow \ \text{незначимо влияет на } Y.\]
+\item Вывод: На уровне значимости \(\alpha = 0.20\) факторы \(A\) и \(B\)
+значимо влияют на отклик \(Y\), поскольку соответствующие p-значения
+меньше 0.20.  В то же время, взаимодействие факторов \(A \times B\)
+незначимо (\(p > 0.2\)).  Это означает, что влияние каждого из
+факторов на \(Y\) не зависит от уровня другого фактора.  Это говорит
+о том, что можно использовать аддитивную модель без взаимодействия.
+\end{itemize}
+\subsection{Пункт e}
+\label{sec:org9e4ae44}
+Для выбора оптимальной модели используются критерии:
+\begin{itemize}
+\item AIC оценивает баланс между качеством подгонки модели и её
+сложностью, накладывая штраф за избыточное количество параметров.
+\item BIC работает аналогично AIC, но применяет более строгий штраф за
+сложность, особенно при больших объемах данных.
+\end{itemize}
+
+Сравниваем две модели:
+\begin{enumerate}
+\item Полная модель (с взаимодействием): \[Y \sim A + B + A : B.\]
+\item Аддитивная модель (без взаимодействия): \[Y \sim A + B.\]
+\end{enumerate}
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Полная & 158.2451 & 176.3118 \\
+    Аддитивная & 156.6867 & 167.5267 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\textbf{Вывод о сравнении моделей}
+
+\begin{itemize}
+\item \textbf{Результаты AIC и BIC:}
+\begin{itemize}
+\item Полная модель имеет AIC = 158.2451, в то время как аддитивная
+модель имеет AIC = 156.6867.  Это указывает на малое преимущество
+аддитивной модели.
+\item Полная модель также имеет BIC = 176.3118, а аддитивная модель ---
+BIC = 167.5267.  Разница подтверждает выбор аддитивной модели.
+\end{itemize}
+\item \textbf{Заключение:}
+\begin{itemize}
+\item Аддитивная модель \textbf{предпочтительнее}, так как она лучше соответствует
+данным, что подтверждается меньшими значениями AIC и BIC.
+\item Взаимодействие оказалось незначимым.
+\end{itemize}
+\end{itemize}
+\subsection{Пункт f}
+\label{sec:org3c84685}
+\subsubsection{Основные эффекты факторов A и B}
+\label{sec:org4a3e25d}
+\begin{itemize}
+\item \textbf{Фактор A:} Оказал сильное статистически значимое влияние на \(Y\)
+(\(F = 25.89, p < 0.2\)).
+\item \textbf{Фактор B:} Также значимо влияет на \(Y\) (\(F = 19.66, p < 0.2\)).
+\end{itemize}
+\subsubsection{Взаимодействие факторов \(A \times B\)}
+\label{sec:org9af8c53}
+\begin{itemize}
+\item \textbf{Статистическая значимость:} Взаимодействие значимо (\(F = 1.38, p <
+  0.2\)).
+\item \textbf{Визуальное подтверждение:} График зависимости \(Y\) от \(A\) при
+фиксированных \(B\) показывает отсутствие пересечение линий, причём
+они почти параллельны, что указывает на аддитивность эффектов.
+\end{itemize}
+\subsubsection{Выбор оптимальной модели}
+\label{sec:org980c163}
+AIC/BIC:
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lrr} \toprule
+    Модель & AIC & BIC \\ \midrule
+    Полная & 158.2451 & 176.3118 \\
+    Аддитивная & 156.6867 & 167.5267 \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+Разница \(\Delta AIC = -1.55\) и \(\Delta BIC = -8.78\) указывает на
+преимущество аддитивной модели.
+
+Полная модель ложно учитывает взаимодействия, они не дают реального
+вклада, но увеличивают размерность и ухудшают обобщающую способность
+\subsubsection{Нормальность остатков}
+\label{sec:orgb6b0507}
+\begin{itemize}
+\item Тест Шапиро-Уилка: \[p\text{-value} = 0.7283 \implies \text{гипотеза
+  о нормальности остатков не отвергается}.\]
+\item Графическая проверка: Гистограмма остатков близка к нормальной
+форме.
+\item Q-Q график показывает совпадение точек с линией \(y = x\).
+\end{itemize}
+
+\textbf{Рекомендации:} Для прогнозирования \(Y\) лучше не учитывать
+взаимодействие \(A \times B\), так как оно лишь усложняет модель.
+
+\textbf{Итоговый вывод}
+\begin{enumerate}
+\item Аддитивная модель без взаимодействий предпочтительна по критериям
+AIC/BIC и объясняет данные лучше полной.
+\item Нормальность остатков подтверждена тестами и графиками.
+\end{enumerate}
+
+\textbf{Рекомендации:}
+\begin{itemize}
+\item Проверить данные на наличие выбросов для \(A=2\) и \(B=3\).
+\item Использовать аддитивную модель для прогнозирования и анализа
+эффектов.
+\end{itemize}
+\end{document}

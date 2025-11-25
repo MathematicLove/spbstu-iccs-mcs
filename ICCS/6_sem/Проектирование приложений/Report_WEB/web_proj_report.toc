@@ -1,0 +1,41 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Определение}{4}{section.1}%
+\contentsline {section}{\numberline {2}Аналитика}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Исходный текст}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Описание предметной области}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Процессы}{9}{subsection.2.3}%
+\contentsline {section}{\numberline {3}ER-диаграмма}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Чтение ER-диаграммы}{10}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Use case}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Уровень 1}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Уровень 2}{14}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Уровень 3 для 1.2}{16}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Уровень 3 для 1.4}{18}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Описание}{20}{subsection.4.5}%
+\contentsline {section}{\numberline {5}BPM-диаграмма №1}{23}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Описание}{23}{subsection.5.1}%
+\contentsline {section}{\numberline {6}BPM-диаграмма №2}{25}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Описание}{25}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Описание экранных форм}{27}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Цель создания форм}{27}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Описание экранной формы}{27}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Граф связи форм}{28}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}JSON-формат для хранения данных}{29}{subsection.7.4}%
+\contentsline {subsubsection}{\numberline {7.4.1}Базовый JSON}{29}{subsubsection.7.4.1}%
+\contentsline {subsubsection}{\numberline {7.4.2}Пример JSON с историей заявки}{32}{subsubsection.7.4.2}%
+\contentsline {subsubsection}{\numberline {7.4.3}Описание состояний}{35}{subsubsection.7.4.3}%
+\contentsline {paragraph}{\nonumberline Преимущества}{35}{paragraph*.4}%
+\contentsline {subsection}{\numberline {7.5}Форма «Управление заявкой на подачу заявления»}{36}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Форма «Проверка данных заявки»}{37}{subsection.7.6}%
+\contentsline {subsection}{\numberline {7.7}Форма «Согласие на зачисление»}{37}{subsection.7.7}%
+\contentsline {subsection}{\numberline {7.8}Форма «Сообщение об отказе»}{38}{subsection.7.8}%
+\contentsline {section}{\numberline {8}Эскизы экранных форм}{39}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Форма «Управление заявкой на подачу заявления»}{40}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Форма «Проверка данных заявки»}{41}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Форма «Согласие»}{42}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Форма «Требуется доработка»}{43}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Форма «Откланено»}{44}{subsection.8.5}%
+\contentsline {section}{Заключение}{45}{section*.5}%
+\contentsline {section}{Список источников}{46}{section*.6}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

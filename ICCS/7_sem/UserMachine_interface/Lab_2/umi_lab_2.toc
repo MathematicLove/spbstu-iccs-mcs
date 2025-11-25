@@ -1,0 +1,3 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,73 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  sender1:
+    build:
+      context: ./sender      
+    container_name: sender_ayzek
+    environment:
+      SENDER_ID: "Ayzek"
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+
+  sender2:
+    build:
+      context: ./sender      
+    container_name: sender_petya
+    environment:
+      SENDER_ID: "Petya"
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+
+  sender3:
+    build:
+      context: ./sender
+    container_name: sender_vasya
+    environment:
+      SENDER_ID: "Vasya"
+      RABBITMQ_HOST: rabbitmq
+    depends_on:
+      - rabbitmq
+
+  receiver2:
+    build:
+      context: ./receiver
+    container_name: receiver_olya
+    environment:
+      QUEUE_NAME: "Olya"
+      RABBITMQ_HOST: rabbitmq
+      BINDING_CRITERIA: '{"x-match": "any", "MayI": "Pass", "priority": "low"}'
+    depends_on:
+      - rabbitmq
+
+  receiver1:
+    build:
+      context: ./receiver    
+    container_name: receiver_masha
+    environment:
+      QUEUE_NAME: "Masha"
+      RABBITMQ_HOST: rabbitmq
+      BINDING_CRITERIA: '{"x-match": "any", "MayI": "Pass", "This": "Lab)"}'
+    depends_on:
+      - rabbitmq
+
+
+
+  receiver3:
+    build:
+      context: ./receiver
+    container_name: receiver_misha
+    environment:
+      QUEUE_NAME: "Misha"
+      RABBITMQ_HOST: rabbitmq
+      BINDING_CRITERIA: '{"x-match": "all", "What": "WAZAAAAP"}'
+    depends_on:
+      - rabbitmq

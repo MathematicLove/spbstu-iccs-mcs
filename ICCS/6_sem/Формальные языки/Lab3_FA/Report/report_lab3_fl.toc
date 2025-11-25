@@ -1,0 +1,18 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Описание грамматик и их математическая модель}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Plusquamperfekt (\textbf {PQ})}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Präsens (\textbf {PR})}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Modal + Infinitiv (\textbf {MI})}{5}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Azeri Present (\textbf {AZ})}{5}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Правило пунктуации}{6}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}LL(1)-свойства (пример для PQ)}{6}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Переход к КС-грамматикам}{7}{subsection.1.7}%
+\contentsline {section}{\numberline {2}Формальное определение CFG}{8}{section.2}%
+\contentsline {section}{\numberline {3}Дерево разбора для Pluperfect}{9}{section.3}%
+\contentsline {section}{\numberline {4}Особенности реализации}{10}{section.4}%
+\contentsline {section}{\numberline {5}$\epsilon $-переход в программной реализации}{11}{section.5}%
+\contentsline {section}{\numberline {6}Результаты работы}{17}{section.6}%
+\contentsline {section}{Заключение}{20}{section*.14}%
+\contentsline {section}{Приложение А. Порождающая грамматика (Pluperfect)}{22}{section*.18}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
