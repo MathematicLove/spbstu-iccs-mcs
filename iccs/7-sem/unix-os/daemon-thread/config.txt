@@ -1,0 +1,2 @@
+directory = /Users/monadayzek/tut
+interval = 5

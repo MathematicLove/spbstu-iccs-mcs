@@ -1,0 +1,311 @@
+\documentclass[areasetadvanced]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+\usepackage[footskip=1cm,left=25mm,right=15mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{float}     % для опции [H]
+\usepackage{dashrule}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{textcomp,enumitem}
+\usepackage{indentfirst}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array}
+\usepackage{afterpage}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb}  % Объединено в одну строку
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{float}
+\usepackage{dashrule}
+\usepackage{fancyhdr} % оформление отчёта
+\usepackage{hyperref} % оформление отчёта
+\usepackage{parskip}
+\usepackage{textcomp, enumitem}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array}  % Для использования команды m{}
+\usepackage{geometry}
+\usepackage{afterpage}
+\usepackage{minted}
+\setcounter{secnumdepth}{3}  % Включает нумерацию для subsubsection
+\setcounter{tocdepth}{3}     % Включает subsubsection в содержание
+\usepackage{listings} % Если используете listings
+
+\tikzstyle{block} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=lightgray]
+
+\setkomafont{sectioning}{\normalfont\bfseries} % для заголовков разделов и подразделов
+\setkomafont{section}{\normalfont\Large\bfseries}
+\setkomafont{subsection}{\normalfont\large\bfseries}
+\setkomafont{subsubsection}{\normalfont\large\bfseries}
+\setkomafont{paragraph}{\normalfont\large\bfseries} % для заголовков параграфов (если они есть)
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+
+\tikzstyle{block} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=lightgray]
+
+
+
+\lstset{
+  language=Haskell,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{green!70!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=10pt,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single
+}
+
+\begin{document}
+\sloppy
+\thispagestyle{empty}
+\begin{center}
+  \large{МИНОБРНАУКИ РОССИИ}\\[0.3cm]
+  \normalsize{ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ\\
+    ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ}\\[0.3cm]
+  \textbf{«САНКТ‑ПЕТЕРБУРГСКИЙ ПОЛИТЕХНИЧЕСКИЙ УНИВЕРСИТЕТ ПЕТРА ВЕЛИКОГО»}\\[0.3cm]
+  {Институт компьютерных наук и кибербезопасности\\
+    Высшая школа технологий искусственного интеллекта}
+\end{center}
+
+\vfill
+
+\begin{center}
+  {\large Отчёт по дисциплине «Программирование на языке Java»}\\[0.5cm]
+  {\huge Лабораторная работа №3\\ «Load Testing»}
+\end{center}
+
+\vfill
+\begin{flushleft}
+    Студент: \hspace{1.8cm} \rule[0pt]{2.5cm}{0.5pt}\hfill Салимли Айзек Мухтар Оглы\par
+    \vspace{1.5cm}
+    Преподаватель: \hspace{0.55cm} \rule[0pt]{2.5cm}{0.5pt}\hfill  Лукашин Антон Андреевич
+\end{flushleft}
+\vspace{0.5cm}
+\begin{flushright}
+    \guillemotleft \rule[0pt]{0.8cm}{0.5pt}\guillemotright \rule[0pt]{2cm}{0.5pt} 20\rule[0pt]{0.5cm}{0.5pt} г.
+\end{flushright}
+\vfill
+\begin{center}
+    Санкт-Петербург, 2025
+\end{center}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section*{Введение}
+\addcontentsline{toc}{section}{Введение}
+В этом отчёте собраны результаты нагрузочного тестирования HTTP‑сервера (лабораторная работа 2) и JSON‑парсера (лабораторная работа 1). Влияние модели потоков (классические vs виртуальные) и выбора парсера (собственный vs Gson) на время обработки двух типов запросов.
+
+\newpage
+\section{Постановка задачи}
+Создать отдельный проект для нагрузочного тестирования, включающий:
+\begin{itemize}
+  \item HTTP‑сервер из lab‑2 с двумя эндпоинтами:
+    \begin{enumerate}
+      \item \textbf{Request‑1}: принять JSON, распарсить, сохранить в SQLite (дисковая БД), прочитать и вернуть \texttt{payload};
+      \item \textbf{Request‑2}: принять JSON‑массив, распарсить, посчитать среднее и вернуть JSON \{\texttt{"average":…}\}.
+    \end{enumerate}
+  \item JSON‑парсер: собственная реализация (lab‑1) и библиотека Gson.
+  \item Режимы потоков: Classic Threads (FixedThreadPool) и Virtual Threads (Project Loom).
+\end{itemize}
+
+\subsection{Требования}
+\begin{itemize}
+  \item Переключение парсера через \verb|-Dparser=<own|gson>|.
+  \item Переключение модели потоков через \verb|-Dthreads=<classic|virtual>|.
+  \item Настройка нагрузки (число потоков, число запросов) через \verb|--threads| и \verb|--requests|.
+  \item Скрипт \verb|run_all.sh| запускает все четыре комбинации автоматически.
+  \item Результаты и ошибки сохраняются в CSV‑файлы: \verb|results-<Config>.csv| и \verb|errors-<Config>.csv|.
+\end{itemize}
+
+\newpage
+\section{Конфигурация и запуск}
+\subsection{Сборка}
+\begin{lstlisting}
+./gradlew clean build
+\end{lstlisting}
+
+\subsection{Запуск HTTP‑сервера}
+\begin{lstlisting}
+./gradlew :app:runServer \
+  -Dthreads=<classic|virtual> \
+  -Dparser=<own|gson>
+\end{lstlisting}
+
+\subsection{Запуск нагрузочного клиента}
+По умолчанию:
+\begin{lstlisting}
+./gradlew :app:run --args="--threads 100 --requests 5000"
+\end{lstlisting}
+Чтобы последовательно прогнать все четыре конфигурации:
+\begin{lstlisting}
+chmod +x run_all.sh
+./run_all.sh
+\end{lstlisting}
+
+\newpage
+\section{Описание эксперимента}
+\subsection{Экспериментальная установка}
+Эксперимент проводился на одной машине, одновременно запущены сервер и клиент. Возможна организация тестирования на отдельных машинах, достаточно указать адрес сервера в параметре \texttt{-Dhost}.
+
+\subsection{Цель эксперимента}
+Оценить:
+\begin{itemize}
+  \item среднее время отклика (AvgTimeMillis);
+  \item 95\%-й процентиль (P95Millis);
+  \item количество ошибок.
+\end{itemize}
+для двух сценариев и четырёх конфигураций.
+
+\subsection{Аппаратное обеспечение}
+\begin{itemize}
+  \item Тип: локальная машина (ноутбук)
+  \item CPU: Apple M1, 8 ядер, 3.2 GHz.
+  \item RAM: 8 ГБ
+  \item Диск: 256 ГБ.
+  \item ОС: macOS Sequoia 15.3.
+\end{itemize}
+
+\subsection{Параметры эксперимента}
+\begin{itemize}
+  \item Число потоков: 100 (можно менять).
+  \item Общее число запросов: 5000 (можно менять) на каждый сценарий.
+  \item Payload Request‑1: JSON тело 1024 байта.
+  \item Body Request‑2: JSON‑массив из 100 целых чисел.
+  \item Сервер слушает на \verb|localhost:8080|.
+\end{itemize}
+
+\subsection{Параметры запросов}
+\begin{description}
+  \item[Request‑1:] POST \verb|/request1|  
+    Тело: \verb|{"id":"<UUID>","payload":"<строка из 1024 байт>"}|
+  \item[Request‑2:] POST \verb|/request2|  
+    Тело: \verb|[n_1,n_2,\dots,n_{100}]|
+\end{description}
+
+\newpage
+\section{Результаты}
+\subsection{Формат выходных данных}
+\begin{itemize}
+  \item \texttt{results-<Config>.csv}: \texttt{Scenario,AvgTimeMillis,P95Millis,Errors}
+  \item \texttt{errors-<Config>.csv}: \texttt{Scenario,Index,Time,ErrorMessage}
+\end{itemize}
+
+\subsection{График производительности}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{image.png}
+  \caption{Сравнение средних и 95\%-го процентиля для Request‑1 и Request‑2}
+  \label{fig:perf}
+\end{figure}
+
+\subsection{Таблица результатов}
+\begin{table}[H]
+  \centering
+  \caption{Avg / P95 / Errors (в мс)}
+  \label{tab:results}
+  \begin{tabular}{@{}lcccc@{}}
+    \toprule
+    Сценарий  & Virtual+own     & Virtual+Gson    & Classic+own     & Classic+Gson    \\
+    \midrule
+    Request‑1 & 126.75/180.33/0 & 127.81/220.72/1 & 141.73/287.74/1 & 129.65/229.23/0 \\
+    Request‑2 & 14.07/24.21/0   & 10.85/22.23/0   & 12.90/23.64/0   & 14.46/29.21/0   \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Сравнение собственного парсера и Gson (AvgTimeMillis)}
+    \label{tab:own-vs-gson}
+    \begin{tabular}{@{}l l r r r r@{}}
+      \toprule
+      Потоки   & Сценарий   & Own (ms) & Gson (ms) & Разница (ms) & Изменение (\%) \\
+      \midrule
+      Classic  & Request-1  &    141.73 &    129.65 &      -12.08 &       -8.5\%  \\
+      Classic  & Request-2  &     12.90 &     14.46 &       +1.56 &      +12.1\%  \\
+      Virtual  & Request-1  &    126.75 &    127.81 &       +1.06 &       +0.8\%  \\
+      Virtual  & Request-2  &     14.07 &     10.85 &       -3.22 &      -22.9\%  \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  
+
+
+\subsection{Анализ ошибок}
+Ошибки возникают редко, когда число потоков сильно меньше чем число запросов. Или когда число запросов больше 6000-10000. 
+В иных ситуациях ошибок нет.
+\begin{table}[H]
+    \centering
+    \caption{Доля ошибок по конфигурациям}
+    \label{tab:error-rates}
+    \begin{tabular}{@{}l l r r c@{}}
+      \toprule
+      Конфигурация    & Сценарий   & Ошибок & Всего запросов & Доля ошибок \\
+      \midrule
+      Virtual + Gson  & Request‑2  &      1 &           7000 & 0,0002\%      \\
+      Classic + own   & Request‑2  &      1 &           10000 & 0,0001\%      \\
+      Virtual + own   & Request‑2  &      0 &           7200 & 0,00\%      \\
+      Classic + Gson  & Request‑2  &      0 &           10000 & 0,00\%      \\
+      Virtual + own   & Request‑1  &      0 &           7400 & 0,00\%      \\
+      Virtual + Gson  & Request‑1  &      0 &           6500 & 0,00\%      \\
+      Classic + own   & Request‑1  &      0 &           7400 & 0,00\%      \\
+      Classic + Gson  & Request‑1  &      0 &           7000 & 0,00\%      \\
+      \bottomrule
+    \end{tabular}
+\end{table}
+  
+\begin{itemize}
+  \item Request‑1:  
+    \begin{itemize}
+      \item Request-1: ошибок не зафиксировано 
+    \end{itemize}
+  \item Request‑2: HTTP Timeout 
+\end{itemize}
+
+\newpage
+\section*{Заключение}
+\addcontentsline{toc}{section}{Заключение}
+По проведенному сравнению можно сказать следующее:
+\begin{itemize}
+    \item В конфигурации Classic threads для Request‑1 собственный парсер работает на 8.5 $\rightarrow$ быстрее, чем Gson.  
+    \item В Classic threads для Request‑2 собственный парсер работает на 12.1 $\rightarrow$ медленнее, чем Gson.  
+    \item В конфигурации Virtual threads для Request‑1 собственный парсер работает на 0.8 $\rightarrow$ медленнее, чем Gson.  
+    \item В Virtual threads для Request‑2 собственный парсер работает на 22.9 $\rightarrow$ медленнее, чем Gson.
+\end{itemize}
+\begin{enumerate}
+  \item Виртуальные потоки дают выигрыш по Request‑1 (126.75 ms vs 141.73 ms), но незначительно замедляют Request‑2.
+  \item Собственный парсер в целом показывает лучшие показатели для Request‑2; влияние парсера на Request‑1 зависит от модели потоков.
+  \item Рекомендуется Virtual+own для минимизации задержек Request‑1 и Classic+own для интенсивных вычислений Request‑2.
+\end{enumerate}
+\newpage
+\section*{Приложение А}
+\addcontentsline{toc}{section}{Приложение А}
+\emph{Ссылка на репозиторий: }
+\url{https://github.com/mycelium/j24-25/tree/20102_Salimli-Ayzek/tasks/java/3}
+
+\end{document}

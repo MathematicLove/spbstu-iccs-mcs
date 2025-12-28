@@ -1,0 +1,66 @@
+#include "stm32f2xx_hal.h"
+
+GPIO_InitTypeDef GPIO_InitStruct;
+TIM_HandleTypeDef htim;
+
+
+void InitializeLED()
+{
+RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;
+/* GPIO base configuration */
+GPIO_InitStruct.Pin = (GPIO_PIN_7);
+GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_RESET);
+}
+
+
+void InitializeTimer()
+{
+RCC->APB1ENR |= RCC_APB1ENR_TIM2EN ;
+/* Time base configuration */
+htim.Instance = TIM2;
+htim.Init.Period = 0x500;
+htim.Init.Prescaler = 40000;
+htim.Init.ClockDivision = 0;
+htim.Init.RepetitionCounter = 0;
+htim.Init.CounterMode = TIM_COUNTERMODE_UP;
+HAL_TIM_Base_Init(&htim);
+/* Enable TIM peripheral counter */
+HAL_TIM_Base_Start(& htim);
+}
+
+
+int main()
+{
+InitializeLED();
+InitializeTimer();
+for (;;)
+
+{
+int timerValue = TIM2->CNT;
+if (timerValue == 400)
+HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_SET);
+if (timerValue == 420)
+	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_RESET);
+if (timerValue == 440)
+HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_SET);
+if (timerValue == 460)
+	HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_RESET);
+if (timerValue == 480)
+HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_SET);
+else if (timerValue == 500)
+HAL_GPIO_WritePin(GPIOG, GPIO_PIN_7,
+GPIO_PIN_RESET);
+}
+}
+
+
+

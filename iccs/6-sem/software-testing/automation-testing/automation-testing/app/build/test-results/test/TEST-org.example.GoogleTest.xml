@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.GoogleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-04-20T20:14:20.041Z" hostname="MacBook-Air-Gore-programmist.local" time="6.222">
+  <properties/>
+  <testcase name="testGoogleTitle" classname="org.example.GoogleTest" time="6.222"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

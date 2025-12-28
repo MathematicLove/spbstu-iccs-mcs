@@ -1,0 +1,22 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Требования}{4}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Конфигурация и запуск}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Сборка}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Запуск HTTP‑сервера}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Запуск нагрузочного клиента}{5}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Описание эксперимента}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Экспериментальная установка}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Цель эксперимента}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Аппаратное обеспечение}{6}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Параметры эксперимента}{6}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Параметры запросов}{6}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Результаты}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Формат выходных данных}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}График производительности}{7}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Таблица результатов}{7}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Анализ ошибок}{7}{subsection.4.4}%
+\contentsline {section}{Заключение}{9}{section*.3}%
+\contentsline {section}{Приложение А}{10}{section*.4}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

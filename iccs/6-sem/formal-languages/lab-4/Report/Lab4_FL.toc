@@ -1,0 +1,24 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Математическое описание}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Лексический и синтаксический анализ}{4}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Синтаксические диаграммы}{5}{section.2}%
+\contentsline {section}{\numberline {3}Компилятор \textbf {CMilan}}{7}{section.3}%
+\contentsline {section}{\numberline {4}Формальная грамматика языка после расширения}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Определение КС-грамматики}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}БНФ (расширенная)}{8}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Грамматика LL(1)}{9}{section.5}%
+\contentsline {section}{\numberline {6}Дерево разбора}{10}{section.6}%
+\contentsline {section}{\numberline {7}Трансляционные правила}{11}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Шаблон генерации p-кода для цикла}{11}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}FIRST/FOLLOW}{11}{subsection.7.2}%
+\contentsline {paragraph}{\nonumberline Множество FIRST}{11}{paragraph*.4}%
+\contentsline {paragraph}{\nonumberline Множество FOLLOW}{11}{paragraph*.6}%
+\contentsline {paragraph}{\nonumberline Условие LL(1)}{11}{paragraph*.8}%
+\contentsline {section}{\numberline {8}Новые токены}{12}{section.8}%
+\contentsline {section}{\numberline {9}Генерируемый p-код}{13}{section.9}%
+\contentsline {section}{\numberline {10}Тестовые примеры}{14}{section.10}%
+\contentsline {section}{\numberline {11}Инструкция по запуску}{15}{section.11}%
+\contentsline {section}{Заключение}{16}{section*.9}%
+\contentsline {section}{Список литературы}{17}{section*.13}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

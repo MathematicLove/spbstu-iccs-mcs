@@ -1,0 +1,3 @@
+Scenario,AvgTimeMillis,P95Millis,Errors
+Request-1,151,81,204,25,0
+Request-2,35,84,59,88,73

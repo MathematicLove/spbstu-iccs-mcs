@@ -1,0 +1,16 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Описание сценария}{4}{section.1}%
+\contentsline {section}{\numberline {2}Описание UNITY}{6}{section.2}%
+\contentsline {section}{\numberline {3}Устройство проекта UNITY}{7}{section.3}%
+\contentsline {section}{\numberline {4}Реализация сцены}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Создание проекта}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Экспорт моделей}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Физика моделей}{9}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Физика фигурки динозавра}{9}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Физика карандаша}{10}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Физика колпачка}{10}{subsubsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.4}Положение моделей}{11}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Результаты работы программы}{13}{section.5}%
+\contentsline {section}{Заключение}{14}{section*.3}%
+\contentsline {section}{Список источников}{15}{section*.4}%

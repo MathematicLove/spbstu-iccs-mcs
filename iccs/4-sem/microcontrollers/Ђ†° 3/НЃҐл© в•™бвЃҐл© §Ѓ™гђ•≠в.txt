@@ -1,0 +1,42 @@
+#include "stm32f2xx.h" // Device header
+void delay ()
+{
+unsigned long i; // Counter for blinky delay
+i=0;
+for(i=0; i<1000000; i++){} // Delay
+}
+int main ()
+{
+RCC->AHB1ENR |= 1ul<<6; // Enable port G clocking
+RCC->AHB1ENR |= 1ul; // Enable port A clocking
+	
+RCC->APB2ENR |= 1ul<<6;
+RCC->APB2ENR |= 1ul;
+
+GPIOG->MODER = (GPIOG->MODER & ~(1ul<<13)) | 1ul<<12; //PG6
+GPIOG->MODER = (GPIOG->MODER & ~(1ul<<15)) | 1ul<<14; //PG7
+GPIOG->MODER = (GPIOG->MODER & ~(1ul<<17)) | 1ul<<16; //PG8
+
+GPIOA->MODER = (GPIOA->MODER & ~(1ul<<1)) | 1ul<<0; //PA0
+GPIOG->MODER = (GPIOG->MODER & ~(1ul<<31)) | 1ul<<30; //PG15
+	
+GPIOA->OTYPER=0;//PUSH_PULL
+GPIOA->OSPEEDR=0;//LOW
+
+//RCC_AHB1LPENR_GPIOALPEN_Pos        (0U)                                
+//#define RCC_AHB1LPENR_GPIOALPEN_Msk        (0x1U << RCC_AHB1LPENR_GPIOALPEN_Pos) /*!< 0x00000001 */
+//#define RCC_AHB1LPENR_GPIOALPEN            RCC_AHB1LPENR_GPIOALPEN_Msk         
+	
+//__IO uint32_t MODER;    /*!< GPIO port mode register,               Address offset: 0x00      */
+//__IO uint32_t OTYPER;   /*!< GPIO port output type register,        Address offset: 0x04      */
+//__IO uint32_t OSPEEDR;  /*!< GPIO port output speed register,       Address offset: 0x08      */
+for (;;)
+{
+GPIOG->ODR |= 1ul<<7;
+delay ();
+GPIOG->ODR &= ~1ul<<7;
+delay ();
+}
+}
+
+

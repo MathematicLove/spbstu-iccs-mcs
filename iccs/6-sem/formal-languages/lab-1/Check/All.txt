@@ -1,0 +1,17 @@
+--All
+//With
+/*AAA*/
+Monad m := IO;
+s := \n.n 3 <$> m <> g . fmap list;
+\m m 4 := Just String s := "Hello"; 
+Nothing m "Error";
+Either m; 
+Left := "a";
+Right := "b";
+map a := list <> Just j;
+while a < 3
+   do a+m;
+do \n.e 3
+   while n >= 3;
+m >>= s;
+

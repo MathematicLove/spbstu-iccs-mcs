@@ -1,0 +1,4 @@
+ayzekCPU1 slots=1
+ayzekCPU2 slots=1
+ayzekGPU1 slots=1
+ayzekGPU2 slots=1

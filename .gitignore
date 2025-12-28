@@ -1,0 +1,24 @@
+# Для проекта на Python
+venv/
+.venv/
+env/
+.env/
+*.sqlite3
+*.db
+
+# Для JavaScript/Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+
+# Для Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+
+# Для C/C++
+*.o
+*.obj
+*.out

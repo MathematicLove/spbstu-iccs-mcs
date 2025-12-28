@@ -1,0 +1,5 @@
+begin
+    for x := 8, 2, -2 do
+        write(x)
+    od
+end

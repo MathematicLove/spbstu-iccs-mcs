@@ -1,0 +1,288 @@
+\documentclass[areasetadvanced]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+\usepackage[footskip=1cm,left=25mm, right=15mm, top=20mm, bottom=20mm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb} 
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{float}
+\usepackage{dashrule}
+\usepackage{fancyhdr} 
+\usepackage{hyperref} 
+\usepackage{parskip}
+\usepackage{textcomp, enumitem}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array} 
+\usepackage{geometry}
+\usepackage{afterpage}
+\usepackage{minted}
+\setcounter{secnumdepth}{3} 
+\setcounter{tocdepth}{3}    
+\usepackage{listings} 
+
+\newcommand{\icon}[1]{\includegraphics[height=1.2em]{#1}}
+
+\tikzstyle{block} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=lightgray]
+
+\setkomafont{sectioning}{\normalfont\bfseries} 
+\setkomafont{section}{\normalfont\Large\bfseries}
+\setkomafont{subsection}{\normalfont\large\bfseries}
+\setkomafont{subsubsection}{\normalfont\large\bfseries}
+\setkomafont{paragraph}{\normalfont\large\bfseries} 
+
+\lstset{
+  language=Haskell,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{green!70!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=10pt,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single
+}
+
+\lstdefinelanguage{Lua}{
+    keywords={function, end, if, then, else, elseif, for, while, do, repeat, until, break, return, local, and, or, not, true, false, nil},
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green!70!black},
+    morestring=[s]{"}{"},
+    morestring=[s]{'}{'},
+    morecomment=[l]{--},
+    morecomment=[s]{--[[}{]]},
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=10pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single
+}
+
+\setlength{\parindent}{1.25cm}
+\setcounter{tocdepth}{2}
+\begin{document}
+\sloppy
+	\thispagestyle{empty}
+    \begin{center}
+        \Huge {Методы оптимизации} 
+        \vspace{5.5cm}
+
+        \huge {\guillemotleft Дихотомия и задача об укладке рюкзака\guillemotright}
+
+        \vspace{0.5cm}
+		\large \textbf{{Салимли Айзек, гр. 5130201/20101}}
+    \end{center}
+	\vfill
+	\vspace{14.5cm}
+	\begin{flushright}
+		\guillemotleft \rule[0pt]{0.8cm}{0.5pt}\guillemotright \rule[0pt]{2cm}{0.5pt} 20\rule[0pt]{0.5cm}{0.5pt} г.
+	\end{flushright}
+	\vfill
+	\begin{center}
+		Санкт-Петербург, 2025
+	\end{center}
+	\newpage
+    \section{Задача о рюкзаке}
+    Задача о рюкзаке - задача комбинаторной оптимизации и теории алгоритмов. 
+
+    Проблема состоит в том, что необходимо принимать дискретное решение при наличии непрерывных ограничений. 
+    Такое противоречие порождает дихотомию. 
+
+    Математическая модель задачи: 
+$$
+    max \sum_{i=1}^{n}v_i x_i
+$$
+при условиях: 
+$$
+    \sum_{i = 1}^{n} w_i x_i \leq W, x_i \in {0,1}
+$$
+
+где: $v_i$ - ценность объекта, $w_i$ - объем или вес объекта, $W$ - вместимость рюкзака, $x_i$ - бинарная переменная включения объекта. 
+
+Сущность дихотомии заключается в следующем: 
+
+\begin{enumerate}
+    \item Ограничения на ресурс (вес, объем, пространство) - является непрерывным 
+    \item Решение (включать / не включать объект) - дискретное 
+\end{enumerate}
+это приводит к тому, что оптимальное решение редко полностью заполняет доступное пространство и возникает остаточное (свободное) пространство,
+которое невозможно эффективно использовать из-за дискретности объекта.
+
+То есть дихотомия задачи заключается между аддитивной модели ограничения и неделимостью объектов.
+
+Формально $W \in \mathbb{R}_+, w_i \in \mathbb{R}_+, \texttt{ a } x_i \in {0,1}$.
+
+$\Rightarrow$ останеться пространство.
+
+\section{Оценка свободного пространства и связь с задачей} 
+
+Свободное пространство - разница между вместимостью рюкзака и суммарным объемом уложеных объектов.
+
+$$
+    F_s = W - \sum_{i = 1}^{n} w_i x_i
+$$
+
+Из-за проблемы из пункта 1, даже при оптимальном выборе объектов, $F_s > 0$.
+
+\section{Случай при N = 3}
+Для задач в трехмерном пространстве (например упаковка параллепипедов в контейнер) доказана, что существует верхняя оценка доли 
+свободного пространства независящая от конфигурации объектов, а зависит только от размерности N.
+
+Связь с задачей о рюкзаке в том, что каждый объект имеет фиксированный объем, контейнер (рюкзак) имеет ограниченный объем и дискретность
+объектов приводит к остаткам пространства. 
+
+\section{Хранение данных N = 8, 24}
+В структурах хранения данных такие как: RAID-массивы, распределенные файловые системы, блоковое хранение в UNIX системах. 
+Данные разбиваются на блоки фиксированного размера, при этом размер файлов не кратен размеру блока.
+
+N = 8, 24 - соответствует размерности адресного пространства/ структурного пространства (число бит в адресном блоке или размер блока).
+
+Пример: 
+1 байт = 8 бит, адресное пространство кратно байту, минимальный размер блока хранения - 1 байт либо ему кратные. 
+Но если файл имеет размер некратный 8 битам, то возникает внутреняя фрагментация и часть блока остается незаполненной. 
+
+Аналогично каждый файл - предмет
+Блок - ячейка рюкзака 
+Свободные байты - свободное пространство.
+
+N = 24 - в более сложных системах: RGB-цвет, сетевые адреса, хеш-пространства. 
+
+\section{Связть с линейным программированием (LP)}
+Если заменить условие $x_i \in {0,1}$ на: 
+
+$$
+    0 \leq x_i \leq 1 
+$$
+
+то мы получим линейную релаксацию и задача становиться задачей LP. 
+
+Тогда: оптимальное решение полностью заполняет рюкзак $\Rightarrow F_s \geq 0$
+
+при этом решение находится жадным алгоритмом. 
+
+Разница между оптимумом линейной релаксации и целочисленной задачей называется - интегральный разрыв.
+
+Этот разрыв отображает количественно: 
+\begin{enumerate}
+    \item Величину неизбежного свободного пространства
+    \item Последствие дихотомии (непрерывное - дискретное)
+\end{enumerate}
+
+\section{Связь задачи о рюкзаке и заполнение пространства}
+Задача о рюкзаке - одномерный случай более общей задачей заполнения пространства. 
+
+То есть: 
+\begin{itemize}
+    \item 1D - задача о рюкзаке 
+    \item 2D - упаковка прямоугольников
+    \item 3D - упаковка параллепипедов
+    \item N - мерное - размещение в абстрактных пространствах
+\end{itemize}
+
+\section{Пример заполнения пространства сферами}
+
+% КУБ 
+\begin{figure}[H]
+    \center
+    \includegraphics[width=0.23\linewidth]{img/Square_circle_grid_spheres.png}
+    \caption{Упаковка сфер}
+\end{figure}
+
+\textbf{Задача:} 
+
+Максимально плотная упаковка одинаковых сфер радиуса $r$ в куб объемом $V$
+
+контейнер - трехмерный куб $C \subset \mathbb{R}^3$
+
+объекты - сферы объема $V_s = \frac{4}{3} \pi r^3$
+
+\textbf{Ограничения: }
+
+\begin{itemize}
+    \item Сферы нельзя пересикать,
+    \item Нужно максимизировать число сфер n.
+\end{itemize}
+
+\textbf{Аналогия с задачей о рюкзаке: }
+\begin{itemize}
+    \item Каждая сфера - дискретный объект фиксированного объема
+    \item Куб - контейнер
+\end{itemize}
+
+Свободное пространство возникает так как: 
+
+Сферы не могут идеально заполнить евклидово пространство.
+
+максимальная плотность упаковки сфер в $\mathbb{R}^3$
+
+$$
+    \delta_{max} = \frac{\pi}{\sqrt{18}} \approx 0.74
+$$
+
+$\Rightarrow$ не менее 26\% объема пустые даже в оптимальном случае. 
+
+
+
+Плотность упаковки определяется как: 
+
+$$
+\delta = \lim_{R \rightarrow +\infty} \frac{\texttt{Объем сфер внутри шара радиусом R}}{\texttt{Объем шара радиусом R}}
+$$
+
+$\delta$ - показывает какую долю пространства можно заполнить сферами без пересечений.
+
+a - ребро куба 
+в первой ячейки 4 сферы.
+
+Сферы касаются друг друга по диоганалям граний $a \sqrt{2} = d$
+
+По этой диоганали укладывается 4 радиуса $r$. 
+
+$$
+    a \sqrt{2} = 4r \Rightarrow a = 2\sqrt{2} r 
+$$
+
+$$
+    V = a^3 = (2\sqrt(2) r)^3 = 16 \sqrt{2} r^3
+$$
+
+4 сферы: 
+
+$$
+    V_{4s} = \frac{16}{3} \pi r^3
+$$
+
+$$
+    \Rightarrow \delta = \frac{V_{4s}}{V} = \frac{16 \pi r^3}{16\sqrt{2} r^3} = \frac{\pi}{\sqrt{2}} = \frac{\pi}{\sqrt{18}}
+$$
+
+$$
+    \Rightarrow \delta_{max} = \frac{\pi}{\sqrt{18}} \approx 0.74
+$$
+
+Томас Хейлс доказал гипотизу Кеплера, что ни одна упаковка сфер в $\mathbb{R}^3$, не может иметь плотность выше $\frac{\pi}{\sqrt{18}}$.
+
+\section{Практические примеры}
+
+\begin{itemize}
+    \item Распределение памяти и дискового пространства 
+    \item VRP - задачи
+    \item Планирование ресурсов в вычислительных системах
+\end{itemize}
+
+Но оптимизация выбора объектов не гарантирует оптимального использования пространства.
+\end{document}

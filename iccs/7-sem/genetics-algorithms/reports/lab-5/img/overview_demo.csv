@@ -1,0 +1,3 @@
+run,n,mu,lam,step0,best_x,best_f,generations,time_sec,convergence_img,num_frames
+demo_n2_mu20_lam100,2,20,100,0.5,"[0.074818, 0.053005]",0.008407225753359665,2,0.003095865249633789,outputs/demo_n2_mu20_lam100_convergence.png,2
+demo_n3_mu20_lam100,3,20,100,0.5,"[ 0.038636,  0.021654, -0.038438]",0.003439066378285058,4,0.005116939544677734,outputs/demo_n3_mu20_lam100_convergence.png,0

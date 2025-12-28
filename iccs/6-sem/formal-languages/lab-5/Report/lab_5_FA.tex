@@ -1,0 +1,35 @@
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Шаг} &
+\multicolumn{1}{c|}{\textbf{Стек (сверху $\to$ вниз)}} &
+\multicolumn{1}{c|}{\textbf{Оставшийся ввод}} \\ \hline
+0 & \stk{S'\ \$}                       & \stk{ab\ b\ a\ b\ \$} \\ \hline
+1 & \stk{S\ \$}                        & \stk{ab\ b\ a\ b\ \$} \\ \hline
+2 & \stk{A\ a\ S\ \$}                  & \stk{ab\ b\ a\ b\ \$} \\ \hline
+3 & \stk{C\ A\ b\ a\ S\ \$}            & \stk{ab\ b\ a\ b\ \$} \\ \hline
+4 & \stk{ab\ A\ b\ a\ S\ \$}           & \stk{\color{red}{ab}\ b\ a\ b\ \$} \\ \hline
+5 & \stk{b\ a\ S\ \$}                  & \stk{\color{red}{b}\ a\ b\ \$} \\ \hline
+6 & \stk{a\ S\ \$}                     & \stk{\color{red}{a}\ b\ \$} \\ \hline
+\end{tabular}
+\caption{Таблица №1 для цепочки ab b a b \$}
+\end{figure}
+
+\bigskip
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Шаг} &
+\multicolumn{1}{c|}{\textbf{Стек (сверху $\to$ вниз)}} &
+\multicolumn{1}{c|}{\textbf{Оставшийся ввод}} \\ \hline
+6 & \stk{a\ S\ \$}                     & \stk{a\ b\ \$} \\ \hline
+7 & \stk{S\ \$}                        & \stk{\color{red}{b}\ \$} \\ \hline
+8 & \stk{b\ \$}                        & \stk{\color{red}{b}\ \$} \\ \hline
+9 & \stk{\$}                           & \stk{\color{red}{\$}} \\ \hline
+10 & \textit{стек пуст}                & \textit{достиг конца} \\ \hline
+\end{tabular}
+\caption{Таблица №2 для цепочки ab b a b \$}
+\end{figure} 

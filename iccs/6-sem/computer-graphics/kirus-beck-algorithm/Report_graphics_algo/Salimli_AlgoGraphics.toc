@@ -1,0 +1,17 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{3}{section*.2}%
+\contentsline {section}{\numberline {1}Постановка задачи алгоритма Кируса-Бека}{4}{section.1}%
+\contentsline {section}{\numberline {2}Математическое описание алгоритма Кируса-Бека}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Расчёт параметра пересечения \(t\)}{6}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Программная реализация алгоритма Кируса-Бека}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Блок-схема}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Результаты программной реализации}{10}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Другие алгоритмы отсечения отрезка выпуклым телом}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Алгоритм Коэна-Сазерленда}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Метод пересечения с полуплоскостями}{15}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Сравнение алгоритмов}{18}{section.5}%
+\contentsline {section}{\numberline {6}Сравнение собственной реализации с библиотечной}{19}{section.6}%
+\contentsline {section}{Заключение}{20}{section*.3}%
+\contentsline {section}{Список литературы}{21}{section*.4}%
+\contentsline {section}{Приложение А}{22}{section*.5}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
