@@ -1,5 +1,0 @@
-BEGIN
-  IF 1 2 THEN WRITE(n) ELSE WRITE(2) FI;
-  X := Y + 1;
-  WRITE (X +)
-END
