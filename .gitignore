@@ -22,3 +22,4 @@ target/
 *.o
 *.obj
 *.out
+.DS_Store
