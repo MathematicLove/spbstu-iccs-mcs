@@ -23,3 +23,5 @@ target/
 *.obj
 *.out
 .DS_Store
+.idea/
+.venv/
