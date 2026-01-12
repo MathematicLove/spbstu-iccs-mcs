@@ -1,6 +1,7 @@
 ## Данные
 
-Файл `creditcard_2023.csv` содержит данные о транзакциях кредитных карт.
+Файл `creditcard_2023.csv` содержит данные о транзакциях кредитных карт. 
+[Датасет тут.](https://www.kaggle.com/datasets/nelgiriyewithana/credit-card-fraud-detection-dataset-2023)
 
 ## Задание
 
