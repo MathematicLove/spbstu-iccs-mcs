@@ -1,0 +1,15 @@
+cd /mnt/share/supercomputers && \
+rm -f build/*.o build/bitcoin_app && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp -c src/main.cpp -o build/main.o && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp -c src/csv_loader.cpp -o build/csv_loader.o && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp -c src/aggregation.cpp -o build/aggregation.o && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp -c src/intervals.cpp -o build/intervals.o && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp -c src/utils.cpp -o build/utils.o && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp -c src/gpu_loader.cpp -o build/gpu_loader.o && \
+/usr/bin/mpic++ -std=c++17 -O2 -Wall -Wextra -Wno-cast-function-type -fopenmp build/*.o -o build/bitcoin_app -ldl && \
+scp build/bitcoin_app ayzekcpu1:~/bitcoin_app && \
+scp build/bitcoin_app ayzekcpu2:~/bitcoin_app && \
+scp build/bitcoin_app ayzekgpu1:~/bitcoin_app && \
+scp build/bitcoin_app ayzekgpu2:~/bitcoin_app && \
+sbatch run.slurm && \
+echo "Job submitted. Check status with: squeue -u ayzek"
