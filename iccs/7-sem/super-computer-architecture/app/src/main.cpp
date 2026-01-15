@@ -7,6 +7,7 @@
 #include <sstream>
 #include <climits>
 #include <algorithm>
+#include <numeric>
 
 #include "csv_loader.hpp"
 #include "record.hpp"
@@ -119,6 +120,7 @@ int main(int argc, char** argv) {
     // Отладочный вывод для проверки параметра
     if (rank == 0) {
         std::cout << "Rank 0: Parsed top_n = " << top_n << " from command line" << std::endl;
+        std::cout << "Rank 0: *** Using NEW weighted balancing system ***" << std::endl;
     }
 
     // Проверяем доступность GPU
@@ -132,11 +134,47 @@ int main(int argc, char** argv) {
               << ", using " << (use_gpu ? "GPU" : "CPU")
               << std::endl;
 
-    // Параллельное чтение данных
+    // Собираем информацию о GPU доступности всех процессов для весовой балансировки
+    int my_gpu_flag = use_gpu ? 1 : 0;
+    std::vector<int> gpu_flags(size, 0);
+    
+    // Собираем информацию со всех процессов
+    MPI_Allgather(&my_gpu_flag, 1, MPI_INT, 
+                  gpu_flags.data(), 1, MPI_INT, MPI_COMM_WORLD);
+    
+    std::vector<bool> process_has_gpu(size, false);
+    for (int i = 0; i < size; i++) {
+        process_has_gpu[i] = (gpu_flags[i] != 0);
+    }
+    
+    // Вычисляем веса процессов на основе GPU доступности
+    std::vector<double> process_weights = calculate_process_weights(process_has_gpu);
+    std::vector<int> data_shares = weights_to_shares(process_weights, 1000);
+    
+    // Выводим информацию о распределении (только на Rank 0)
+    if (rank == 0) {
+        double gpu_weight = get_gpu_process_weight();
+        double cpu_weight = get_cpu_process_weight();
+        std::cout << "Rank 0: GPU weight = " << gpu_weight << ", CPU weight = " << cpu_weight << std::endl;
+        std::cout << "Rank 0: Process weights: ";
+        for (int i = 0; i < size; i++) {
+            std::cout << "P" << i << "=" << process_weights[i] << (process_has_gpu[i] ? "(GPU)" : "(CPU)");
+            if (i < size - 1) std::cout << ", ";
+        }
+        std::cout << std::endl;
+        std::cout << "Rank 0: Data shares: ";
+        for (size_t i = 0; i < data_shares.size(); i++) {
+            std::cout << data_shares[i];
+            if (i < data_shares.size() - 1) std::cout << ",";
+        }
+        std::cout << " (total: " << std::accumulate(data_shares.begin(), data_shares.end(), 0) << ")" << std::endl;
+    }
+
+    // Параллельное чтение данных с использованием вычисленных долей
     double read_start = MPI_Wtime();
     std::vector<Record> records;
     try {
-        records = load_csv_parallel(rank, size);
+        records = load_csv_parallel(rank, size, data_shares);
     } catch (const std::exception& e) {
         if (rank == 0) {
             std::cerr << std::endl;
@@ -202,6 +240,8 @@ int main(int argc, char** argv) {
               << std::endl;
 
     // Сбор интервалов на ранке 0
+    // КРИТИЧНО: Процессы с Rank > 0 отправляют данные и СРАЗУ продолжают работу
+    // Rank 0 обрабатывает данные по мере поступления
     double collect_wait = collect_intervals(iv_result.intervals, rank, size, top_n);
 
     if (rank == 0) {
@@ -209,6 +249,9 @@ int main(int argc, char** argv) {
                   << ", wait " << std::fixed << std::setprecision(3) << collect_wait << " sec"
                   << std::endl;
     }
+    
+    // КРИТИЧНО: Процессы с Rank > 0 могут продолжать работу здесь, не дожидаясь Rank 0
+    // Rank 0 обрабатывает данные параллельно с работой других процессов
 
     // Запись результатов в файл (только ранк 0)
     const char* home = std::getenv("HOME");
@@ -224,8 +267,7 @@ int main(int argc, char** argv) {
                   << std::endl;
     }
 
-    // Вывод общего времени выполнения
-    MPI_Barrier(MPI_COMM_WORLD);
+    // Вывод общего времени выполнения (без барьера - каждый процесс работает независимо)
     double total_time = MPI_Wtime() - total_start;
     if (rank == 0) {
         std::cout << "Total execution time: "

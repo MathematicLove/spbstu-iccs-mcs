@@ -7,8 +7,9 @@
 // Параллельное чтение CSV файла для MPI
 // rank - номер текущего ранка
 // size - общее количество ранков
+// shares - доли данных для каждого процесса (если пуст, вычисляется автоматически)
 // Возвращает вектор записей, прочитанных этим ранком
-std::vector<Record> load_csv_parallel(int rank, int size);
+std::vector<Record> load_csv_parallel(int rank, int size, const std::vector<int>& shares = std::vector<int>());
 
 // Парсинг одной строки CSV в Record
 // Возвращает true если парсинг успешен

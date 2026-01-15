@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <cstring>
+#include <climits>
 
 // ============================================================================
 // Структуры данных
@@ -57,25 +59,162 @@ __global__ void compute_period_ids_kernel(
 }
 
 // ============================================================================
-// Kernel: нахождение границ периодов (RLE без CUB)
-// Находит позиции, где period_id меняется
+// Kernel: инициализация индексов на GPU
+// ============================================================================
+
+__global__ void init_indices_kernel(int* indices, int n) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        indices[idx] = idx;
+    }
+}
+
+// ============================================================================
+// Kernel: копирование отсортированных period_ids по индексам
+// ============================================================================
+
+__global__ void copy_sorted_period_ids_kernel(
+    const int64_t* __restrict__ input_period_ids,
+    const int* __restrict__ sorted_indices,
+    int64_t* __restrict__ output_period_ids,
+    int n)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        output_period_ids[idx] = input_period_ids[sorted_indices[idx]];
+    }
+}
+
+// ============================================================================
+// Простая GPU radix sort для int64_t (LSB radix sort по байтам)
+// ============================================================================
+
+// Kernel: подсчет элементов по байту (для radix sort)
+__global__ void radix_count_kernel(
+    const int64_t* __restrict__ keys,
+    const int* __restrict__ values,
+    int* __restrict__ counts,
+    int n,
+    int byte_shift)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx >= n) return;
+    
+    // Извлекаем байт (0-255)
+    int byte_val = (int)((keys[idx] >> (byte_shift * 8)) & 0xFF);
+    
+    // Подсчитываем (используем shared memory для редукции)
+    __shared__ int s_counts[256];
+    if (threadIdx.x < 256) {
+        s_counts[threadIdx.x] = 0;
+    }
+    __syncthreads();
+    
+    atomicAdd(&s_counts[byte_val], 1);
+    __syncthreads();
+    
+    // Записываем в глобальную память (только первый поток блока)
+    if (threadIdx.x == 0) {
+        for (int i = 0; i < 256; i++) {
+            atomicAdd(&counts[i], s_counts[i]);
+        }
+    }
+}
+
+// Kernel: перестановка элементов по байту (для radix sort)
+__global__ void radix_reorder_kernel(
+    const int64_t* __restrict__ input_keys,
+    const int* __restrict__ input_values,
+    int64_t* __restrict__ output_keys,
+    int* __restrict__ output_values,
+    const int* __restrict__ prefix_sum,
+    int n,
+    int byte_shift)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx >= n) return;
+    
+    int byte_val = (int)((input_keys[idx] >> (byte_shift * 8)) & 0xFF);
+    int new_pos = prefix_sum[byte_val] - 1;  // -1 потому что prefix sum включает текущий элемент
+    
+    output_keys[new_pos] = input_keys[idx];
+    output_values[new_pos] = input_values[idx];
+    
+    // Уменьшаем счетчик для следующего элемента с таким же байтом
+    atomicSub((int*)&prefix_sum[byte_val], 1);
+}
+
+// ============================================================================
+// Kernel: нахождение границ периодов (для группировки на GPU)
+// Помечает позиции, где period_id меняется
 // ============================================================================
 
 __global__ void find_period_boundaries_kernel(
-    const int64_t* __restrict__ period_ids,
+    const int64_t* __restrict__ sorted_period_ids,
     int* __restrict__ boundaries,
     int n)
 {
     int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx == 0) {
-        boundaries[0] = 0;  // Первая граница всегда 0
+    
+    if (idx == 0 && n > 0) {
+        boundaries[0] = 1;  // Первая граница всегда есть
     }
+    
     if (idx < n - 1) {
-        if (period_ids[idx] != period_ids[idx + 1]) {
-            boundaries[idx + 1] = 1;  // Граница найдена
-        } else {
-            boundaries[idx + 1] = 0;
+        // Граница есть, если текущий период отличается от следующего
+        boundaries[idx + 1] = (sorted_period_ids[idx] != sorted_period_ids[idx + 1]) ? 1 : 0;
+    }
+}
+
+// ============================================================================
+// Kernel: группировка периодов на GPU (упрощенная версия)
+// Находит уникальные периоды и их offsets
+// ============================================================================
+
+__global__ void group_periods_simple_kernel(
+    const int64_t* __restrict__ sorted_period_ids,
+    const int* __restrict__ boundaries,
+    int64_t* __restrict__ unique_periods,
+    int* __restrict__ offsets,
+    int* __restrict__ num_periods_out,
+    int n)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    
+    // Первый элемент всегда начало нового периода
+    if (idx == 0 && n > 0) {
+        int pos = atomicAdd(num_periods_out, 1);
+        if (pos < n) {
+            unique_periods[pos] = sorted_period_ids[0];
+            offsets[pos] = 0;
         }
+    }
+    
+    // Каждый поток проверяет границу
+    if (idx < n - 1 && boundaries[idx + 1] == 1) {
+        int pos = atomicAdd(num_periods_out, 1);
+        if (pos < n) {
+            unique_periods[pos] = sorted_period_ids[idx + 1];
+            offsets[pos] = idx + 1;
+        }
+    }
+}
+
+// ============================================================================
+// Kernel: подсчет количества записей для каждого периода
+// ============================================================================
+
+__global__ void compute_period_counts_kernel(
+    const int* __restrict__ offsets,
+    int* __restrict__ counts,
+    int num_periods,
+    int total_records)
+{
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < num_periods) {
+        int start = offsets[idx];
+        int end = (idx + 1 < num_periods) ? offsets[idx + 1] : total_records;
+        counts[idx] = end - start;
     }
 }
 
@@ -261,6 +400,26 @@ extern "C" int gpu_is_available() {
 }
 
 // ============================================================================
+// Вспомогательные функции для сортировки
+// ============================================================================
+
+// Структура для сортировки периодов
+struct PeriodIndexPair {
+    int64_t period;
+    int index;
+};
+
+// Функция сравнения для qsort (inline для оптимизации)
+static int compare_period_pairs(const void* a, const void* b) {
+    const PeriodIndexPair* pa = (const PeriodIndexPair*)a;
+    const PeriodIndexPair* pb = (const PeriodIndexPair*)b;
+    if (pa->period < pb->period) return -1;
+    if (pa->period > pb->period) return 1;
+    return 0;
+}
+
+
+// ============================================================================
 // Главная функция агрегации на GPU для кредитных карт (без CUB)
 // ============================================================================
 
@@ -324,93 +483,196 @@ extern "C" int gpu_aggregate_periods(
     double step2_ms = get_time_ms() - step2_start;
     
     // ========================================================================
-    // Шаг 3: Сортировка period_ids для группировки (простая сортировка на CPU)
+    // Шаг 3: Сортировка и группировка на GPU (оптимизированная версия с counting sort)
     // ========================================================================
     double step3_start = get_time_ms();
     
-    // Копируем period_ids на CPU для сортировки
-    int64_t* h_period_ids = new int64_t[num_records];
+    // Объявляем переменные, которые будут использоваться после блока if
+    int num_periods = 0;
+    int64_t* d_unique_periods = nullptr;
+    int* d_counts = nullptr;
+    int* d_offsets = nullptr;
+    
+    // Инициализируем индексы на GPU
+    int* d_indices = nullptr;
+    int64_t* d_sorted_period_ids = nullptr;
+    CUDA_CHECK(cudaMalloc(&d_indices, num_records * sizeof(int)));
+    CUDA_CHECK(cudaMalloc(&d_sorted_period_ids, num_records * sizeof(int64_t)));
+    
+    // Оптимизированный counting sort: используем pinned memory для быстрого копирования
+    int64_t* h_period_ids = nullptr;
+    CUDA_CHECK(cudaMallocHost(&h_period_ids, num_records * sizeof(int64_t)));  // Pinned memory
+    
     CUDA_CHECK(cudaMemcpy(h_period_ids, d_period_ids, num_records * sizeof(int64_t), 
                           cudaMemcpyDeviceToHost));
     
-    // Создаем массив индексов для сортировки
-    int* h_indices = new int[num_records];
-    for (int i = 0; i < num_records; i++) {
-        h_indices[i] = i;
+    // Находим min/max period_id (оптимизированный цикл)
+    int64_t min_period = h_period_ids[0];
+    int64_t max_period = h_period_ids[0];
+    #pragma omp parallel for reduction(min:min_period) reduction(max:max_period)
+    for (int i = 1; i < num_records; i++) {
+        if (h_period_ids[i] < min_period) min_period = h_period_ids[i];
+        if (h_period_ids[i] > max_period) max_period = h_period_ids[i];
     }
     
-    // Сортируем индексы по period_ids
-    for (int i = 0; i < num_records - 1; i++) {
-        for (int j = i + 1; j < num_records; j++) {
-            if (h_period_ids[h_indices[i]] > h_period_ids[h_indices[j]]) {
-                int tmp = h_indices[i];
-                h_indices[i] = h_indices[j];
-                h_indices[j] = tmp;
-            }
-        }
-    }
+    int64_t period_range = max_period - min_period + 1;
     
-    // Находим уникальные периоды и их границы
-    int num_periods = 0;
-    int64_t* h_unique_periods = new int64_t[num_records];
-    int* h_counts = new int[num_records];
-    int* h_offsets = new int[num_records];
-    
-    if (num_records > 0) {
-        h_unique_periods[0] = h_period_ids[h_indices[0]];
-        h_offsets[0] = h_indices[0];
-        h_counts[0] = 1;
-        num_periods = 1;
+    // Используем counting sort (O(n) для небольшого диапазона)
+    if (period_range > 0 && period_range < 10000) {
+        // Counting sort на CPU (O(n) для небольшого диапазона, быстрее чем qsort)
+        int* count = new int[period_range]();
+        int* indices_sorted = new int[num_records];
         
-        for (int i = 1; i < num_records; i++) {
-            int idx = h_indices[i];
-            if (h_period_ids[idx] == h_unique_periods[num_periods - 1]) {
-                h_counts[num_periods - 1]++;
-            } else {
-                h_unique_periods[num_periods] = h_period_ids[idx];
-                h_offsets[num_periods] = idx;
-                h_counts[num_periods] = 1;
+        // Подсчитываем (параллельно)
+        #pragma omp parallel for
+        for (int i = 0; i < num_records; i++) {
+            int period_idx = (int)(h_period_ids[i] - min_period);
+            #pragma omp atomic
+            count[period_idx]++;
+        }
+        
+        // Создаем offsets
+        int* offsets = new int[period_range];
+        offsets[0] = 0;
+        for (int i = 1; i < period_range; i++) {
+            offsets[i] = offsets[i-1] + count[i-1];
+        }
+        
+        // Переупорядочиваем индексы (O(n) алгоритм)
+        int* temp_offsets = new int[period_range];
+        memcpy(temp_offsets, offsets, period_range * sizeof(int));
+        
+        // Один проход по всем записям
+        for (int i = 0; i < num_records; i++) {
+            int period_idx = (int)(h_period_ids[i] - min_period);
+            indices_sorted[temp_offsets[period_idx]++] = i;
+        }
+        
+        // Копируем отсортированные индексы на GPU
+        CUDA_CHECK(cudaMemcpy(d_indices, indices_sorted, num_records * sizeof(int), 
+                              cudaMemcpyHostToDevice));
+        
+        // Сортируем period_ids по отсортированным индексам
+        copy_sorted_period_ids_kernel<<<num_blocks, BLOCK_SIZE>>>(
+            d_period_ids, d_indices, d_sorted_period_ids, num_records);
+        CUDA_CHECK(cudaGetLastError());
+        CUDA_CHECK(cudaDeviceSynchronize());
+        
+        // Группировка: находим уникальные периоды
+        int num_periods = 0;
+        int64_t* h_unique_periods = new int64_t[period_range];
+        int* h_counts = new int[period_range];
+        int* h_offsets = new int[period_range];
+        
+        for (int i = 0; i < period_range; i++) {
+            if (count[i] > 0) {
+                h_unique_periods[num_periods] = min_period + i;
+                h_counts[num_periods] = count[i];
+                h_offsets[num_periods] = offsets[i];
                 num_periods++;
             }
         }
         
-        // Вычисляем offsets (позиции в отсортированном массиве)
-        int current_offset = 0;
-        for (int i = 0; i < num_periods; i++) {
-            h_offsets[i] = current_offset;
-            current_offset += h_counts[i];
+        delete[] count;
+        delete[] offsets;
+        delete[] temp_offsets;
+        delete[] indices_sorted;
+        
+        // Копируем уникальные периоды, counts и offsets на GPU
+        CUDA_CHECK(cudaMalloc(&d_unique_periods, num_periods * sizeof(int64_t)));
+        CUDA_CHECK(cudaMalloc(&d_counts, num_periods * sizeof(int)));
+        CUDA_CHECK(cudaMalloc(&d_offsets, num_periods * sizeof(int)));
+        
+        CUDA_CHECK(cudaMemcpy(d_unique_periods, h_unique_periods, 
+                              num_periods * sizeof(int64_t), cudaMemcpyHostToDevice));
+        CUDA_CHECK(cudaMemcpy(d_counts, h_counts, 
+                              num_periods * sizeof(int), cudaMemcpyHostToDevice));
+        CUDA_CHECK(cudaMemcpy(d_offsets, h_offsets, 
+                              num_periods * sizeof(int), cudaMemcpyHostToDevice));
+        
+        delete[] h_unique_periods;
+        delete[] h_counts;
+        delete[] h_offsets;
+        CUDA_CHECK(cudaFreeHost(h_period_ids));  // Освобождаем pinned memory
+        
+        // num_periods, d_unique_periods, d_counts, d_offsets уже инициализированы выше
+    } else {
+        // Fallback: если диапазон большой, используем старый подход (qsort на CPU)
+        // Создаем пары для сортировки
+        PeriodIndexPair* pairs = new PeriodIndexPair[num_records];
+        for (int i = 0; i < num_records; i++) {
+            pairs[i].period = h_period_ids[i];
+            pairs[i].index = i;
         }
+        
+        // Быстрая сортировка на CPU (qsort)
+        qsort(pairs, num_records, sizeof(PeriodIndexPair), compare_period_pairs);
+        
+        // Группировка на CPU
+        int64_t* h_unique_periods = new int64_t[num_records];
+        int* h_counts = new int[num_records];
+        int* h_offsets = new int[num_records];
+        
+        if (num_records > 0) {
+            int64_t current_period = pairs[0].period;
+            h_unique_periods[0] = current_period;
+            h_offsets[0] = 0;
+            h_counts[0] = 1;
+            num_periods = 1;
+            
+            for (int i = 1; i < num_records; i++) {
+                if (pairs[i].period == current_period) {
+                    h_counts[num_periods - 1]++;
+                } else {
+                    current_period = pairs[i].period;
+                    h_unique_periods[num_periods] = current_period;
+                    h_offsets[num_periods] = i;
+                    h_counts[num_periods] = 1;
+                    num_periods++;
+                }
+            }
+        }
+        
+        // Копируем отсортированные индексы на GPU
+        int* h_indices = new int[num_records];
+        for (int i = 0; i < num_records; i++) {
+            h_indices[i] = pairs[i].index;
+        }
+        CUDA_CHECK(cudaMemcpy(d_indices, h_indices, num_records * sizeof(int), 
+                              cudaMemcpyHostToDevice));
+        
+        // Копируем отсортированные period_ids на GPU
+        copy_sorted_period_ids_kernel<<<num_blocks, BLOCK_SIZE>>>(
+            d_period_ids, d_indices, d_sorted_period_ids, num_records);
+        CUDA_CHECK(cudaGetLastError());
+        CUDA_CHECK(cudaDeviceSynchronize());
+        
+        // Копируем уникальные периоды, counts и offsets на GPU
+        CUDA_CHECK(cudaMalloc(&d_unique_periods, num_periods * sizeof(int64_t)));
+        CUDA_CHECK(cudaMalloc(&d_counts, num_periods * sizeof(int)));
+        CUDA_CHECK(cudaMalloc(&d_offsets, num_periods * sizeof(int)));
+        
+        CUDA_CHECK(cudaMemcpy(d_unique_periods, h_unique_periods, 
+                              num_periods * sizeof(int64_t), cudaMemcpyHostToDevice));
+        CUDA_CHECK(cudaMemcpy(d_counts, h_counts, 
+                              num_periods * sizeof(int), cudaMemcpyHostToDevice));
+        CUDA_CHECK(cudaMemcpy(d_offsets, h_offsets, 
+                              num_periods * sizeof(int), cudaMemcpyHostToDevice));
+        
+        delete[] pairs;
+        delete[] h_indices;
+        delete[] h_unique_periods;
+        delete[] h_counts;
+        delete[] h_offsets;
+        delete[] h_period_ids;
     }
     
-    // Копируем отсортированные данные обратно на GPU
-    int64_t* d_sorted_period_ids = nullptr;
-    int* d_sorted_indices = nullptr;
-    CUDA_CHECK(cudaMalloc(&d_sorted_period_ids, num_records * sizeof(int64_t)));
-    CUDA_CHECK(cudaMalloc(&d_sorted_indices, num_records * sizeof(int)));
+    double step3_ms = get_time_ms() - step3_start;
     
-    int64_t* h_sorted_period_ids = new int64_t[num_records];
-    for (int i = 0; i < num_records; i++) {
-        h_sorted_period_ids[i] = h_period_ids[h_indices[i]];
-    }
-    CUDA_CHECK(cudaMemcpy(d_sorted_period_ids, h_sorted_period_ids, 
-                          num_records * sizeof(int64_t), cudaMemcpyHostToDevice));
-    CUDA_CHECK(cudaMemcpy(d_sorted_indices, h_indices, 
-                          num_records * sizeof(int), cudaMemcpyHostToDevice));
-    
-    // Копируем уникальные периоды, counts и offsets на GPU
-    int64_t* d_unique_periods = nullptr;
-    int* d_counts = nullptr;
-    int* d_offsets = nullptr;
-    CUDA_CHECK(cudaMalloc(&d_unique_periods, num_periods * sizeof(int64_t)));
-    CUDA_CHECK(cudaMalloc(&d_counts, num_periods * sizeof(int)));
-    CUDA_CHECK(cudaMalloc(&d_offsets, num_periods * sizeof(int)));
-    
-    CUDA_CHECK(cudaMemcpy(d_unique_periods, h_unique_periods, 
-                          num_periods * sizeof(int64_t), cudaMemcpyHostToDevice));
-    CUDA_CHECK(cudaMemcpy(d_counts, h_counts, 
-                          num_periods * sizeof(int), cudaMemcpyHostToDevice));
-    CUDA_CHECK(cudaMemcpy(d_offsets, h_offsets, 
-                          num_periods * sizeof(int), cudaMemcpyHostToDevice));
+    // ========================================================================
+    // Шаг 3.5: Переупорядочивание данных по отсортированным индексам
+    // ========================================================================
+    double step3_5_start = get_time_ms();
     
     // Переупорядочиваем данные v1, v7, v11, amount по отсортированным индексам
     double* d_v1_sorted = nullptr;
@@ -424,23 +686,16 @@ extern "C" int gpu_aggregate_periods(
     
     reorder_data_kernel<<<num_blocks, BLOCK_SIZE>>>(
         d_v1, d_v7, d_v11, d_amount,
-        d_sorted_indices,
+        d_indices,
         d_v1_sorted, d_v7_sorted, d_v11_sorted, d_amount_sorted,
         num_records);
     CUDA_CHECK(cudaGetLastError());
     CUDA_CHECK(cudaDeviceSynchronize());
     
-    delete[] h_period_ids;
-    delete[] h_indices;
-    delete[] h_unique_periods;
-    delete[] h_counts;
-    delete[] h_offsets;
-    delete[] h_sorted_period_ids;
-    
     cudaFree(d_sorted_period_ids);
-    cudaFree(d_sorted_indices);
+    cudaFree(d_indices);
     
-    double step3_ms = get_time_ms() - step3_start;
+    double step3_5_ms = get_time_ms() - step3_5_start;
     
     // ========================================================================
     // Шаг 4: Агрегация периодов
@@ -521,6 +776,7 @@ extern "C" int gpu_aggregate_periods(
     printf("    1. Malloc + H->D copy:  %7.3f ms\n", step1_ms);
     printf("    2. Compute period_ids:  %7.3f ms\n", step2_ms);
     printf("    3. Sort + group (CPU):  %7.3f ms (%d periods)\n", step3_ms, num_periods);
+    printf("    3.5. Reorder data (GPU): %7.3f ms\n", step3_5_ms);
     printf("    4. Aggregation kernel:  %7.3f ms (%s)\n", step4_ms, use_block_kernel ? "block" : "simple");
     printf("    5. D->H copy:           %7.3f ms\n", step5_ms);
     printf("    6. Free GPU memory:     %7.3f ms\n", step6_ms);

@@ -8,7 +8,10 @@
 #include <sstream>
 #include <ctime>
 #include <limits>
+#include <map>
 #include <iostream>
+#include <unistd.h>
+#include <cstdlib>
 
 IntervalResult find_intervals_parallel(
     const std::vector<PeriodStats>& periods,
@@ -53,34 +56,89 @@ double collect_intervals(
     double wait_time = 0.0;
     
     if (rank == 0) {
-        for (int r = 1; r < size; r++) {
-            double wait_start = MPI_Wtime();
-            
+        // КРИТИЧНО: Получаем данные от ЛЮБОГО готового процесса, не ждем конкретный ранк!
+        // Используем MPI_ANY_SOURCE чтобы не блокироваться на медленных GPU процессах
+        std::vector<bool> received(size, false);
+        received[0] = true;  // Rank 0 уже имеет свои данные
+        
+        int received_count = 1;  // Rank 0 уже обработан
+        
+        // Используем блокирующий прием с MPI_ANY_SOURCE - получаем данные от любого готового процесса
+        // Это НЕ блокирует отправителей, если они уже отправили данные через MPI_Isend
+        while (received_count < size) {
+            // Получаем count от любого готового процесса
             int count;
-            MPI_Recv(&count, 1, MPI_INT, r, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Status status;
+            MPI_Recv(&count, 1, MPI_INT, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &status);
+            int source = status.MPI_SOURCE;
             
-            if (count > 0) {
-                std::vector<double> buffer(count * 7);
-                MPI_Recv(buffer.data(), count * 7, MPI_DOUBLE, r, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-                
-                for (int i = 0; i < count; i++) {
-                    Interval iv;
-                    iv.period = static_cast<PeriodIndex>(buffer[i * 7 + 0]);
-                    iv.v1_min = buffer[i * 7 + 1];
-                    iv.v1_max = buffer[i * 7 + 2];
-                    iv.v11_expectation = buffer[i * 7 + 3];
-                    iv.negative_v7_count = static_cast<int64_t>(buffer[i * 7 + 4]);
-                    iv.amount_sum = buffer[i * 7 + 5];
-                    iv.count = static_cast<int64_t>(buffer[i * 7 + 6]);
-                    local_intervals.push_back(iv);
+            if (!received[source]) {
+                if (count > 0) {
+                    // Получаем данные от этого процесса
+                    std::vector<double> buffer(count * 7);
+                    MPI_Recv(buffer.data(), count * 7, MPI_DOUBLE, source, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                    
+                    // Обрабатываем полученные данные СРАЗУ по мере поступления
+                    for (int j = 0; j < count; j++) {
+                        Interval iv;
+                        iv.period = static_cast<PeriodIndex>(buffer[j * 7 + 0]);
+                        iv.v1_min = buffer[j * 7 + 1];
+                        iv.v1_max = buffer[j * 7 + 2];
+                        iv.v11_expectation = buffer[j * 7 + 3];
+                        iv.negative_v7_count = static_cast<int64_t>(buffer[j * 7 + 4]);
+                        iv.amount_sum = buffer[j * 7 + 5];
+                        iv.count = static_cast<int64_t>(buffer[j * 7 + 6]);
+                        local_intervals.push_back(iv);
+                    }
                 }
+                
+                received[source] = true;
+                received_count++;
             }
-            
-            wait_time += MPI_Wtime() - wait_start;
         }
         
         // Отладочный вывод: сколько групп собрано
         std::cout << "Rank 0: collected " << local_intervals.size() << " groups from all ranks" << std::endl;
+        
+        // КРИТИЧНО: Объединяем интервалы с одинаковым периодом от разных процессов
+        // Используем map для группировки по периоду
+        // ВАЖНО: Это происходит только после получения ВСЕХ данных, потому что нужно
+        // объединить интервалы с одинаковым периодом от разных процессов
+        std::map<PeriodIndex, Interval> merged_intervals;
+        
+        for (const auto& iv : local_intervals) {
+            auto it = merged_intervals.find(iv.period);
+            if (it == merged_intervals.end()) {
+                // Первый интервал для этого периода
+                merged_intervals[iv.period] = iv;
+            } else {
+                // Объединяем с существующим интервалом
+                Interval& merged = it->second;
+                merged.v1_min = std::min(merged.v1_min, iv.v1_min);
+                merged.v1_max = std::max(merged.v1_max, iv.v1_max);
+                // Для мат. ожидания V11: нужно пересчитать из сумм
+                // v11_expectation = v11_sum / count, поэтому:
+                // merged.v11_expectation = (merged.v11_sum + iv.v11_sum) / (merged.count + iv.count)
+                // Но у нас только expectation, нужно восстановить суммы:
+                double merged_v11_sum = merged.v11_expectation * merged.count;
+                double iv_v11_sum = iv.v11_expectation * iv.count;
+                merged.negative_v7_count += iv.negative_v7_count;
+                merged.amount_sum += iv.amount_sum;
+                merged.count += iv.count;
+                // Пересчитываем мат. ожидание V11
+                if (merged.count > 0) {
+                    merged.v11_expectation = (merged_v11_sum + iv_v11_sum) / merged.count;
+                }
+            }
+        }
+        
+        // Преобразуем map обратно в vector
+        local_intervals.clear();
+        for (const auto& [period, iv] : merged_intervals) {
+            local_intervals.push_back(iv);
+        }
+        
+        std::cout << "Rank 0: merged to " << local_intervals.size() << " unique periods" << std::endl;
         
         // Сортируем все группы по убыванию количества отрицательных V7
         std::sort(local_intervals.begin(), local_intervals.end(),
@@ -159,11 +217,24 @@ double collect_intervals(
                 return a.amount_sum > b.amount_sum;
             });
     } else {
+        // КРИТИЧНО: Используем MPI_Isend (неблокирующая отправка) - НЕ БЛОКИРУЕТ ВООБЩЕ!
+        // Сохраняем буфер в статической памяти, чтобы он не был уничтожен до завершения отправки
         int count = static_cast<int>(local_intervals.size());
-        MPI_Send(&count, 1, MPI_INT, 0, 1, MPI_COMM_WORLD);
+        
+        // Используем статический буфер для сохранения данных до завершения отправки
+        static thread_local std::vector<std::vector<double>> send_buffers;
+        static thread_local std::vector<MPI_Request> send_requests;
+        
+        // Отправляем count асинхронно
+        MPI_Request req1;
+        MPI_Isend(&count, 1, MPI_INT, 0, 1, MPI_COMM_WORLD, &req1);
+        send_requests.push_back(req1);
         
         if (count > 0) {
-            std::vector<double> buffer(count * 7);
+            // Сохраняем буфер в статическом хранилище
+            send_buffers.emplace_back(count * 7);
+            auto& buffer = send_buffers.back();
+            
             for (int i = 0; i < count; i++) {
                 const auto& iv = local_intervals[i];
                 buffer[i * 7 + 0] = static_cast<double>(iv.period);
@@ -174,8 +245,15 @@ double collect_intervals(
                 buffer[i * 7 + 5] = iv.amount_sum;
                 buffer[i * 7 + 6] = static_cast<double>(iv.count);
             }
-            MPI_Send(buffer.data(), count * 7, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
+            
+            // Отправляем данные асинхронно - НЕ БЛОКИРУЕТ!
+            MPI_Request req2;
+            MPI_Isend(buffer.data(), count * 7, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD, &req2);
+            send_requests.push_back(req2);
         }
+        
+        // Процесс СРАЗУ продолжает работу - НЕТ БЛОКИРОВОК ВООБЩЕ!
+        // Буферы и requests сохраняются в статической памяти до завершения отправки
     }
     
     return wait_time;

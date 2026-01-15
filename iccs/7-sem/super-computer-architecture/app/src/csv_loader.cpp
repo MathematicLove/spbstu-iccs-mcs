@@ -59,12 +59,26 @@ bool parse_csv_line(const std::string& line, Record& record) {
     }
 }
 
-std::vector<Record> load_csv_parallel(int rank, int size) {
+std::vector<Record> load_csv_parallel(int rank, int size, const std::vector<int>& provided_shares) {
     std::vector<Record> data;
     
     // Читаем настройки из переменных окружения
     std::string data_path = get_data_path();
-    std::vector<int> shares = get_data_read_shares();
+    std::vector<int> shares;
+    
+    // Если доли предоставлены, используем их, иначе вычисляем автоматически
+    if (!provided_shares.empty() && provided_shares.size() == static_cast<size_t>(size)) {
+        shares = provided_shares;
+        if (rank == 0) {
+            std::cout << "Rank 0: Using provided process-based shares (weighted balancing)" << std::endl;
+        }
+    } else {
+        shares = get_data_read_shares();
+        if (rank == 0) {
+            std::cout << "Rank 0: Using auto-calculated node-based shares (fallback)" << std::endl;
+        }
+    }
+    
     int64_t overlap_bytes = get_read_overlap_bytes();
     
     // Выводим информацию о распределении (только на Rank 0)

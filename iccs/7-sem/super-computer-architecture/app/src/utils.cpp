@@ -35,6 +35,88 @@ bool is_gpu_node(const std::string& node_name) {
     return lower_name.find("gpu") != std::string::npos;
 }
 
+double get_gpu_process_weight() {
+    const char* env = std::getenv("GPU_PROCESS_WEIGHT");
+    if (env) {
+        try {
+            double weight = std::stod(env);
+            if (weight > 0.0) {
+                return weight;
+            }
+        } catch (...) {
+            // Игнорируем ошибки парсинга
+        }
+    }
+    // Значение по умолчанию: 1.28 (GPU получает на 28% больше данных)
+    return 1.28;
+}
+
+double get_cpu_process_weight() {
+    const char* env = std::getenv("CPU_PROCESS_WEIGHT");
+    if (env) {
+        try {
+            double weight = std::stod(env);
+            if (weight > 0.0) {
+                return weight;
+            }
+        } catch (...) {
+            // Игнорируем ошибки парсинга
+        }
+    }
+    // Значение по умолчанию: 1.0 (базовый вес для CPU)
+    return 1.0;
+}
+
+std::vector<double> calculate_process_weights(const std::vector<bool>& process_has_gpu) {
+    double gpu_weight = get_gpu_process_weight();
+    double cpu_weight = get_cpu_process_weight();
+    
+    std::vector<double> weights;
+    weights.reserve(process_has_gpu.size());
+    
+    for (bool has_gpu : process_has_gpu) {
+        weights.push_back(has_gpu ? gpu_weight : cpu_weight);
+    }
+    
+    return weights;
+}
+
+std::vector<int> weights_to_shares(const std::vector<double>& weights, int base_share) {
+    if (weights.empty()) {
+        return std::vector<int>();
+    }
+    
+    // Находим минимальный вес для нормализации
+    double min_weight = *std::min_element(weights.begin(), weights.end());
+    if (min_weight <= 0.0) {
+        min_weight = 1.0;
+    }
+    
+    // Вычисляем суммарный вес
+    double total_weight = 0.0;
+    for (double w : weights) {
+        total_weight += w;
+    }
+    
+    if (total_weight <= 0.0) {
+        // Если суммарный вес некорректный, используем равномерное распределение
+        return std::vector<int>(weights.size(), base_share);
+    }
+    
+    // Преобразуем веса в доли, сохраняя пропорции
+    // Используем base_share как базовое значение для нормализации
+    std::vector<int> shares;
+    shares.reserve(weights.size());
+    
+    for (double w : weights) {
+        // Нормализуем вес относительно минимального и умножаем на base_share
+        double normalized = (w / min_weight) * base_share;
+        shares.push_back(static_cast<int>(normalized + 0.5)); // Округляем
+    }
+    
+    return shares;
+}
+
 std::vector<int> calculate_data_shares_auto(int num_nodes, const std::vector<std::string>& node_names) {
     std::vector<int> shares;
     

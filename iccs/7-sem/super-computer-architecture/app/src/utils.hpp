@@ -21,6 +21,16 @@ bool is_gpu_node(const std::string& node_name);
 // Автоматически вычисляет доли на основе количества узлов и их типов
 std::vector<int> calculate_data_shares_auto(int num_nodes, const std::vector<std::string>& node_names);
 
+// Весовая балансировка процессов
+// Получает веса GPU и CPU процессов из переменных окружения
+double get_gpu_process_weight();
+double get_cpu_process_weight();
+// Вычисляет доли данных на основе весов процессов (GPU/CPU)
+// process_has_gpu[i] = true если процесс i имеет доступный GPU
+std::vector<double> calculate_process_weights(const std::vector<bool>& process_has_gpu);
+// Преобразует веса в целочисленные доли для распределения данных
+std::vector<int> weights_to_shares(const std::vector<double>& weights, int base_share = 1000);
+
 // Структура для хранения диапазона байт для чтения
 struct ByteRange {
     int64_t start;

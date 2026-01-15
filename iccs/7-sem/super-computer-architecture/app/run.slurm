@@ -1,19 +1,25 @@
 #!/bin/bash
 #SBATCH --job-name=creditcard
-#SBATCH --nodes=3
-#SBATCH --ntasks=3
+#SBATCH --nodes=4
+#SBATCH --ntasks=4
 #SBATCH --cpus-per-task=2
-#SBATCH --nodelist=ayzekcpu1,ayzekcpu2,ayzekgpu1
+#SBATCH --nodelist=ayzekcpu1,ayzekcpu2,ayzekgpu1,ayzekgpu2
 #SBATCH --output=out.txt
 #SBATCH --export=ALL
 
 # Путь к файлу данных (должен существовать на всех узлах)
 export DATA_PATH="/home/ayzek/creditcard_2023.csv"
 
-# Доли данных для каждого ранка (автоматически вычисляются, если не заданы)
+# Веса процессов для балансировки нагрузки
+# GPU процессы получают больше данных пропорционально весу
+# По умолчанию: GPU_PROCESS_WEIGHT=1.28, CPU_PROCESS_WEIGHT=1.0
+# Измените значения ниже для настройки балансировки
+export GPU_PROCESS_WEIGHT=${GPU_PROCESS_WEIGHT:-1.28}   
+export CPU_PROCESS_WEIGHT=${CPU_PROCESS_WEIGHT:-1.0}    
+# 
+# Доли данных для каждого ранка (автоматически вычисляются на основе весов процессов)
 # Формат: "share1,share2,share3,share4" или оставьте пустым для автоматического вычисления
-# Автоматическое вычисление: GPU узлы получают в 2 раза больше данных
-# export DATA_READ_SHARES="10,11,13,14"  # Раскомментируйте для ручной настройки
+# export DATA_READ_SHARES="10,11,13,14"  # Раскомментируйте для ручной настройки (не рекомендуется)
 
 # Размер перекрытия в байтах для обработки границ строк
 export READ_OVERLAP_BYTES=131072
@@ -37,11 +43,18 @@ if [ -d "$HOME/cuda/bin" ]; then
     export LD_LIBRARY_PATH=$HOME/cuda/lib64:$LD_LIBRARY_PATH
 fi
 
-cd ~
+# Переходим в директорию проекта (NFS - доступна на всех узлах)
+cd /mnt/share/supercomputers
+
 # Количество выводимых групп (по умолчанию 50)
 # Можно переопределить перед sbatch: export TOP_N=100
 TOP_N=${TOP_N:-50}
 echo "Using TOP_N = $TOP_N"
+
+# Путь к программе (NFS - доступна на всех узлах)
+APP_PATH="/mnt/share/supercomputers/build/bitcoin_app"
+
 # Явно передаем переменные окружения через mpirun
+# GPU_PROCESS_WEIGHT и CPU_PROCESS_WEIGHT передаются автоматически через --export=ALL (если заданы)
 # DATA_READ_SHARES не передаем, так как она опциональна и вычисляется автоматически
-mpirun -np $SLURM_NTASKS -x USE_CUDA -x DATA_PATH -x READ_OVERLAP_BYTES -x AGGREGATION_INTERVAL -x USE_BLOCK_KERNEL ~/bitcoin_app -n $TOP_N
+mpirun -np $SLURM_NTASKS -x USE_CUDA -x DATA_PATH -x READ_OVERLAP_BYTES -x AGGREGATION_INTERVAL -x USE_BLOCK_KERNEL -x GPU_PROCESS_WEIGHT -x CPU_PROCESS_WEIGHT $APP_PATH -n $TOP_N
