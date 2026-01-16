@@ -51,5 +51,5 @@
     - [Введение в квантовые вычисления (квантовые алгоритмы)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/quantum-computing);
     - [ОС UNIX (скрипт, поток-демон, http-сервер, чат-сервер)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/unix-os);
     - [Человеко-машинный интерфейс (figma)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/user-machine-interface);
-    - [Архитектура суперкомпьютерных систем (CUDA, MPI, SLURM)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/supercomputer-architecture);
+    - [Архитектура суперкомпьютерных систем (CUDA, MPI, SLURM, Xilinx)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/supercomputer-architecture);
     - [Научно-исследовательская работа (распознавание объектов в режиме реального времени)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/srw).  
