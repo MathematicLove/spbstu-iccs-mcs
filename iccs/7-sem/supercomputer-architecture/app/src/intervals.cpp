@@ -56,44 +56,49 @@ double collect_intervals(
     double wait_time = 0.0;
     
     if (rank == 0) {
-        // КРИТИЧНО: Получаем данные от ЛЮБОГО готового процесса, не ждем конкретный ранк!
+        // КРИТИЧНО: Получаем данные от ЛЮБОГО готового процесса, не ждем конкретный ранк
         // Используем MPI_ANY_SOURCE чтобы не блокироваться на медленных GPU процессах
         std::vector<bool> received(size, false);
         received[0] = true;  // Rank 0 уже имеет свои данные
         
         int received_count = 1;  // Rank 0 уже обработан
         
-        // Используем блокирующий прием с MPI_ANY_SOURCE - получаем данные от любого готового процесса
-        // Это НЕ блокирует отправителей, если они уже отправили данные через MPI_Isend
         while (received_count < size) {
-            // Получаем count от любого готового процесса
-            int count;
+            // Проверяем, есть ли данные от любого процесса
             MPI_Status status;
-            MPI_Recv(&count, 1, MPI_INT, MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &status);
-            int source = status.MPI_SOURCE;
+            int flag = 0;
+            MPI_Iprobe(MPI_ANY_SOURCE, 1, MPI_COMM_WORLD, &flag, &status);
             
-            if (!received[source]) {
-                if (count > 0) {
-                    // Получаем данные от этого процесса
-                    std::vector<double> buffer(count * 7);
-                    MPI_Recv(buffer.data(), count * 7, MPI_DOUBLE, source, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            if (flag) {
+                int source = status.MPI_SOURCE;
+                if (!received[source]) {
+                    // Получаем count от этого процесса
+                    int count;
+                    MPI_Recv(&count, 1, MPI_INT, source, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                     
-                    // Обрабатываем полученные данные СРАЗУ по мере поступления
-                    for (int j = 0; j < count; j++) {
-                        Interval iv;
-                        iv.period = static_cast<PeriodIndex>(buffer[j * 7 + 0]);
-                        iv.v1_min = buffer[j * 7 + 1];
-                        iv.v1_max = buffer[j * 7 + 2];
-                        iv.v11_expectation = buffer[j * 7 + 3];
-                        iv.negative_v7_count = static_cast<int64_t>(buffer[j * 7 + 4]);
-                        iv.amount_sum = buffer[j * 7 + 5];
-                        iv.count = static_cast<int64_t>(buffer[j * 7 + 6]);
-                        local_intervals.push_back(iv);
+                    if (count > 0) {
+                        std::vector<double> buffer(count * 7);
+                        MPI_Recv(buffer.data(), count * 7, MPI_DOUBLE, source, 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                        
+                        for (int i = 0; i < count; i++) {
+                            Interval iv;
+                            iv.period = static_cast<PeriodIndex>(buffer[i * 7 + 0]);
+                            iv.v1_min = buffer[i * 7 + 1];
+                            iv.v1_max = buffer[i * 7 + 2];
+                            iv.v11_expectation = buffer[i * 7 + 3];
+                            iv.negative_v7_count = static_cast<int64_t>(buffer[i * 7 + 4]);
+                            iv.amount_sum = buffer[i * 7 + 5];
+                            iv.count = static_cast<int64_t>(buffer[i * 7 + 6]);
+                            local_intervals.push_back(iv);
+                        }
                     }
+                    
+                    received[source] = true;
+                    received_count++;
                 }
-                
-                received[source] = true;
-                received_count++;
+            } else {
+                // Нет готовых данных - небольшая задержка чтобы не нагружать CPU
+                usleep(100);  // 100 микросекунд
             }
         }
         
@@ -102,8 +107,6 @@ double collect_intervals(
         
         // КРИТИЧНО: Объединяем интервалы с одинаковым периодом от разных процессов
         // Используем map для группировки по периоду
-        // ВАЖНО: Это происходит только после получения ВСЕХ данных, потому что нужно
-        // объединить интервалы с одинаковым периодом от разных процессов
         std::map<PeriodIndex, Interval> merged_intervals;
         
         for (const auto& iv : local_intervals) {
@@ -217,24 +220,24 @@ double collect_intervals(
                 return a.amount_sum > b.amount_sum;
             });
     } else {
-        // КРИТИЧНО: Используем MPI_Isend (неблокирующая отправка) - НЕ БЛОКИРУЕТ ВООБЩЕ!
-        // Сохраняем буфер в статической памяти, чтобы он не был уничтожен до завершения отправки
+        // КРИТИЧНО: Используем MPI_Bsend (буферизованная отправка) - НЕ БЛОКИРУЕТ!
+        // MPI_Bsend копирует данные в буфер и сразу возвращается
         int count = static_cast<int>(local_intervals.size());
         
-        // Используем статический буфер для сохранения данных до завершения отправки
-        static thread_local std::vector<std::vector<double>> send_buffers;
-        static thread_local std::vector<MPI_Request> send_requests;
+        // Выделяем буфер для MPI_Bsend (один раз, статически)
+        static bool buffer_attached = false;
+        if (!buffer_attached) {
+            int buffer_size = 10 * 1024 * 1024;  // 10 MB буфер
+            void* send_buffer = malloc(buffer_size);
+            MPI_Buffer_attach(send_buffer, buffer_size);
+            buffer_attached = true;
+        }
         
-        // Отправляем count асинхронно
-        MPI_Request req1;
-        MPI_Isend(&count, 1, MPI_INT, 0, 1, MPI_COMM_WORLD, &req1);
-        send_requests.push_back(req1);
+        // Отправляем count через буферизованную отправку
+        MPI_Bsend(&count, 1, MPI_INT, 0, 1, MPI_COMM_WORLD);
         
         if (count > 0) {
-            // Сохраняем буфер в статическом хранилище
-            send_buffers.emplace_back(count * 7);
-            auto& buffer = send_buffers.back();
-            
+            std::vector<double> buffer(count * 7);
             for (int i = 0; i < count; i++) {
                 const auto& iv = local_intervals[i];
                 buffer[i * 7 + 0] = static_cast<double>(iv.period);
@@ -245,15 +248,11 @@ double collect_intervals(
                 buffer[i * 7 + 5] = iv.amount_sum;
                 buffer[i * 7 + 6] = static_cast<double>(iv.count);
             }
-            
-            // Отправляем данные асинхронно - НЕ БЛОКИРУЕТ!
-            MPI_Request req2;
-            MPI_Isend(buffer.data(), count * 7, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD, &req2);
-            send_requests.push_back(req2);
+            // Отправляем через буфер - НЕ БЛОКИРУЕТ, сразу возвращается!
+            MPI_Bsend(buffer.data(), count * 7, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
         }
         
-        // Процесс СРАЗУ продолжает работу - НЕТ БЛОКИРОВОК ВООБЩЕ!
-        // Буферы и requests сохраняются в статической памяти до завершения отправки
+        // Процесс СРАЗУ продолжает работу - НЕТ БЛОКИРОВОК!
     }
     
     return wait_time;

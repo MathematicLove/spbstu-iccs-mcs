@@ -240,8 +240,6 @@ int main(int argc, char** argv) {
               << std::endl;
 
     // Сбор интервалов на ранке 0
-    // КРИТИЧНО: Процессы с Rank > 0 отправляют данные и СРАЗУ продолжают работу
-    // Rank 0 обрабатывает данные по мере поступления
     double collect_wait = collect_intervals(iv_result.intervals, rank, size, top_n);
 
     if (rank == 0) {
@@ -249,9 +247,6 @@ int main(int argc, char** argv) {
                   << ", wait " << std::fixed << std::setprecision(3) << collect_wait << " sec"
                   << std::endl;
     }
-    
-    // КРИТИЧНО: Процессы с Rank > 0 могут продолжать работу здесь, не дожидаясь Rank 0
-    // Rank 0 обрабатывает данные параллельно с работой других процессов
 
     // Запись результатов в файл (только ранк 0)
     const char* home = std::getenv("HOME");

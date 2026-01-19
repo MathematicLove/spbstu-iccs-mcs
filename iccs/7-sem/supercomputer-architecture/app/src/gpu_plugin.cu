@@ -771,11 +771,11 @@ extern "C" int gpu_aggregate_periods(
     double total_ms = get_time_ms() - total_start;
     
     // Выводим информацию о GPU агрегации
-    printf("  GPU aggregation (%d records, interval=%.1f, kernel=%s):\n",
+    printf(" GPU aggregation (%d records, interval=%.1f, kernel=%s):\n",
            num_records, interval, use_block_kernel ? "block" : "simple");
     printf("    1. Malloc + H->D copy:  %7.3f ms\n", step1_ms);
     printf("    2. Compute period_ids:  %7.3f ms\n", step2_ms);
-    printf("    3. Sort + group (CPU):  %7.3f ms (%d periods)\n", step3_ms, num_periods);
+    printf("    3. Sort + group:  %7.3f ms (%d periods)\n", step3_ms, num_periods);
     printf("    3.5. Reorder data (GPU): %7.3f ms\n", step3_5_ms);
     printf("    4. Aggregation kernel:  %7.3f ms (%s)\n", step4_ms, use_block_kernel ? "block" : "simple");
     printf("    5. D->H copy:           %7.3f ms\n", step5_ms);

@@ -19,7 +19,7 @@ std::vector<PeriodStats> aggregate_periods(const std::vector<Record>& records) {
         double v1_max = std::numeric_limits<double>::lowest();
         double v11_sum = 0.0;
         int64_t negative_v7_count = 0;
-        int64_t zero_v7_count = 0;  // Количество нулевых значений V7
+        int64_t zero_v7_count = 0;   
         double amount_sum = 0.0;
         int64_t count = 0;
 
