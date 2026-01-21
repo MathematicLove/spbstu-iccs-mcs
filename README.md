@@ -36,8 +36,8 @@
     - [Семенары на английском языке (Literature review)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/english);
     - [Параллельное программирование на языке Java (+ Scala)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/parallel-programming-on-java).
   - 6-ой семестр:
-    - Анонимизация данных (OpenEDU)(**н/д**);
-    - Проектирование WEB приложений (ER, UseCase, BPM, BPMN, Screen-form graph, ScreenForms)(**н/д**);
+    - [Анонимизация данных (OpenEDU)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/data-anonymization);
+    - [Проектирование WEB приложений (ER, UseCase, BPM, BPMN, Screen-form graph, ScreenForms](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/web-application-design);
     - [Алгоритмические основы компьютерной графики (Blender, Unigine)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/computer-graphics);
     - [Математическая статистика (Classic statistic, Regression analysis)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/math-statistics);
     - [Методы тестирования программного обеспечения (Black-Box, White-Box, статическое тестирование (Haskell), JUnit (Java))](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/software-testing);
