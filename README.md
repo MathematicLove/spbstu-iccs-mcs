@@ -44,6 +44,7 @@
     - [Сети ЭВМ и телекомуникации компьютерных сетей (RabbitMQ, traceroute, ping)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/сomputer-networking);
     - [Математическая логика и теория формальных языков (на Haskell)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/formal-languages);
     - [Программирования на языке Java (Spring framework)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/programming-on-java).
+    - [Проектирование дельта-робота (Практика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/practice-delta-robot-design)
   - 7-ой семестр:
     - [Генетические алгоритмы (6 типов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/genetics-algorithms);
     - [Методы оптимизации (2 метода одномерной оптимизации, 5 методов градиентного спуска)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/methods-of-optimization);
