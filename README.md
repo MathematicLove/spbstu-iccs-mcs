@@ -5,37 +5,22 @@
 
 ### Данный репозиторий содержит:
 - Статьи:
+  - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles);
   - Решение задачи динамической VRP для обеспечения точной подачи такси клиенту (в реализации);
-  - Использование методов машинного обучения для обнаружения объектов на железных дорогах (в реализации); 
-  - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles).
+  - Использование методов машинного обучения для обнаружения объектов на железных дорогах (в реализации).
 - Дипломный проект: 
   - Распознование посторонних объектов на трамвайных путях в режиме реального времени (в реализации).
 - Учеба:
-  - 1-ый семестр: **н/д**.
-  - 2-ой семестр: **н/д**.
-  - 3-ий семестр:
-    - [Объектно-ориентированное программирование (картотека)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/oop-basics);
-    - [Дискретная математика (большая арифметика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/discrete-mathematics/big-and-small-arithmetic);
-    - [Программирование на языке C++ (игра дурак)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/programming-on-c%2B%2B).
-  - 4-ый семестр:
-    - Английский язык intermediate level (**н/д**);
-    - [Архитектура суперкомпьютеров (RAID50)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/supercomputer-architecture);
-    - [Основы баз данных (MySQL)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/databases);
-    - [Программирование микроконтроллеры (STM32)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/microcontrollers);
-    - [Теория автоматического управления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/automatic-control-theory);
-    - [Теория графов (алгоритмы на графах)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/graph-theory);
-    - [Цифровая культура (тг-бот IMG2TXT)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/digital-culture/bot).
-  - 5-ый семестр:
-    - Математическая логика (**н/д**);
-    - Теория вероятности (Вероятностный эксперемент, Классическая/Геометрическая вероятность, Теория меры, Случайные величины, Ч-Х случайных величин, , Случайные Вектора, ЦПТ, Цепи Маркова) (**н/д**);
-    - Технологии разработки программного обеспечения (ТЗ, IDEF0) (**н/д**); 
-    - [Теория алгоритмов (клеточный автомат, логическая схема часов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/algorithm-theory);
-    - [Методы проектирования баз данных (SQL)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/db-desing);
-    - [Программирование на языке Python (тг-бот парсинга товаров)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/programming-on-python);
-    - [Функциональное программирование на языке Haskell (TXT2IMG)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/haskell);
-    - [Семенары на английском языке (Upper-intermediate level, Literature review)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/english);
-    - [Параллельное программирование на языке Java (+ Scala)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/parallel-programming-on-java).
-  - 6-ой семестр:
+  - **7-ой семестр**:
+    - [Генетические алгоритмы (6 типов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/genetics-algorithms);
+    - [Методы оптимизации (2 метода одномерной оптимизации, 5 методов градиентного спуска)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/methods-of-optimization);
+    - [Управление проектами (scrumban)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/projects-manegment);
+    - [Введение в квантовые вычисления (квантовые алгоритмы)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/quantum-computing);
+    - [ОС UNIX (скрипт, поток-демон, http-сервер, чат-сервер)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/unix-os);
+    - [Человеко-машинный интерфейс (figma)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/user-machine-interface);
+    - [Архитектура суперкомпьютерных систем (CUDA, MPI, SLURM, Xilinx)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/supercomputer-architecture);
+    - [Научно-исследовательская работа (распознавание объектов в режиме реального времени)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/srw).
+  - **6-ой семестр**:
     - [Анонимизация данных (OpenEDU)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/data-anonymization);
     - [Проектирование WEB приложений (ER, UseCase, BPM, BPMN, Screen-form graph, ScreenForms](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/web-application-design);
     - [Алгоритмические основы компьютерной графики (Blender, Unigine)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/computer-graphics);
@@ -45,12 +30,61 @@
     - [Математическая логика и теория формальных языков (на Haskell)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/formal-languages);
     - [Программирования на языке Java (Spring framework)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/programming-on-java).
     - [Проектирование дельта-робота (Практика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/practice-delta-robot-design)
-  - 7-ой семестр:
-    - [Генетические алгоритмы (6 типов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/genetics-algorithms);
-    - [Методы оптимизации (2 метода одномерной оптимизации, 5 методов градиентного спуска)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/methods-of-optimization);
-    - [Управление проектами (scrumban)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/projects-manegment);
-    - [Введение в квантовые вычисления (квантовые алгоритмы)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/quantum-computing);
-    - [ОС UNIX (скрипт, поток-демон, http-сервер, чат-сервер)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/unix-os);
-    - [Человеко-машинный интерфейс (figma)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/user-machine-interface);
-    - [Архитектура суперкомпьютерных систем (CUDA, MPI, SLURM, Xilinx)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/supercomputer-architecture);
-    - [Научно-исследовательская работа (распознавание объектов в режиме реального времени)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/srw).  
+  - **5-ый семестр**:
+    - [Теория алгоритмов (клеточный автомат, логическая схема часов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/algorithm-theory);
+    - [Методы проектирования баз данных (SQL)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/db-desing);
+    - [Программирование на языке Python (тг-бот парсинга товаров)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/programming-on-python);
+    - [Функциональное программирование на языке Haskell (TXT2IMG)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/haskell);
+    - [Семенары на английском языке (Upper-intermediate level, Literature review)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/english);
+    - [Параллельное программирование на языке Java (+ Scala)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/parallel-programming-on-java);
+    - Математическая логика (**н/д**);
+    - Теория вероятности (Вероятностный эксперемент, Классическая/Геометрическая вероятность, Теория меры, Случайные величины, Ч-Х случайных величин, , Случайные Вектора, ЦПТ, Цепи Маркова) (**н/д**);
+    - Технологии разработки программного обеспечения (ТЗ, IDEF0) (**н/д**).
+
+  - **4-ый семестр**:
+    - [Научно-исследовательская работа (OpenMP, OpenMPI)](https://github.com/MathematicLove/fano-encode-openmpi-openmp);
+    - [Архитектура суперкомпьютеров (RAID50)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/supercomputer-architecture);
+    - [Основы баз данных (MySQL)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/databases);
+    - [Программирование микроконтроллеры (STM32)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/microcontrollers);
+    - [Теория автоматического управления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/automatic-control-theory);
+    - [Теория графов (алгоритмы на графах)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/graph-theory);
+    - [Цифровая культура (тг-бот IMG2TXT)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/digital-culture/bot);
+    - Английский язык intermediate level (**н/д**);
+    - Основы проектной деятельности (тг-бот);
+    - Физическая культура.
+  - **3-ий семестр**:
+    - [Объектно-ориентированное программирование (картотека)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/oop-basics);
+    - [Дискретная математика (большая арифметика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/discrete-mathematics/big-and-small-arithmetic);
+    - [Программирование на языке C++ (игра дурак)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/programming-on-c%2B%2B);
+    - Безопасность жизнедеятельности (**н/д**);
+    - Иностранный язык: Базовый курс (**н/д**);
+    - Основы архитектуры ЦВМ (**н/д**);
+    - Теория автоматического управления (**н/д**);
+    - Технологии социально-значимых инициатив (Soft skills) (**н/д**);
+    - Физическая культура (**н/д**).
+  - **2-ой семестр**: **н/д**.
+    - Введение в профессиональную деятельность (**н/д**);
+    - Высшая математика (**н/д**); 
+    - Иностранный язык: Базовый курс (pre-intermediate level) (**н/д**);
+    - Научно-исследовательская работа (Qt + C++) (**н/д**);
+    - Основы критического мышления (Логика) (**н/д**);
+    - Программирование и алгоритмизация (на C++) (**н/д**);
+    - Технологии цифровой промышленности (OpenEDU) (**н/д**);
+    - Физика (Электричество и Магнетизм, Оптика) (**н/д**);
+    - Экономическая культура (**н/д**);
+    - Философия (**н/д**);
+    - Физическая культура (**н/д**).
+  - **1-ый семестр**: **н/д**.
+    - Физика (Механика, термодинамика) (**н/д**);
+    - Математический анализ (**н/д**);
+    - Линейная алгебра и аналитическая геометрия (**н/д**);
+    - Английский язык (**н/д**);
+    - Физическая культура (**н/д**);
+    - Цифровая культура (Основы математической логики) (**н/д**);
+    - Алгоритмизация и программирование (на C) (**н/д**);
+    - Безопасность жизнедеятельности (**н/д**);
+    - Гуманитарные проблемы суперкомпьютерных вычислений (**н/д**);
+    - История (**н/д**);
+    - Курсовое проектирование по основам программирования (**н/д**);
+    - Цифровой практикум (LaTeX) (**н/д**);
+    - Экономика (**н/д**).
