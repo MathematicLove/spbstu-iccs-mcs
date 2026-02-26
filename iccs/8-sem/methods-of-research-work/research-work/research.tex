@@ -1,0 +1,280 @@
+\documentclass[areasetadvanced]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+
+\usepackage[footskip=1cm,left=25mm, right=15mm, top=20mm, bottom=20mm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb} 
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usepackage{float}
+\usepackage{dashrule}
+\usepackage{fancyhdr} 
+\usepackage{hyperref} 
+\usepackage{parskip}
+\usepackage{textcomp, enumitem}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array} 
+\usepackage{geometry}
+\usepackage{afterpage}
+\usepackage{minted}
+\setcounter{secnumdepth}{3} 
+\setcounter{tocdepth}{3}    
+\usepackage{listings} 
+
+\newcommand{\icon}[1]{\includegraphics[height=1.2em]{\#1}}
+
+\tikzstyle{block} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=lightgray]
+
+\setkomafont{sectioning}{\normalfont\bfseries} 
+\setkomafont{section}{\normalfont\Large\bfseries}
+\setkomafont{subsection}{\normalfont\large\bfseries}
+\setkomafont{subsubsection}{\normalfont\large\bfseries}
+\setkomafont{paragraph}{\normalfont\large\bfseries} 
+
+\lstset{
+  language=Haskell,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{green!70!black},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=10pt,
+  showstringspaces=false,
+  breaklines=true,
+  frame=single
+}
+
+\lstdefinelanguage{Lua}{
+    keywords={function, end, if, then, else, elseif, for, while, do, repeat, until, break, return, local, and, or, not, true, false, nil},
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green!70!black},
+    morestring=[s]{"}{"},
+    morestring=[s]{'}{'},
+    morecomment=[l]{--},
+    morecomment=[s]{--[[}{]]},
+    basicstyle=\ttfamily\small,
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=10pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single
+}
+
+\setlength{\parindent}{1.25cm}
+\setcounter{tocdepth}{3}
+\begin{document}
+\sloppy
+	\thispagestyle{empty}
+	\begin{center}
+		\large{МИНОБРНАУКИ РОССИИ} \par
+		\vspace{0.3cm}
+		\normalsize
+		{ФЕДЕРАЛЬНОЕ ГОСУДАРСТВЕННОЕ АВТОНОМНОЕ ОБРАЗОВАТЕЛЬНОЕ УЧРЕЖДЕНИЕ ВЫСШЕГО ОБРАЗОВАНИЯ} \par
+		\vspace{0.3cm}
+		\textbf{\guillemotleft САНКТ-ПЕТЕРБУРГСКИЙ ПОЛИТЕХНИЧЕСКИЙ}
+		\textbf{УНИВЕРСИТЕТ ПЕТРА ВЕЛИКОГО\guillemotright} \par
+		\vspace{0.3cm}
+		{Институт компьютерных наук и кибербезопасности}\par
+		{Высшая школа технологий искусственного интеллекта}\par
+	\end{center}
+	\vfill
+	\begin{center}
+        \par
+		{\huge Методы исследовательской работы}\par
+        \Large {Использование настраиваемых персон и аватаров в LLM-чат-ботах:
+как кастомизация образа ИИ влияет на самораскрытие, регуляцию аффекта
+и переживание «цифровой близости».}\par
+	\end{center}
+	\vfill
+	\begin{flushleft}
+		Студент: \hspace{1.8cm} \rule[0pt]{2.5cm}{0.5pt}\hfill Салимли Айзек Мухтар Оглы\par
+		\vspace{1.5cm}
+		Преподаватель: \hspace{0.55cm} \rule[0pt]{2.5cm}{0.5pt}\hfill  Заборовский Владимир Сергеевич
+	\end{flushleft}
+	\vspace{0.5cm}
+	\begin{flushright}
+		\guillemotleft \rule[0pt]{0.8cm}{0.5pt}\guillemotright \rule[0pt]{2cm}{0.5pt} 20\rule[0pt]{0.5cm}{0.5pt} г.
+	\end{flushright}
+	\vfill
+	\begin{center}
+		Санкт-Петербург, 2026
+	\end{center}
+	\newpage
+	\tableofcontents
+\newpage
+\section*{Введение}
+\addcontentsline{toc}{section}{Введение}
+
+\subsection*{Актуальность темы}
+Рост популярности ИИ-ассистентов, стремление к персонализации, «одиночество в цифровую эпоху».
+
+\subsection*{Проблема исследования}
+Как техническая возможность настройки внешности и характера ИИ меняет психологический опыт взаимодействия.
+
+\subsection*{Объект и предмет исследования}
+% Текст раздела.
+
+\subsection*{Цель и гипотезы работы}
+% Текст раздела.
+
+\subsection*{Научная новизна и практическая значимость}
+% Текст раздела.
+
+\newpage
+\section{Теоретические основы и контекст исследования}
+
+\subsection{Эволюция человеко-машинного взаимодействия: от командной строки к антропоморфным агентам}
+% Текст раздела.
+
+\subsection{Психология общения с неодушевленным объектом}
+Эффект Элизы (склонность приписывать машинам человеческие черты). Парасоциальные отношения с медиаперсонажами и ботами.
+% Текст раздела.
+
+\subsection{Ключевые понятия исследования}
+\begin{itemize}
+\item \textbf{Самораскрытие (Self-disclosure):} теории, риски и преимущества.
+\item \textbf{Регуляция аффекта (Affect regulation):} как общение помогает справляться со стрессом.
+\item \textbf{Цифровая близость (Digital intimacy):} определение, компоненты, отличие от реальной близости.
+\end{itemize}
+
+\newpage
+\section{Обзор и анализ современных инструментов: кастомизация персон и аватаров}
+
+\subsection{Концепция «персонажа» в современных LLM: от безличного помощника к собеседнику}
+% Текст раздела.
+
+\subsection{Экосистема OpenAI (ChatGPT)}
+Возможности кастомизации через инструкции (Custom instructions). Генерация аватаров (DALL-E интеграция) и создание образа. Специализированные GPTs: создание персон с уникальным промптом и знаниями.
+% Текст раздела.
+
+\subsection{Платформа DeepSeek}
+Доступный функционал кастомизации (стиль ответов, память). Специфика взаимодействия и возможности настройки «характера» в свободном режиме.
+% Текст раздела.
+
+\subsection{Семейство Grok AI (xAI)}
+Встроенная персона: «бунтарь», «юморист». Анализ заданной, а не настраиваемой персоны.
+% Текст раздела.
+
+\subsubsection{Grok Companion (виртуальный партнер)}
+Фокус на эмоциональную связь и более глубокое взаимодействие. Анализ того, как разработчики проектируют «близость» и какие инструменты кастомизации предлагаются пользователю для усиления этого эффекта.
+% Текст раздела.
+
+\subsection{Типология сценариев взаимодействия с ИИ-компаньонами}
+Анализ типичных контекстов использования и поведение систем в различных ситуациях.
+
+\subsubsection{Сценарий установления контакта и приветствия}
+% Текст раздела.
+
+\subsubsection{Партнёрские и романтические сценарии}
+% Текст раздела.
+
+\subsubsection{Реакция на агрессивное поведение пользователя: грубость и оскорбления}
+% Текст раздела.
+
+\subsubsection{Ситуации ревности}
+% Текст раздела.
+
+\subsubsection{Конфликтные и эскалационные ситуации}
+% Текст раздела.
+
+\subsection{Психологическая поддержка и этические границы}
+Возможности и ограничения ИИ-компаньонов в контексте психического здоровья пользователей.
+
+\subsubsection{Психологическая помощь и эмпатическая поддержка}
+% Текст раздела.
+
+\subsubsection{Рекомендации и советы: возможности и ограничения}
+% Текст раздела.
+
+\subsubsection{Разграничение компетенций: ситуации, требующие помощи психиатра}
+Анализ того, даёт ли система совет о необходимости обращения к специалисту (психиатру) и насколько корректно определяет границы применимости.
+% Текст раздела.
+
+\subsubsection{Обработка интимных откровений и конфиденциальность}
+% Текст раздела.
+
+\subsection{Сравнительный анализ}
+Таблица сравнения платформ по критериям (глубина кастомизации, тип аватара, ориентация на эмоциональный отклик).
+% Текст раздела.
+
+\newpage
+\section{Методология и дизайн эмпирического исследования}
+
+\subsection{Постановка задачи и этапы исследования}
+% Текст раздела.
+
+\subsection{Описание выборки: респонденты, критерии отбора}
+% Текст раздела.
+
+\subsection{Методы сбора данных}
+\begin{itemize}
+\item Шкалы самораскрытия (например, адаптация опросника Jourard).
+\item Шкалы оценки аффективного состояния (PANAS или аналоги).
+\item Полуструктурированное интервью для оценки переживания «цифровой близости».
+\end{itemize}
+
+\subsection{Дизайн эксперимента}
+\begin{itemize}
+\item Контрольная группа (общение со стандартной, «безличной» версией бота).
+\item Экспериментальная группа (общение с глубоко кастомизированным ботом — имя, аватар, стиль общения, бэкстори).
+\item Серии коммуникативных сессий (нейтральная тема / личная / стрессовая).
+\end{itemize}
+
+\newpage
+\section{Результаты исследования и их интерпретация}
+
+\subsection{Анализ самораскрытия}
+Сравнение глубины и интимности раскрываемой информации в группах. Влияние визуального образа (аватара) на готовность делиться личным.
+% Текст раздела.
+
+\subsection{Динамика регуляции аффекта}
+Изменение эмоционального состояния до и после сессий. Как персона ИИ помогает снижать тревожность или, наоборот, может вызывать дискомфорт.
+% Текст раздела.
+
+\subsection{Феномен «цифровой близости»}
+Качественный анализ интервью: испытывали ли пользователи чувство понимания, привязанности, интимности? Роль кастомизации в создании иллюзии «живого» общения.
+% Текст раздела.
+
+\subsection{Зависимость от виртуального партнёра}
+Анализ признаков эмоциональной привязанности и рисков формирования зависимого паттерна взаимодействия с ИИ-компаньоном.
+% Текст раздела.
+
+\subsection{Сравнение с реальными межличностными отношениями}
+Восприятие пользователями различий и сходств между взаимодействием с кастомизированным ИИ и отношениями с реальным партнёром.
+% Текст раздела.
+
+\subsection{Качественные данные: отзывы пользователей}
+Обобщение субъективных оценок и переживаний респондентов по результатам интервью и открытых вопросов.
+% Текст раздела.
+
+\subsection{Экспертная оценка: мнение специалиста (психолог-психиатр)}
+Интерпретация результатов с точки зрения клинической и консультативной практики; риски и рекомендации.
+% Текст раздела.
+
+\subsection{Обсуждение результатов}
+Подтверждение или опровержение гипотез. Неожиданные находки.
+% Текст раздела.
+
+\newpage
+\section*{Заключение}
+\addcontentsline{toc}{section}{Заключение}
+\begin{itemize}
+\item Основные выводы исследования.
+\item Ответ на вопрос, поставленный во введении.
+\item Практические рекомендации для разработчиков подобных систем.
+\item Ограничения исследования и перспективы дальнейшей разработки темы.
+\end{itemize}
+
+\end{document}
