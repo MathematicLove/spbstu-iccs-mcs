@@ -37,8 +37,9 @@
     - [Методы тестирования программного обеспечения (Black-Box, White-Box, статическое тестирование (Haskell), JUnit (Java))](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/software-testing);
     - [Сети ЭВМ и телекомуникации компьютерных сетей (RabbitMQ, traceroute, ping)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/сomputer-networking);
     - [Математическая логика и теория формальных языков (на Haskell)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/formal-languages);
-    - [Программирования на языке Java (Spring framework)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/programming-on-java).
-    - [Проектирование дельта-робота (Практика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/practice-delta-robot-design)
+    - [Программирования на языке Java (Spring framework)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/programming-on-java);
+    - [Курсовое проектирование по управлению ресурсами суперэвм](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/supercomputer-resource-management);
+    - [Проектирование дельта-робота (Практика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/6-sem/practice-delta-robot-design).
   - ### **5-ый семестр**:
     - [Теория алгоритмов (клеточный автомат, логическая схема часов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/algorithm-theory);
     - [Методы проектирования баз данных (SQL)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/db-desing);
