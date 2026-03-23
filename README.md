@@ -13,13 +13,13 @@
   - Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации (в реализации).
 - ## Учебные проекты:
   - ### **8-ой семестр**:
-    - [Системы исскуственного интеллекта](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/artificial-intelligence-systems) (в процессе)
-    - [Облачные вычисления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/cloud-computing) (в процессе)
-    - [Методы исследовательской работы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/methods-of-research-work) (в процессе)
-    - [Защита информации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/information-protection) (в процессе)
-    - [Генетические алгоритмы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/genetics-algorithms) (в процессе)
-    - Высокоскоростные сетевые технологии суперкомпьютеров (private)
-    - ВКР (в процессе)
+    - [Системы исскуственного интеллекта](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/artificial-intelligence-systems); (в процессе)
+    - [Облачные вычисления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/cloud-computing); (в процессе)
+    - [Методы исследовательской работы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/methods-of-research-work); (в процессе)
+    - [Защита информации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/information-protection); (в процессе)
+    - [Генетические алгоритмы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/genetics-algorithms);
+    - Высокоскоростные сетевые технологии суперкомпьютеров; (private)
+    - ВКР. (в процессе)
   - ### **7-ой семестр**:
     - [Генетические алгоритмы (6 типов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/genetics-algorithms);
     - [Методы оптимизации (2 метода одномерной оптимизации, 5 методов градиентного спуска)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/methods-of-optimization);
