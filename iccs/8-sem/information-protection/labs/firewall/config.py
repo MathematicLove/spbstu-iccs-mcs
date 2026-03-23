@@ -1,0 +1,3 @@
+MY_IP = ""
+ALLOWED_PING_FROM_IP = ""
+DNS_SERVERS = ["8.8.8.8", "8.8.4.4", "1.1.1.1"]

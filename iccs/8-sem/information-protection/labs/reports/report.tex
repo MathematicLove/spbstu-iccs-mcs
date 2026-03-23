@@ -150,10 +150,12 @@
 Отчет содержит информацию о проделанной работе по дисциплине «защита информации», которая включала в себя N лабораторных работ.
 
 \begin{itemize}
-    \item \textbf{Практическая работа №1} — Банк угроз ФСТЭК: изучение структуры разделов «Угрозы» и «Уязвимости», поиск уязвимостей по заданным критериям.
-    \item \textbf{Практическая работа №2} — Аутентификация и авторизация: разработка системы доступа к конфиденциальным данным, утилиты управления учётными записями и программы brute force для исследования стойкости паролей.
-    \item \textbf{Практическая работа №3} — DAC и MAC: реализация дискреционной и мандатной моделей доступа на базе системы аутентификации из работы №2 (владение, ACL, метки безопасности, модель Белла-Лападулы).
-    \item $\dots$
+    \item \textbf{Практическая работа №1} - Банк угроз ФСТЭК: изучение структуры разделов «Угрозы» и «Уязвимости», поиск уязвимостей по заданным критериям;
+    \item \textbf{Практическая работа №2} - Аутентификация и авторизация: разработка системы доступа к конфиденциальным данным, утилиты управления учётными записями и программы brute force для исследования стойкости паролей;
+    \item \textbf{Практическая работа №3} - DAC и MAC: реализация дискреционной и мандатной моделей доступа на базе системы аутентификации из работы №2 (владение, ACL, метки безопасности, модель Белла-Лападулы);
+    \item \textbf{Практическая работа №4} - Мэжсетевое экранирование: локальное взаимодействие через loopback интерфейс, разрешение взаимодействия с DNS-сервером, утилита ping для проверки, разрешение по протоколам HTTP/HTTPS, блокировка пакетов неудовлетворяющих условиям;
+    \item \textbf{Практическая работа №5} - Разработка клиент-серверного приложения: обеспечение конфиденциального обмена сообщениями между клиентами и сервером, использование симметричного шифрования и обеспечение целостности данных с использованием хэш-функций;
+    \item $\dots$ 
 \end{itemize}
 
 \newpage
@@ -225,7 +227,37 @@ CVSS 3.0 (Common Vulnerability Scoring System, v3.0) & Третья версия
 \hline
 MAC & Mondatory Access Control. \\
 \hline
-DAC & Discretionary Access Control.
+DAC & Discretionary Access Control. \\
+\hline 
+DNS & Domain Name System - система преобразования доменных имён в IP-адреса. \\
+\hline 
+HTTP & HyperText Transfer Protocol - протокол прикладного уровня передачи данных в сети (порт 80). \\
+\hline 
+HTTPS & HTTP Secure - защищённая версия HTTP с шифрованием TLS/SSL (порт 443). \\
+\hline 
+ICMP & Internet Control Message Protocol - протокол сетевого уровня для служебных сообщений (ping, уведомления об ошибках). \\
+\hline 
+TCP & Transmission Control Protocol - транспортный протокол с установлением соединения и надёжной доставкой. \\
+\hline 
+UDP & User Datagram Protocol - транспортный протокол без установления соединения. \\
+\hline 
+Мэжсетевой экран (МЭ) & Программное или программно-аппаратное средство фильтрации сетевого трафика между сетями или сегментами. \\
+\hline 
+tcpdump & Утилита для перехвата и отображения сетевых пакетов, проходящих через сетевые интерфейсы. \\
+\hline 
+iptables & Механизм ядра Linux для фильтрации пакетов, NAT и управления сетевым трафиком. \\
+\hline 
+loopback & Виртуальный сетевой интерфейс для локального обмена данными (адрес 127.0.0.1). \\
+\hline 
+anchors & Якоря в pf - отдельные файлы с правилами, подключаемые к основной конфигурации. \\
+\hline 
+Симметричное шифрование & Шифрование, в котором используется один и тот же ключ для шифрования и расшифрования данных. \\
+\hline 
+Асимметричное шифрование & Шифрование, в котором используются два разных ключа для шифрования и расшифрования данных. \\
+\hline 
+Клиент-серверное приложение & Приложение, в котором клиент и сервер взаимодействуют друг с другом. \\
+\hline
+Раунд & В алгоритме шифрования ChaCha20 - это одна итерация из всех 20 циклов. \\
 \end{longtable}
 \end{center}
 
@@ -246,6 +278,9 @@ DAC & Discretionary Access Control.
 
 В практической работе №3 на базе системы аутентификации из работы №2 реализованы модели дискреционного (DAC) и мандатного (MAC) управления доступом. Для DAC: владение объектами, произвольное назначение прав через команды grant/revoke, контроль на основе списка доступа (ACL). Для MAC: метки безопасности для субъектов и объектов (несекретно, ДСП, секретно), свойства модели Белла-Лападулы (\guillemetleft нет чтения сверху\guillemetright, \guillemetleft нет записи вниз\guillemetright).
 
+В практической работе №4 изучен межсетевой экран pf в macOS (обработка пакетов, правила, pfctl). Реализована политика доступа: разрешены loopback, DNS, исходящий ping, входящий ping с указанного IP, HTTP/HTTPS; остальной трафик блокируется. Правила задают IP источника/приёмника, протокол, порты (TCP/UDP) и тип ICMP. Проверка выполнена через ping, nslookup, curl и tcpdump.
+
+В практической работе №5 разработано клиент-серверное приложение для конфиденциального обмена сообщениями между клиентами и сервером. Использовано симметричное шифрование алгоритмом ChaCha20 и обеспечение целостности данных с использованием хэш-функции Blake2b. Так же реализовано общение между клиентами и группами клиентов. Реализован алгоритм сессионного ключа. В хэш добавляется соль, так же реализована аутентификация пользователей.
 \newpage
 \section{Анализ уязвимостей программного обеспечения}
 \subsection{Введение}
@@ -894,13 +929,13 @@ U - не оказывает/ C - влияние на конфиденциаль�
 \[
 N_L = 52 \cdot 72^{L-1},
 \]
-где 52 — количество допустимых символов для первой позиции (латинские буквы в верхнем и нижнем регистре), а 72 — количество возможных символов для каждой из последующих позиций (буквы, цифры и спецсимволы). Таким образом, первая буква всегда является буквой, а все остальные символы могут быть любыми из расширенного алфавита. Теоретическое суммарное количество вариантов от длины 1 до $L$ вычисляется как
+где 52 - количество допустимых символов для первой позиции (латинские буквы в верхнем и нижнем регистре), а 72 - количество возможных символов для каждой из последующих позиций (буквы, цифры и спецсимволы). Таким образом, первая буква всегда является буквой, а все остальные символы могут быть любыми из расширенного алфавита. Теоретическое суммарное количество вариантов от длины 1 до $L$ вычисляется как
 \[
 N_{\leq L} = \sum_{k=1}^{L} N_k,
 \]
 и именно это значение выводится режимом расчёта теоретической сложности.
 
-Скрипт поддерживает два режима запуска. В основном режиме пользователь вызывает утилиту как \texttt{/Users/practice2/bin/run\_crack <LOGIN> <LENGTH>}, где \texttt{LOGIN} — имя пользователя, для которого выполняется подбор, а \texttt{LENGTH} — максимальная длина пароля. В этом случае сначала выводится теоретическое количество комбинаций и затем запускается реальный перебор с измерением времени. Во втором режиме, \texttt{/Users/practice2/bin/run\_crack -max-iterations <LENGTH>}, утилита не выполняет реальный перебор паролей, а только рассчитывает и выводит теоретическое число итераций и суммарное количество вариантов для длин от 1 до указанной, что позволяет оценить сложность атаки brute force без запуска длительного эксперимента.
+Скрипт поддерживает два режима запуска. В основном режиме пользователь вызывает утилиту как \texttt{/Users/practice2/bin/run\_crack <LOGIN> <LENGTH>}, где \texttt{LOGIN} - имя пользователя, для которого выполняется подбор, а \texttt{LENGTH} - максимальная длина пароля. В этом случае сначала выводится теоретическое количество комбинаций и затем запускается реальный перебор с измерением времени. Во втором режиме, \texttt{/Users/practice2/bin/run\_crack -max-iterations <LENGTH>}, утилита не выполняет реальный перебор паролей, а только рассчитывает и выводит теоретическое число итераций и суммарное количество вариантов для длин от 1 до указанной, что позволяет оценить сложность атаки brute force без запуска длительного эксперимента.
 
 
 \subsubsection{Реализация управления пользователями}
@@ -1111,10 +1146,10 @@ $$
 
 \subsection{Сведения о DAC и MAC}
 \subsubsection{DAC (Discretionary Access Control)}
-Дискреционное управление доступом (DAC) — модель разграничения доступа, в которой владелец ресурса самостоятельно определяет права субъектов на объекты (чтение, запись, исполнение). Права фиксируются в матрице доступа или списках ACL. Особенность: гибкость управления при потенциальной уязвимости к несанкционированной передаче прав.
+Дискреционное управление доступом (DAC) - модель разграничения доступа, в которой владелец ресурса самостоятельно определяет права субъектов на объекты (чтение, запись, исполнение). Права фиксируются в матрице доступа или списках ACL. Особенность: гибкость управления при потенциальной уязвимости к несанкционированной передаче прав.
 
 \subsubsection{MAC (Mandatory Access Control)}
-Мандатное управление доступом (MAC) — модель, основанная на присвоении меток безопасности субъектам и объектам. Доступ разрешается только при выполнении правил сравнения меток, централизованно заданных политикой безопасности. Ключевой принцип реализуется моделью Белла-Лападулы, обеспечивающей иерархический контроль потоков информации и предотвращающей несанкционированное понижение уровня конфиденциальности. В отличие от DAC, пользователь не может изменять политику доступа.
+Мандатное управление доступом (MAC) - модель, основанная на присвоении меток безопасности субъектам и объектам. Доступ разрешается только при выполнении правил сравнения меток, централизованно заданных политикой безопасности. Ключевой принцип реализуется моделью Белла-Лападулы, обеспечивающей иерархический контроль потоков информации и предотвращающей несанкционированное понижение уровня конфиденциальности. В отличие от DAC, пользователь не может изменять политику доступа.
 
 \subsection{Реализация DAC}
 
@@ -1122,15 +1157,15 @@ $$
 
 Владение реализовано так: при создании файла командой \texttt{create} пользователь, создавший файл, записывается как владелец (\texttt{owner}) этого объекта. Создаётся запись в служебном хранилище, и владельцу сразу выдаются полные права \texttt{rwd} на созданный файл. Передача прав выполняется командами \texttt{grant} и \texttt{revoke}. Выдать права (\texttt{grant <файл> <пользователь> <права>}) может только владелец файла; отозвать права (\texttt{revoke <файл> <пользователь>}) также может только владелец. Нельзя отозвать права у самого себя (владелец остаётся единственным, кто может управлять списком доступа). Проверка при операциях чтения, записи и удаления: у субъекта должна быть соответствующая буква (\texttt{r}, \texttt{w} или \texttt{d}) в его записи для данного файла.
 
-Информация о доступе хранится не в виде одной матрицы «субъект-объект», а по объектам: для каждого файла ведётся свой список прав. Список доступа (ACL, Access Control List) — это перечень пар «субъект : права» для одного объекта. В нашей реализации ACL хранится в файле \texttt{/Users/practice3/etc/acl.json} в формате JSON: для каждого имени файла задаётся поле \texttt{owner} (логин владельца) и поле \texttt{acl} — словарь вида \texttt{\{ "логин": "rwd", ... \}}. Таким образом, матрица доступа представлена в виде набора ACL по файлам, что эквивалентно хранению по столбцам матрицы доступа.
+Информация о доступе хранится не в виде одной матрицы «субъект-объект», а по объектам: для каждого файла ведётся свой список прав. Список доступа (ACL, Access Control List) - это перечень пар «субъект : права» для одного объекта. В нашей реализации ACL хранится в файле \texttt{/Users/practice3/etc/acl.json} в формате JSON: для каждого имени файла задаётся поле \texttt{owner} (логин владельца) и поле \texttt{acl} - словарь вида \texttt{\{ "логин": "rwd", ... \}}. Таким образом, матрица доступа представлена в виде набора ACL по файлам, что эквивалентно хранению по столбцам матрицы доступа.
 
 \subsection{Реализация MAC}
 
-Реализация мандатной модели также выполнена поверх той же базы: каталог \texttt{/Users/practice3/}, общий \texttt{passwd} и общая структура утилит доступа. В \texttt{passwd} для каждого пользователя хранится не только логин, хэш пароля и права, но и уровень конфиденциальности (метка субъекта). Используются три уровня: 0 — unclassified, 1 — DSP, 2 — secret. Метки объектов (файлов) хранятся отдельно в \texttt{/Users/practice3/etc/file\_labels.json}: для каждого имени файла записан числовой уровень (0, 1 или 2). При создании файла командой \texttt{create} файлу присваивается метка, равная уровню создателя; таким образом, метка объекта задаётся один раз при создании и в дальнейшем определяет, кто может читать или записывать этот объект по правилам Белла-Лападулы.
+Реализация мандатной модели также выполнена поверх той же базы: каталог \texttt{/Users/practice3/}, общий \texttt{passwd} и общая структура утилит доступа. В \texttt{passwd} для каждого пользователя хранится не только логин, хэш пароля и права, но и уровень конфиденциальности (метка субъекта). Используются три уровня: 0 - unclassified, 1 - DSP, 2 - secret. Метки объектов (файлов) хранятся отдельно в \texttt{/Users/practice3/etc/file\_labels.json}: для каждого имени файла записан числовой уровень (0, 1 или 2). При создании файла командой \texttt{create} файлу присваивается метка, равная уровню создателя; таким образом, метка объекта задаётся один раз при создании и в дальнейшем определяет, кто может читать или записывать этот объект по правилам Белла-Лападулы.
 
-Доступ по чтению разрешён только если уровень субъекта не ниже уровня объекта (No Read Up): пользователь с уровнем 0 не может читать файлы с уровнем 1 или 2; с уровнем 1 — не может читать уровень 2. Доступ по записи разрешён только если уровень субъекта не выше уровня объекта (No Write Down): пользователь с уровнем 2 не может записывать в файлы с уровнем 1 или 0, чтобы не понижать конфиденциальность данных. В коде это реализовано функциями \texttt{check\_mac\_read} (разрешение при \texttt{subject\_level >= object\_level}) и \texttt{check\_mac\_write} (разрешение при \texttt{subject\_level <= object\_level}). Перед каждой операцией чтения или записи выполняется соответствующая проверка; при нарушении выводится сообщение об отказе с указанием уровней. Удаление файла по-прежнему контролируется дискреционным ACL: право \texttt{d} у субъекта на данный объект и владение; при этом при создании и удалении обновляется и \texttt{file\_labels.json}.
+Доступ по чтению разрешён только если уровень субъекта не ниже уровня объекта (No Read Up): пользователь с уровнем 0 не может читать файлы с уровнем 1 или 2; с уровнем 1 - не может читать уровень 2. Доступ по записи разрешён только если уровень субъекта не выше уровня объекта (No Write Down): пользователь с уровнем 2 не может записывать в файлы с уровнем 1 или 0, чтобы не понижать конфиденциальность данных. В коде это реализовано функциями \texttt{check\_mac\_read} (разрешение при \texttt{subject\_level >= object\_level}) и \texttt{check\_mac\_write} (разрешение при \texttt{subject\_level <= object\_level}). Перед каждой операцией чтения или записи выполняется соответствующая проверка; при нарушении выводится сообщение об отказе с указанием уровней. Удаление файла по-прежнему контролируется дискреционным ACL: право \texttt{d} у субъекта на данный объект и владение; при этом при создании и удалении обновляется и \texttt{file\_labels.json}.
 
-Список доступа (ACL) в MAC хранится так же, как в DAC: в \texttt{/Users/practice3/etc/acl.json} — владелец и права \texttt{rwd} по пользователям для каждого файла. Дополнительно в \texttt{/Users/practice3/etc/file\_labels.json} хранится метка конфиденциальности каждого файла. Итоговое решение доступа: сначала проверяется DAC (есть ли у пользователя нужное право в ACL), затем MAC (соблюдаются ли правила No Read Up и No Write Down по меткам). Таким образом, мандатная политика накладывается поверх дискреционной и обеспечивает запрет недопустимых потоков информации по уровням.
+Список доступа (ACL) в MAC хранится так же, как в DAC: в \texttt{/Users/practice3/etc/acl.json} - владелец и права \texttt{rwd} по пользователям для каждого файла. Дополнительно в \texttt{/Users/practice3/etc/file\_labels.json} хранится метка конфиденциальности каждого файла. Итоговое решение доступа: сначала проверяется DAC (есть ли у пользователя нужное право в ACL), затем MAC (соблюдаются ли правила No Read Up и No Write Down по меткам). Таким образом, мандатная политика накладывается поверх дискреционной и обеспечивает запрет недопустимых потоков информации по уровням.
 
 \subsection{Примеры работы программы}
 Ниже на рисунках \ref{fig:dac_user}-\ref{fig:dac_matrix}, представлен пример работы программы с контролем доступа DAC:
@@ -1323,7 +1358,6 @@ $$
     \end{tabular}
 \end{table}
 
-
 \subsection*{Заключение}
 \addcontentsline{toc}{subsection}{Заключение}
 
@@ -1343,6 +1377,987 @@ $$
 \textcolor{red}{Файлы run\_access.c, run\_access, оставлены исходными, так как расположение вписано в \$PATH.} \textcolor{blue}{(Смотреть приложение \hyperref[sec:pril2]{A}).}
 
 \newpage
+\section{Мэжсетевое экранирование}
+\subsection{Введение}
+Межсетевое экранирование - это одна из базовых технологий защиты компьютерных сетей, реализуемая с помощью межсетевых экранов (МЭ, Firewall, Brandmauer), которые также называют брандмауэрами или файерволами. МЭ представляет собой программное или программно-аппаратное средство, контролирующее трафик между двумя и более сетями или между отдельными узлами. Основная цель его работы - фильтрация потока данных на основе заданного набора правил, что позволяет предотвратить несанкционированный доступ как извне в защищаемую сеть, так и изнутри наружу.
+
+В зависимости от принципов функционирования межсетевые экраны делятся на несколько типов. Простейшие из них - пакетные фильтры (packet filters) - анализируют заголовки IP-пакетов и протоколов верхнего уровня (TCP, UDP, ICMP), принимая решение о пропуске или блокировке на основе адресов отправителя и получателя, портов и флагов. Классическим примером такого фильтра для ОС Linux является iptables - компонент ядра Linux. Однако данная работа выполняется в macOS, которая не использует iptables, поскольку последний привязан к ядру Linux. В macOS по умолчанию применяется межсетевой экран pf (Packet Filter) - также реализующий контроль состояния соединений (stateful inspection). Packet Filter сопоставим по возможностям с iptables, но отличается более лаконичным синтаксисом правил и использует единый конфигурационный файл /etc/pf.conf, что упрощает управление фильтрацией. В рамках данной работы рассматривается настройка политики доступа с помощью pf на macOS, что позволяет получить практические навыки работы с межсетевым экраном в UNIX-подобной системе.
+
+На рисунке \ref{fig:me}, представлен принцип работы межсетевого экрана на схеме, где WAN - внешняя сеть, LAN - внутренняя сеть, а Firewall - межсетевой экран:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/SCHEME.png}
+    \caption{Принцип работы межсетевого экрана}
+    \label{fig:me}
+\end{figure}
+
+\subsection{Постановка задачи}
+\subsubsection{Цели}
+Целью работы является получение базовых знаний и навыков работы по настройке межсетевого экрана 
+в GNU/Linux и UNIX-подобных системах.
+\subsubsection{Задачи}
+Задачами практической работы №4 являются:
+\begin{itemize}
+    \item изучение мэжсетевого экрана iptables (в работе используется Packet Filter так как iptables привязан к ядру Linux), обеспечивающего выполнение задания;
+    \item Реализация следующей политки доступа: \begin{enumerate}
+            \item Установить утилиту iptables или другую, обеспечивающий выполнение задания (Packet Filter);
+            \item Изучить команды вывода таблиц фильтрации, добавления, редактирования и удаления правил;
+            \item Реализовать следующие правила: \begin{enumerate}
+                \item разрешить локальное взаимодействие через loopback интерфейс;
+                \item разрешить взаимодействие с DNS-сервером;
+                \item разрешить использование утилиты ping для проверки достижимости компьютеров с любыми IP-адресами во внешней сети;
+                \item разрешить доступ по протоколам HTTP/HTTPS к внешним серверам;
+                \item блокировать все пакеты не удовлетворяющие условиям;
+                \item произвести проверку корректности реализованной политики с ping, nslookup, web браузером;
+                \item проконтролировать прохождение пакетов через tcpdump.
+            \end{enumerate}
+        \end{enumerate}
+\end{itemize}
+
+\subsection{Проектирование системы}
+Общая схема системы представлена на рисунке \ref{fig:arch}: 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.60\linewidth]{img/lab-4/ME.png}
+    \caption{Общая схема системы}
+    \label{fig:arch}
+\end{figure}
+
+Ее подробное описание предствлено в двух таблицах. 
+В таблице \ref{tab:yes}, представлены разрешенные серверы и порты для защищаемого компьютера, а в таблице
+\ref{tab:no}, представлены запрещенные серверы и порты для защищаемого компьютера.
+
+\begin{table}[H]
+    \label{tab:yes}
+    \begin{center}
+    \caption{Разрешено}
+    \begin{tabular}{|c|c|}
+    \textbf{Действие} & \textbf{Результат} \\
+    \hline
+    Mac $\rightarrow$ любой хост: ping & Разрешено (ICMP) \\
+    Mac $\rightarrow$ любой хост: DNS (порт 53) & Разрешено \\
+    Mac $\rightarrow$ любой хост: HTTP/HTTPS (80, 443) & Разрешено \\
+    Windows 192.168.0.4 $\rightarrow$ Mac: ping & Разрешено \\
+    \end{tabular}
+    \end{center}
+    \end{table}
+
+
+\begin{table}[H]
+    \label{tab:no}
+    \begin{center}
+    \caption{Запрещено}
+    \begin{tabular}{|c|c|}
+    \textbf{Действие} & \textbf{Результат} \\
+    \hline
+    Любой другой ПК (не 192.168.0.4) $\rightarrow$ Mac: ping & Запрещено \\
+    Любой сервер/ПК $\rightarrow$ Mac: любой TCP/UDP & Запрещено \\
+    Mac $\rightarrow$ сервер: SSH (22), SMTP (25) и т.п. & Запрещено \\
+    Mac $\rightarrow$ сервер: порты, кроме 53, 80, 443 & Запрещено \\
+    \end{tabular}
+    \end{center}
+    \end{table}
+
+
+\subsection{Принцип обработки пакетов в pf}
+
+Packet Filter (pf) является потомком одноименного межсетевого экрана из ОС OpenBSD и предоставляет 
+собой основной компонент для фильтрации трафика на уровне ядра в macOS. 
+В отличие от iptables, pf интегрирован в сетевой стек XNU (Darwin) и управляется 
+утилитой пользовательского пространства /sbin/pfctl \cite{pf}. 
+
+Особенность pf заключается в интеграции с ситемой инициализации и управлениями службами launchd \cite{pf}.
+
+Основной файл конфигурации pf находится в /etc/pf.conf. Он определяет макросы, таблицы, опции 
+и правила фильтрации. 
+
+Ниже представлен пример конфигурации pf в собственной операционной система:
+
+\begin{lstlisting}[language=bash]
+cat /etc/pf.conf 
+
+(base) monadayzek@Ayzeks-MacBook-Pro ~ % sudo cat /etc/pf.conf
+Password:
+#
+# Default PF configuration file.
+#
+# This file contains the main ruleset, which gets automatically loaded
+# at startup.  PF will not be automatically enabled, however.  Instead,
+# each component which utilizes PF is responsible for enabling and disabling
+# PF via -E and -X as documented in pfctl(8).  That will ensure that PF
+# is disabled only when the last enable reference is released.
+#
+# Care must be taken to ensure that the main ruleset does not get flushed,
+# as the nested anchors rely on the anchor point defined here. In addition,
+# to the anchors loaded by this file, some system services would dynamically 
+# insert anchors into the main ruleset. These anchors will be added only when
+# the system service is used and would removed on termination of the service.
+#
+# See pf.conf(5) for syntax.
+#
+
+#
+# com.apple anchor point
+#
+scrub-anchor "com.apple/*"
+nat-anchor "com.apple/*"
+rdr-anchor "com.apple/*"
+dummynet-anchor "com.apple/*"
+anchor "com.apple/*"
+load anchor "com.apple" from "/etc/pf.anchors/com.apple"
+(base) monadayzek@Ayzeks-MacBook-Pro ~ % cat /etc/pf.conf 
+#
+# Default PF configuration file.
+#
+# This file contains the main ruleset, which gets automatically loaded
+# at startup.  PF will not be automatically enabled, however.  Instead,
+# each component which utilizes PF is responsible for enabling and disabling
+# PF via -E and -X as documented in pfctl(8).  That will ensure that PF
+# is disabled only when the last enable reference is released.
+#
+# Care must be taken to ensure that the main ruleset does not get flushed,
+# as the nested anchors rely on the anchor point defined here. In addition,
+# to the anchors loaded by this file, some system services would dynamically 
+# insert anchors into the main ruleset. These anchors will be added only when
+# the system service is used and would removed on termination of the service.
+#
+# See pf.conf(5) for syntax.
+#
+
+#
+# com.apple anchor point
+#
+scrub-anchor "com.apple/*"
+nat-anchor "com.apple/*"
+rdr-anchor "com.apple/*"
+dummynet-anchor "com.apple/*"
+anchor "com.apple/*"
+load anchor "com.apple" from "/etc/pf.anchors/com.apple"
+\end{lstlisting}
+
+Для обеспечения сохранности пользовательской конфигурации pf, 
+при обнавлениях системы  используется механизм anchor (как видно com.apple подгружает свои правила-якоря). 
+
+Сами же пользовательские правила размещаются в файле /etc/pf.anchors/*.conf,(rules).
+
+Ниже представлена якорная конфигурация для сервисов AirDrop, Application Firewall: 
+
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % cat /etc/pf.anchors/com.apple           
+    #
+    # com.apple ruleset, referred to by the default /etc/pf.conf file.
+    # See notes in that file regarding the anchor point in the main ruleset.
+    #
+    # Copyright (c) 2011 Apple Inc. All rights reserved.
+    #
+    # AirDrop anchor point.
+    #
+    anchor "200.AirDrop/*"
+    
+    #
+    # Application Firewall anchor point.
+    #
+    anchor "250.ApplicationFirewall/*"    
+\end{lstlisting}
+
+Такой подход хорош тем, что ненужно менять главный конфигурационный файл /etc/pf.conf,
+а только подгружать свой набор якорных правил.
+
+Запуском и остановкой службы в macOS управляет демон launchd. 
+Apple предоставляет свой собственный демон /System/Library/LaunchDaemons/com.apple.pfctl.plist, который
+выполняет команду pfctl -f /etc/pf.conf \cite{pf}. Эта команда загружает конфигурацию правил если МЭ включен.
+
+Правила pf в macOS, обрабатываются последовательно, последнее совпавшее правило определяет действие (по умолчанию pass (пропуск)). 
+
+Типовая структура включает:
+\begin{itemize}
+    \item Действие: pass (пропуск), block (блокировать с опцией drop/return);
+    \item Направление: in (входящие пакеты), out (исходящие пакеты);
+    \item Интерфейс: привязка к сетевому интерфейсу (по типу en0);
+    \item Протоколы: TCP, UDP, ICMP;
+    \item Сокеты (адрес-порт): отправителя и получателя;
+    \item Параметры: например icmp-type, code, quick;
+    \item Так же есть возможность исключения обратной петли set skip on lo0, для повышения производительности.
+\end{itemize}
+
+\subsection{Реализация}
+
+Для реализации практической части поставленной задачи, были созданы 4 файла:
+
+\begin{itemize}
+    \item firewall\_rules.py - файл с правилами фильтрации, можно применить, сбросить или изменить;
+    \item config\_pf.py - файл с конфигурацией.
+    \item setup\_practice4.py - файл с настройкой pf.
+\end{itemize}
+
+Идея реализации: 
+Для начала необходимо создать скрипт или вручную добавить правила в якорный файл /etc/pf.anchors. Это обусловлено тем,
+что если напрямую прописать правила в /etc/pf.conf, то при любом обнавлении системы, правила будут стерты. 
+
+Для этого был создан скрипт, автоматически добавляющий файл practice4 в /etc/pf.anchors, таким образом созданный файл будет подгружаться
+при запуске pfctl, и будет прописан как основные правила службы pf. 
+
+
+\subsubsection{Правила филтрации}
+
+В файле скрипта нужно прописать правила фильтрации указанные в таблицах \ref{tab:yes} и \ref{tab:no}. 
+
+Для этого, был создан скрипт firewall\_rules.py, который просто применяет append к созданному файлу и добавляет строку со следующими правилами:
+
+\begin{itemize}
+    \item \texttt{\#ALLOWED\_PING\_FROM\_IP=192.168.0.4} - подстановка IP из внешней сети, с которого разрешён входящий ping;
+    \item \texttt{set block-policy drop} - блокированные пакеты отбрасываются тихо, без отправки ICMP или TCP RST;
+    \item \texttt{scrub in all} - нормализация входящих пакетов (защита от фрагментации);
+    \item \texttt{block all} - политика по умолчанию: блокировать весь трафик;
+    \item После чего идут правила \texttt{pass}: \begin{enumerate}
+        \item \texttt{pass quick on lo0} - разрешить loopback (локальный интерфейс);
+        \item \texttt{pass out quick proto udp to any port 53 keep state} - исходящий DNS по UDP, порт 53;
+        \item \texttt{pass out quick proto tcp to any port 53 keep state} - исходящий DNS по TCP, порт 53;
+        \item \texttt{pass out quick inet proto icmp all icmp-type 8 code 0 keep state} - исходящий ping (ICMP echo request);
+        \item \texttt{pass in quick inet proto icmp all icmp-type 0 code 0} - входящий ответ на ping (ICMP echo reply);
+        \item \texttt{pass in quick inet proto icmp from 192.168.0.4 icmp-type 8 code 0 keep state} - входящий ping только с указанного IP;
+        \item \texttt{pass out quick proto tcp to any port \{ 80 443 \} keep state} - HTTP и HTTPS на портах 80 и 443.
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection{Пример добавления правила}
+Ниже представлен вывод файла /etc/pf.anchors/practice4:
+
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % cat practice4 
+    # ALLOWED_PING_FROM_IP = 192.168.0.4
+    
+    set block-policy drop
+    scrub in all
+    
+    block all
+    
+    # Loopback
+    pass quick on lo0
+    
+    # DNS - UDP/TCP 53
+    pass out quick proto udp to any port 53 keep state
+    pass out quick proto tcp to any port 53 keep state
+    
+    # Ping from ICMP type 8
+    pass out quick inet proto icmp all icmp-type 8 code 0 keep state
+    
+    # ANSW to ping ICMP type 0
+    pass in quick inet proto icmp all icmp-type 0 code 0
+    
+    # Ping inp 192.168.0.4
+    pass in quick inet proto icmp from 192.168.0.4 icmp-type 8 code 0 keep state
+    
+    # HTTP/HTTPS
+    pass out quick proto tcp to any port { 80 443 } keep state
+\end{lstlisting}
+
+Так же можно добавлять, удалять, сбрасывать и изменять правила фильтрации. Можно напрямую редактировать 
+файл /etc/pf.anchors/practice4, средствами VIM или иным редактором. 
+
+Ниже показан пример добавления нового правила которая разрешает использование SSH по порту 22:
+
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % echo "pass in proto tcp to any port 22 keep state" >> practice4
+\end{lstlisting}
+
+Так как SSH работает поверх протокола TCP, мы объявили proto tcp и указали порт 22. 
+
+Чтобы заблокировать SSH, можно просто убрать команду разрешения, или напрямую запретить, прописав:
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % echo "block in proto tcp to any port 22" >> practice4
+\end{lstlisting}
+
+Что бы сбросить все правила, можно выполнить скрипт firewall\_rules.py с аргументом flush:
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro lab-4 % sudo python firewall_rules.py flush
+\end{lstlisting}
+
+Для вывода правил, можно выполнить скрипт firewall\_rules.py с аргументом show:
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro lab-4 % sudo python firewall_rules.py show
+    Password:
+    scrub-anchor "com.apple/*" all fragment reassemble
+    anchor "com.apple/*" all
+    anchor "practice4" all
+    No ALTQ support in kernel
+\end{lstlisting}
+
+\subsection{Проверки реализованной политики}
+
+Для осуществления проверок, необходимо для начала запустить созданный скрипт setup\_practice4.py:
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro lab-4 % sudo python setup_practice4.py
+\end{lstlisting}
+
+Как было указано ранее, этот скрипт добавляет якорь в pf.conf и записывает правила в файл /etc/pf.anchors/practice4.
+
+На рисунке \ref{fig:setup}, показан созданный якорь в /etc/pf.anchors :
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/SETUP.png}
+    \caption{Созданный якорь в /etc/pf.anchors и правила в файле practice4}
+    \label{fig:setup}
+\end{figure}
+
+Подстановка в главном конфигурационном файле так же прописывается при выполнении скрипта. Главный файл изображен на рисунке
+\ref{fig:pfconf}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/PFCONF.png}
+    \caption{Главный конфигурационный файл /etc/pf.conf}
+    \label{fig:pfconf}
+\end{figure}
+
+Как видно из рисунка \ref{fig:pfconf}, в главном конфигурационном файле прописана подстановка якоря practice4.
+
+Далее что бы активировать правила, необходимо выполнить скрипт firewall\_rules.py с аргументом apply:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-4/APPLY.png}
+    \caption{Активация правил}
+    \label{fig:apply}
+\end{figure}
+
+На рисунке \ref{fig:pfinfo} показан вывод информации о pf после активации правил с помощью команды pfctl -s info:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/INFO.png}
+    \caption{Информация о pf после активации правил}
+    \label{fig:pfinfo}
+\end{figure}
+
+Далее можно посмотреть правила с помощью команды pfctl -sr:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/SR.png}
+    \caption{Правила pf после активации правил}
+    \label{fig:sr}
+\end{figure}
+
+Красная стрелка на рисунке \ref{fig:sr}, указывает на наши активные правила.
+
+После того как правила активированы, можно проверить loopback командой ping -c 3 127.0.0.1, как показано на рисунке \ref{fig:loopback}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/LOOPBACK.png}
+    \caption{Проверка loopback}
+    \label{fig:loopback}
+\end{figure}
+
+Как видно из вывода утилиты ping, было отправлено 3 ICMP-пакета типа echo request на адрес 127.0.0.1 (loopback), 
+и на каждый из них был получен ответ (echo reply). Потеря пакетов составила 0\%, среднее время отклика - 0,138 мс. 
+
+Далее можно проверить DNS командой nslookup google.com, как показано на рисунке \ref{fig:dns}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/DNS.png}
+    \caption{Проверка DNS}
+    \label{fig:dns}
+\end{figure}
+
+Запрос был отправлен на сервер 192.168.0.1 на порт 53, который является портом DNS.
+Получен неавторитативный ответ (Non-authoritative answer), содержащий несколько IP-адресов домена google.com.
+
+Далее идет проверка исходящего ping командой ping -c 3 8.8.8.8, как показано на рисунке \ref{fig:ping_outgoing}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/PING_OUT.png}
+    \caption{Проверка исходящего ping}
+    \label{fig:ping_outgoing}
+\end{figure}
+
+Из вывода видно, что на три отправленных ICMP-запроса получено три ответа от узла 8.8.8.8, потеря пакетов отсутствует. 
+
+Ниже на рисунках \ref{fig:http} и \ref{fig:https}, показаны тесты проверки протоколов HTTP (из \url{http://httpforever.com}) и HTTPS (из \url{https://github.com}):
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-4/HTTP.png}
+    \caption{Проверка HTTP}
+    \label{fig:http}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/HTTPS.png}
+    \caption{Проверка HTTPS}
+    \label{fig:https}
+\end{figure}
+
+Оба запроса были успешно выполнены, и были получены ответы от серверов.
+
+Далее тестируются блокировки запрещенного трафика. 
+
+На рисунке \ref{fig:nczv}, показан результат попытки подключения к порту 22 (SSH) на узле 8.8.8.8:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/NCZV.png}
+    \caption{Проверка блокировки запрещенного трафика (SSH)}
+    \label{fig:nczv}
+\end{figure}
+
+Из вывода видно, что попытка подключения к порту 22 по протоколу TCP, вызвала Operation timed out, что подтверждает блокировку трафика.
+
+Так же можно протестировать попытку подключения к порту 5432 на котором работает база данных PostgreSQL:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/NCZV_POSTGRESQL.png}
+    \caption{Проверка блокировки запрещенного трафика (PostgreSQL)}
+    \label{fig:nczv_postgresql}
+\end{figure}
+
+Получен аналогичный результат, что и в случае с портом 22.
+
+Ниже на рисунке \ref{fig:ping_in}, показан результат попытки входящего ping из внешней сети на узел 192.168.0.2:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-4/PING_IN.jpg}
+    \caption{Проверка разрешенного входящего ping}
+    \label{fig:ping_in}
+\end{figure}
+
+С внешней сети с IP 192.168.0.4, на узел 192.168.0.2, было отправлено 4 ICMP-пакета и 4 ответа, потеря пакетов отсутствует.
+
+\subsection{Пример контроля трафика}
+Для контроля трафика, была использована утилита tcpdump, которая позволяет просматривать трафик, проходящий через pf.
+
+На рисунке \ref{fig:tcpdump}, показан вывод утилиты tcpdump:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-4/TCPDUMP.png}
+    \caption{Вывод утилиты tcpdump}
+    \label{fig:tcpdump}
+\end{figure}
+
+\textcolor{orange}{Оранживые стрелки} указывают на HTTPS запросы, а \textcolor{red}{Красные стрелки} на ICMP запросы из внешнего ПК.
+
+
+Можно попробывать убрать разрешенный IP из файла practice4 и проверить результат:
+
+Для этого нужно выполнить скрипт firewall\_rules.py с аргументом flush, который сбросит правила (удалит) и запишет в файл 
+якоря pass all. 
+
+После чего в файле firewall\_rules.py нужно закомментировать строку pass in quick inet proto icmp from ALLOWED\_PING\_FROM\_IP icmp-type 8 code 0 keep state.
+
+Далее запустить скрипт firewall\_rules.py с аргументом apply, который применит правила.
+
+На рисунке \ref{fig:clean} показан результат попытки ранее разрешенного IP отправить ping на узел 192.168.0.2:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.48\linewidth]{img/lab-4/CLEAN.jpg}
+    \caption{Проверка блокировки запрещенного трафика (без разрешенного IP)}
+    \label{fig:clean}
+\end{figure}
+
+Видно, что ПК не смог отправить ping на узел 192.168.0.2, что подтверждает блокировку трафика.
+
+
+\subsection{Дополнительные аргументы pfctl}
+
+Можно так же просматривать правила для конретного якоря: 
+
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % sudo pfctl -sr -a practice4
+    No ALTQ support in kernel
+ALTQ related functions disabled
+scrub in all fragment reassemble
+block drop all
+pass quick on lo0 all flags S/SA keep state
+pass out quick proto udp from any to any port = 53 keep state
+pass out quick proto tcp from any to any port = 53 flags S/SA keep state
+pass out quick proto tcp from any to any port = 80 flags S/SA keep state
+pass out quick proto tcp from any to any port = 443 flags S/SA keep state
+pass out quick inet proto icmp all icmp-type echoreq code 0 keep state
+pass in quick inet proto icmp all icmp-type echorep code 0 keep state
+\end{lstlisting}
+
+Можно посмотреть сами якоря (аналог цепочки):
+
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % sudo pfctl -s Anchors
+No ALTQ support in kernel
+ALTQ related functions disabled
+  com.apple
+  practice4
+\end{lstlisting}
+
+Можно вывести таблицы текущих состояний соединений:
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % sudo pfctl -s states
+No ALTQ support in kernel
+ALTQ related functions disabled
+ALL tcp 192.168.0.2:64414 -> 104.18.19.125:443       ESTABLISHED:ESTABLISHED
+ALL tcp 192.168.0.2:64450 -> 3.173.21.63:443       ESTABLISHED:ESTABLISHED
+ALL tcp 192.168.0.2:64454 -> 93.186.225.194:443       ESTABLISHED:ESTABLISHED
+ALL tcp 192.168.0.2:64458 -> 87.240.137.207:443       ESTABLISHED:ESTABLISHED
+ALL tcp 192.168.0.2:64472 -> 93.186.237.7:443       ESTABLISHED:ESTABLISHED
+ALL tcp 192.168.0.2:64505 -> 95.213.56.3:443       ESTABLISHED:ESTABLISHED
+...
+...
+\end{lstlisting}
+
+Так же можно выводить NAT:
+
+\begin{lstlisting}[language=bash]
+    (base) monadayzek@Ayzeks-MacBook-Pro pf.anchors % sudo pfctl -sn
+    No ALTQ support in kernel
+    ALTQ related functions disabled
+    nat-anchor "com.apple/*" all
+    rdr-anchor "com.apple/*" all
+\end{lstlisting}
+
+\subsection*{Заключение}
+\addcontentsline{toc}{subsection}{Заключение}
+
+В данной главе спроектирована и реализована политика межсетевого экранирования с использованием Packet Filter (pf) в среде macOS. Изучена архитектура pf, принципы обработки пакетов и механизм якорных правил в \texttt{/etc/pf.anchors}, обеспечивающий сохранность пользовательской конфигурации при обновлениях системы. Разработан набор скриптов firewall\_rules.py, setup\_practice4.py, test\_policy.py, tcpdump\_monitor.py, config\_pf.py для автоматизированной настройки и управления правилами фильтрации.
+
+Реализованная политика доступа предусматривает: разрешение трафика через интерфейс loopback, исходящих DNS-запросов (UDP/TCP, порт 53), исходящего ping (ICMP), входящего ping с доверенного узла 192.168.0.4, а также HTTP/HTTPS (порты 80 и 443); блокировку всего остального трафика по умолчанию. Проведённые проверки подтвердили корректность работы: разрешённый трафик успешно проходит, запрещённые соединения (SSH, PostgreSQL, входящий ping с неразрешённых адресов) блокируются. Контроль прохождения пакетов выполнен с помощью tcpdump и утилиты pfctl, что позволило верифицировать соответствие фактического поведения политике доступа.
+
+\newpage
+\section{Разработка клиент-серверного приложения для конфиденциального обмена сообщениями}
+
+\subsection{Введение}
+В данной работе, разработано клиент-серверное приложение для защищённого обмена короткими сообщениями (до 80 символов) по протоколу TCP. 
+Для этого решались следующие задачи: освоение криптографических функций библиотеки OpenSSL (cryptography использует API OpenSSL), 
+реализация обмена сообщениями, обеспечение обмена сообщениями между клиентами, а также проверка корректности через анализ трафика. 
+В соответствии с индивидуальным заданием применяется симметричное шифрование ChaCha20 и хэш-функция Blake2B. Ключ шифрования длиной 32 байта хранится в файле с ограниченными правами доступа.
+Помимо базовых требований, реализованы: выработка сессионного ключа по протоколу Диффи‑Хеллмана, добавление соли в хэш, аутентификация пользователей, а также поддержка широковещательной и групповой рассылки сообщений.
+
+Актуальность темы обусловлена необходимостью защиты передаваемых данных в сетевых приложениях от перехвата и несанкционированной модификации, особенно в условиях открытых сетей.
+\subsection{Постановка задачи}
+\subsubsection{Цели}
+Целью работы является разработка клиент-серверного приложения для конфиденциального обмена
+сообщениями с использованием шифрования и контроля целостности данных.
+\subsubsection{Задачи}
+Задачами решаемами при выполнении работы являются:
+\begin{itemize}
+    \item Получение базовых знаний по использованию криптографических функций библиотеки OpenSSL (cryptography с OpenSSL API);
+    \item Разработка клиент-серверного приложения для конфиденциального обмена сообщениями с контролем целостности;
+    \item Проверка работы приложения в различных режимах с помощью анализа трафика.
+\end{itemize}
+
+\subsection{Алгоритм ChaCha20}
+ChaCha20 - это потоковый шифр, основанный на функции шифрования которая преобразует входное состояние с помощью последовательности раундов(см. Таблицу \ref{tab:terms})~\cite{chacha20}.
+Состояние представленно в виде матрицы $4 \times 4$ 32-битных слов (16 слов, 512 бит). Начальное состояние формируется следующим образом:
+\begin{itemize}
+    \item Первые 4 слова - константы в ASCII представлении строк "expand 32-byte k";
+    \item Следующие 8 слов - 256-битный ключ ($k_0, k_1, \dots, k_7$);
+    \item Следующее слово - 32-битный счетчик блока; 
+    \item Последние 3 слова - 96-битный nonce.
+\end{itemize}
+
+Алгоритм выполняет 20 раундов (10 двоичных раундов). Каждый раунд состоит из применение 8 четверть-раундов: Сначала к каждому из четырех столбцов матрицы,
+затем к каждой из четырех диагоналей. Четверть-раунд работает с четыремя словами и выполняет опирации - $\oplus$ - XOR, <<< - циклический сдвиг влево, $+$ - сложение по модулю $2^{32}$.
+
+Пусть слова - $a, b, c, d$. Тогда операции выполняются следующим образом~\cite{chacha20}.
+\begin{itemize}
+    \item $a = a + b; d = d \oplus a; d <<< 16$;
+    \item $c = c + d; b = b \oplus c; b <<< 12$;
+    \item $a = a + b; d = d \oplus a; d <<< 8$;
+    \item $c = c + d; b = b \oplus c; b <<< 7$;
+\end{itemize}
+
+После выполнения 20 раундов к полученному состоянию прибовляется по модулю $2^{32}$ исходное состояние. Полученные 16 слов = 64 байта состоявляют блок ключевого потока. 
+Этот поток побайтно совершает $\oplus$ с открытым текстом. Для генерации следующего блока счетчик увеличивается на 1, и процесс повторяется~\cite{chacha20}.
+
+Сам алгоритм шифрования используется в коде следующим образом:
+
+\begin{lstlisting}[language=Python]
+def derive_message_key(master_key: bytes, salt: bytes) -> bytes:
+    hkdf = HKDF(
+        algorithm=hashes.SHA256(),
+        length=CHACHA_KEY_SIZE,
+        salt=salt,
+        info=b"lab5-chacha20-msg",
+    )
+    return hkdf.derive(master_key)
+
+def chacha20_encrypt(plaintext: bytes, master_key: bytes) -> bytes:
+    salt = os.urandom(SALT_SIZE)
+    msg_key = derive_message_key(master_key, salt)
+    nonce = os.urandom(CHACHA_NONCE_SIZE)
+    cipher = Cipher(algorithms.ChaCha20(msg_key, nonce), mode=None)
+    enc = cipher.encryptor()
+    return salt + nonce + enc.update(plaintext) + enc.finalize()
+
+def chacha20_decrypt(blob: bytes, master_key: bytes) -> bytes:
+    salt = blob[:SALT_SIZE]
+    nonce = blob[SALT_SIZE : SALT_SIZE + CHACHA_NONCE_SIZE]
+    ciphertext = blob[SALT_SIZE + CHACHA_NONCE_SIZE :]
+    msg_key = derive_message_key(master_key, salt)
+    cipher = Cipher(algorithms.ChaCha20(msg_key, nonce), mode=None)
+    dec = cipher.decryptor()
+    return dec.update(ciphertext) + dec.finalize()
+\end{lstlisting}
+
+В данной реализации используется поточный шифр ChaCha20, построенный на принципе генерации ключевого потока и побайтового XOR с открытым текстом. Для каждого сообщения генерируются криптографически стойкая соль (16 байт) и nonce (16 байт). Мастер-ключ и соль подаются в HKDF (HMAC-based Key Derivation Function), который вырабатывает уникальный 32-байтный ключ для данного сообщения. Использование HKDF с солью обеспечивает то, что при шифровании одного и того же текста разными пакетами получается разный шифртекст, что устраняет уязвимости, связанные с повторным использованием nonce. Шифр ChaCha20 создаётся через \texttt{Cipher} с алгоритмом \texttt{ChaCha20} и режимом без дополнительной обёртки (потоковый режим). Результат шифрования формируется как конкатенация: \texttt{salt $||$ nonce $||$ ciphertext}. При расшифровании получатель извлекает соль и nonce из начала блоба, восстанавливает тот же \texttt{msg\_key} через HKDF и применяет обратное преобразование ChaCha20 к шифртексту.
+
+\subsection{Хэш-функция Blake2b}
+Blake2b - это криптографическая хэш-функция, оптимизированная для 64-битных платформ, которая основана на архитектуре ARX (Addition-Rotation-XOR). Математически алгоритм строится на итеративном применении функции сжатия к блокам данных~\cite{blake2b}.
+
+Пусть размер слова $w = 64$ бита, состоянием будет матрица $4 \times 4$ состоящая из 16 слов (1024 бита). 
+Имеется 12 раундов - итераций перемешивания. Операции - сложение по модулю $2^{64}$, XOR - $\oplus$, и циклический сдвиг.
+
+Тогда - инициализация состояние происходит следующим образом:
+Внутреннее состояние $v_0, \dots, v_15$ - инициализируется с помощью текущего значения хеша $h$, векторов инициализации $IV$, счетчика байтов $t$ и флагов 
+финализации $f$.
+
+Тогда матрица внутреннего состояния:
+$$
+\begin{bmatrix}
+    v_0 & v_1 & v_2 & v_3 \\
+    v_4 & v_5 & v_6 & v_7 \\
+    v_8 & v_9 & v_{10} & v_{11} \\
+    v_{12} & v_{13} & v_{14} & v_{15}
+\end{bmatrix} \leftarrow 
+\begin{bmatrix}
+    h_0 & h_1 & h_2 & h_3 \\
+    h_4 & h_5 & h_6 & h_7 \\
+    IV_0 & IV_1 & IV_2 & IV_3 \\
+    IV_4 \oplus t_0 & IV_5 \oplus t_1 & IV_6 \oplus f_0 & IV_7 \oplus f_1 
+\end{bmatrix}
+$$
+
+Сама функция перемешивания - это функция $G(a,b,c,d)$, обрабатывающая четыре 64-битных слова 
+и сообщение m с константами $const$: 
+
+\begin{itemize}
+    \item a = a + b + $m_{const_i}$;
+    \item d = $(d \oplus a) \ggg 32$;
+    \item c = c + d;
+    \item b = $(b \oplus c) \ggg 24$;
+    \item a = $a+b+m_{const_{i+1}}$;
+    \item d = $(d \oplus a) \ggg 16$;
+    \item c = c + d;
+    \item b = $(b \oplus c) \ggg 63$;
+\end{itemize}
+
+В коде функция используется следующим образом:
+\begin{lstlisting}[language=Python]
+def blake2b_digest(data: bytes) -> bytes:
+    return hashlib.blake2b(data, digest_size=BLAKE2B_DIGEST).digest()
+
+if use_integrity:
+    h = blake2b_digest(pt)
+    if test_bad_hash:
+        h = bytes((b + 1) % 256 for b in h)
+    inner.extend(h)
+
+if integrity:
+    expected = blake2b_digest(pt)
+    if recv_hash is None or recv_hash != expected:
+        raise ValueError("Integrity check: invalid Blake2b")
+\end{lstlisting}
+
+Хэш-функция Blake2b применяется для обеспечения контроля целостности сообщения. При формировании пакета (функция \texttt{pack\_message}) вычисляется криптографический образ открытого текста \texttt{pt} с помощью \texttt{blake2b\_digest}, формируя 32-байтный дайджест. Этот дайджест добавляется к телу пакета. При приёме (функция \texttt{parse\_message}) получатель заново вычисляет Blake2b от расшифрованного либо считанного открытого текста и сравнивает полученное значение с принятым хэшем. При несовпадении выбрасывается исключение «контроль целостности: неверный Blake2b», что означает обнаружение искажений или подделки данных. Использование Blake2b обеспечивает криптографическую стойкость: злоумышленник не может подобрать допустимый текст и хэш без знания ключа или без нарушения предположений о стойкости Blake2b.
+
+\subsubsection{Добавление соли}
+
+\subsection{Алгоритм Диффи-Хеллмана для генерации сессионного ключа}
+
+Алгоритм Диффи-Хеллмана позволяет двум сторонам создать общий секретный ключ через незащищенный канал, при этом не передавая ключ.
+
+В основе используется сложность вычисления дискретного логарифма:
+
+Стороны договариваются о двух открытых числах - $g$ - генератор и $p$ - большое простое число. 
+
+Пусть одна сторона - Алиса генерирует число $a$, а другая - Боб число $b$. $a, b$~--- секретны~\cite{dh}.
+
+Теперь Алиса вычисляет $A = g^a \mod p$, и отправляет $A$ Бобу.
+
+А боб вычисляет $B = g^b \mod p$, и отправляет $B$ Алисе.
+
+Алиса считает $K = B^a \mod p$, и Боб считает $K = A^b \mod p$.
+
+Тогда обе стороны приходят к одному и тому же числу:
+
+$$
+    K = (g^b)^a = (g^a)^b = g^{ab} \mod p
+$$
+
+Злоумышленик может прочесть $g, p, A, B$, но не может вычислить $a, b$ значит не может вычислить $K$. Это потребует очень большого количества времени~\cite{dh}.
+
+В коде используется следующим образом:
+\begin{lstlisting}[language=Python]
+def _raw_pub(key: x25519.X25519PublicKey) -> bytes:
+    return key.public_bytes(
+        encoding=serialization.Encoding.Raw,
+        format=serialization.PublicFormat.Raw,
+    )
+
+def dh_client(sock) -> bytes:
+    priv = x25519.X25519PrivateKey.generate()
+    write_frame(sock, bytes([KIND_DH_CLIENT]) + _raw_pub(priv.public_key()))
+    body = read_frame(sock)
+    if len(body) != 33 or body[0] != KIND_DH_SERVER:
+        raise ValueError("Expected DH server")
+    peer = x25519.X25519PublicKey.from_public_bytes(body[1:33])
+    return derive_session_key_from_shared_secret(priv.exchange(peer))
+
+def dh_server(sock) -> bytes:
+    body = read_frame(sock)
+    if len(body) != 33 or body[0] != KIND_DH_CLIENT:
+        raise ValueError("Expected DH client")
+    peer = x25519.X25519PublicKey.from_public_bytes(body[1:33])
+    priv = x25519.X25519PrivateKey.generate()
+    write_frame(sock, bytes([KIND_DH_SERVER]) + _raw_pub(priv.public_key()))
+    return derive_session_key_from_shared_secret(priv.exchange(peer))
+
+def derive_session_key_from_shared_secret(shared_secret: bytes) -> bytes:
+    hkdf = HKDF(algorithm=hashes.SHA256(), length=CHACHA_KEY_SIZE,
+                salt=None, info=b"lab5-x25519-session")
+    return hkdf.derive(shared_secret)
+\end{lstlisting}
+
+В реализации применяется протокол обмена ключами на базе эллиптических кривых - X25519 (алгоритм Диффи-Хеллмана для кривой Curve25519). Клиент генерирует пару ключей X25519 (\texttt{private\_key}, \texttt{public\_key}) и отправляет серверу кадр: байт-тип \texttt{KIND\_DH\_CLIENT} и 32 байта открытого ключа. Сервер, получив кадр, создаёт свою пару ключей, извлекает открытый ключ клиента, вычисляет общий секрет $K = [a_{\mathrm{srv}}] \cdot P_{\mathrm{clt}}$ (скалярное умножение: приватный ключ сервера на публичную точку клиента) и отправляет клиенту свой открытый ключ. Клиент вычисляет $K = [a_{\mathrm{clt}}] \cdot P_{\mathrm{srv}}$. В силу свойств ECDH обе стороны получают один и тот же общий секрет. Далее \texttt{shared\_secret} подаётся в HKDF с фиксированным \texttt{info}, что даёт 32-байтный сессионный ключ для ChaCha20. Каждое TCP-соединение получает свой сессионный ключ, что повышает безопасность и обеспечивает forward secrecy: компрометация ключа одного сеанса не затрагивает прошлые сессии.
+
+HKDF (HMAC-based Key Derivation Function) - Это алгоритм \guillemetleft вытягивания\guillemetright и \guillemetleft расширения\guillemetright. Он берет сырой секрет из ECDH и превращает его в один или несколько криптографически стойких ключей.
+
+ECDH (Elliptic Curve Diffie-Hellman) - Два участника обмениваются публичными ключами и вычисляют «сырой» общий секрет. Сам по себе этот секрет нельзя использовать как ключ шифрования.
+\subsection{Дополнительная реализация}
+В программе помимо базовых требований реализованы дополнительные требования, а так же дополнительный функционал:
+
+\begin{itemize}
+    \item Реализованы дополнительные требования: \begin{itemize}
+        \item Добавление соли в хэш;
+        \item Режим работы с сессионным ключом.
+    \end{itemize}
+    \item Дополнительный функционал: \begin{itemize}
+        \item Аутентификация пользователей;
+        \item Широковещательная и групповая рассылка сообщений.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Структура приложения}
+
+Приложение состоит из следующих частей:
+\begin{itemize}
+    \item confdata/ \begin{itemize}
+            \item key.txt - файл для хранения ключа шифрования;
+            \item passwd - файл для хранения пользователей и их хешей с солью.
+        \end{itemize}
+    \item scripts/ \begin{itemize}
+            \item connect.sh - скрипт для подключения к серверу и аутентификации;
+            \item start\_server.sh - скрипт для запуска сервера;
+            \item connect\_test.sh - скрипт запуска тестового сервера без шифрования;
+            \item connect\_test.sh - скрипт подключения к тестовому серверу без шифрования.
+        \end{itemize}
+    \item src/ \begin{itemize}
+            \item server.py - серверное приложение;
+            \item client.py - клиентское приложение;
+            \item auth.py - аутентификация пользователей;
+            \item add\_user.py - добавление пользователей;
+            \item crypto.py - шифрование сообщений, генерация сессионного ключа и контроль целостности данных;
+            \item fortest/ - директория с тестовым сервером без шифрования с той же логикой работы клиент-серверного приложения.
+        \end{itemize}
+\end{itemize}
+
+Файлы скриптов написанные на bash, нужны только для упрощенного запуска приложения без ввода дополнительных аргуметов. 
+
+Полный код представлен в приложении \hyperref[sec:pril5]{Г}. 
+
+\subsection{Примеры работы приложения}
+\subsubsection{Без шифрования}
+Ниже представлен результат работы приложения без шифрования, с запуском скрипта \texttt{scripts/connect\_test.sh} и \texttt{scripts/connect\_test.sh}.
+
+Для просмотра результата необходимо вызвать утилиту TCPDump, где будет видно отправителя и его сообщение.
+
+Сначала Алиса подключается к тестовому серверу без шифрования и отправляет сообщение "Hello! I hope no one listen me...", как показано на рисунке \ref{fig:alice_noconf}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/ALICE_NOCONF.png}
+    \caption{Алиса подключается к тестовому серверу без шифрования и отправляет сообщение «Hello, i hope no one listen me…»}
+    \label{fig:alice_noconf}
+\end{figure}
+
+Далее на рисунке \ref{fig:nocrypto}, в красных рамках, отмечено сообщение Алисы, которое легко читаемо, а так же видно как Алиса подключалась к серверу:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\linewidth]{img/lab-5/NOCRYPTO.png}
+    \caption{Результат работы приложения без шифрования}
+    \label{fig:nocrypto}
+\end{figure}
+
+
+\subsubsection{С симметричным шифрованием}
+
+Сначала нужно запустить сервер с шифрованием, с помощью скрипта \texttt{scripts/start\_server.sh}, как показано на рисунке \ref{fig:start_server}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/START_SERVER.png}
+    \caption{Запуск сервера с шифрованием}
+    \label{fig:start_server}
+\end{figure}
+
+Для проверки шифрования, необходим запустить скрипт \texttt{scripts/connect\_test.sh} и \texttt{scripts/connect.sh}, как показано на рисунке \ref{fig:login}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/LOGIN.png}
+    \caption{Запуск скриптов для аутентификации и подключения к серверу}
+    \label{fig:login}
+\end{figure}
+
+Пользователь Ayzek - отправляет сообщение "Im super programmer so u cant read my text :)". Сейчас нужно перезапустить 
+TCPDump на порт 9000 и посмотреть на трафик, как показано на рисунке \ref{fig:crypto_traffic}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\linewidth]{img/lab-5/CRYPTO_TRAFFIC.png}
+    \caption{Зашифрованный трафик}
+    \label{fig:crypto_traffic}
+\end{figure}
+
+Как видно из рисунка \ref{fig:crypto_traffic}, трафик зашифрован и вообще не читаемый, что подтверждает работоспособность шифрования.
+
+\subsubsection{Проверка целостности данных}
+
+Для проверки целостности данных, нужно вызвать скрипт из \texttt{src/} (client.py), так как необходимо передать аргумент который портит хэш перед отправкой:
+
+Сначала Боб присоединяется к серверу, так же для проверки к серверу подключается Алиса. 
+
+Алиса отправляет сообщение "Hello, I am Alice!", так как у Алисы хеш совпадает с хешем сервера ее сообщение целостное как видно на рисунке. 
+В ответ Боб (с неверным хешем) отправляет сообщение: "Hello Alice! I am Bob with wrong life and hash". 
+
+Однако из-за неверного хеша, Алиса получает сообщение: "Hello Alice! I am Bob wiuh wrong life and hash". 
+Нарушена целостность данных. Так же после отправки, сервер "выкидывает" Боба из чата, с сообщением: "bob disconnected (integrity error)".
+На рисунке \ref{fig:bob_out}, показан результат теста:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/BOB_OUT.png}
+    \caption{Алиса видит сообщение с нарушением целостности от Боба}
+    \label{fig:bob_out}
+\end{figure}
+
+При этом в логировании сервера будет видно нарушение целостности данных (Integrity check: invalid Blake2b), 
+что Боб отключился из чата не используя команду \texttt{\\q}, как показано на рисунке \ref{fig:server_out}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/SERVER_OUT.png}
+    \caption{Логирование сервера при нарушении целостности данных}
+    \label{fig:server_out}
+\end{figure}
+
+Сам же Боб, так же видит сообщение о нарушении целостности данных и сообщение об отключении из чата как показано на рисунке \ref{fig:poor_bob}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/POOR_BOB.png}
+    \caption{Боб видит сообщение о нарушении целостности данных и сообщение об отключении из чата}
+    \label{fig:poor_bob}
+\end{figure}
+
+\subsubsection{Проверка сессионного ключа}
+Для проверки сессионного ключа, нужно вызвать скрипт из \texttt{src/} (server.py), и передать ему аргумент \texttt{--dh}.
+
+\begin{lstlisting}[language=bash]
+python src/server.py -e --dh
+\end{lstlisting}
+
+Как видно, мы не передаем аргумент \texttt{--key-file}, так как используем режим сессионного ключа.
+Аргумент \texttt{-e} - включает шифрование в целом. А аргумент \texttt{--dh} - включает режим сессионного ключа.
+
+Из рисунка \ref{fig:dh_server}, видно, что Алиса и Боб написали друг другу сообщения. Так же красной стрелкой указано, что не был передан аргумент ключа:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/DH_SERVER.png}
+    \caption{Алиса и Боб написали друг другу сообщения в режиме сессионного ключа}
+    \label{fig:dh_server}
+\end{figure}
+
+
+Сейчас нужно посмортеть на трафик, при тестовом запуске обычного сервера без шифрования, было видно сообщения в открытом виде.
+На рисунке \ref{fig:dh_traffic}, показан результат. Видно что данные так же зашифрованы и не читаемы, что подтверждает работу в режиме сессионного ключа:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.78\linewidth]{img/lab-5/DH_TRAFFIC.png}
+    \caption{Трафик в режиме сессионного ключа}
+    \label{fig:dh_traffic}
+\end{figure}
+
+\subsubsection{Проверка хеша}
+
+Для проверки сессионного хеша, и показа того, что хэш генерируется с "солью", можно вызвать скрипт из \texttt{src/} (show\_hash.py), как показано на рисунке \ref{fig:showhash}.
+Идея в том, что скрипт на короткое время подключается к серверу, получает хеш и выводит в консоль отключаясь от сервера. Соль отделяется от хеша символом "\$".
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/SALT.png}
+    \caption{Проверка сессионного хеша}
+    \label{fig:showhash}
+\end{figure}
+
+\subsubsection{Общение между клиентами и группами клиентов}
+Для общения между клиентами, был реализован парсер, который парсит знак @, и до окончания слова считает его как пользователя. 
+
+Соответственно, если пользователь Алиса, хочет отправить сообщение только Бобу, он может написать: "@bob Hello!".
+
+Для реализации групповой рассылки, парсер считывает все символы @ и до окончания слова считает так же как пользователя. 
+
+Если Алиса хочет отправить сообщение только Бобу и Айзеку, она может написать "Hello! @bob, @Ayzek !"
+
+Для теста, к серверу подключаются четыре пользователя: Алиса (alice), Боб (bob), Айзек (Ayzek) и Ольга (Olga), как показано на рисунке \ref{fig:users}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/USERS.png}
+    \caption{Подключение четырех пользователей к серверу}
+    \label{fig:users}
+\end{figure}
+
+Для теста, были реализованы следующие сценарии:
+\begin{itemize}
+\item Пользователь Ayzek отправляет широковещательное сообщение "Hello everyone! Im Ayzek";
+\item Пользователь Olga отправляет личное сообщение пользователю Ayzek: "Who is this Alice???!!!";
+\item Пользователь Ayzek, отправляет сообщение только пользователям Bob, Alice: "Never mind...".
+\end{itemize}
+На рисунке \ref{fig:all}, показан результат теста:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.68\linewidth]{img/lab-5/ALL.png}
+    \caption{Общение между пользователями}
+    \label{fig:all}
+\end{figure}
+
+Из рисунка \ref{fig:all}, видно что Ayzek отправил широковещательное сообщение ([Ayzek] broadcast), после Olga отправила личное сообщение Ayzek ([Olga] -> @Ayzek),
+после чего Ayzek отправил сообщение группе из пользователей bob и alice ([Ayzek] -> @bob, @alice).
+
+Соответственно, сообщения дошли только до тех, кому сообщения были адресованы.
+
+\subsection*{Заключение}
+\addcontentsline{toc}{subsection}{Заключение}
+В ходе выполнения работы разработано клиент-серверное приложение для защищённого обмена сообщениями, обеспечивающее конфиденциальность и целостность передаваемых данных. Реализованы базовые требования: шифрование по алгоритму ChaCha20, контроль целостности с помощью Blake2b и обмен по TCP. 
+
+Дополнительно внедрены: выработка сессионного ключа по протоколу Диффи‑Хеллмана на эллиптической кривой X25519, добавление соли в хэш для усиления стойкости, аутентификация пользователей по паролю, а также широковещательная и групповая рассылка сообщений.
+ 
+Проведённая проверка с использованием анализа трафика подтвердила корректность работы всех реализованных механизмов. 
+
+\textcolor{blue}{Исходный код приложения, и скриптов запуска представлен в приложении \hyperref[sec:pril5]{Г}.}
+\newpage
 \addcontentsline{toc}{section}{Список литературы}
 \begin{thebibliography}{99}
 
@@ -1350,11 +2365,20 @@ $$
 ФСТЭК России // Банк данных угроз безопасности информации. URL: \url{https://bdu.fstec.ru/} (дата обращения: 22.02.2026).
 
 \bibitem{dac}
-DAC: Was ist Discretionary Access Control? [Электронный ресурс] // Security-Insider. — 2024. — 9 окт. — Режим доступа: \url{https://www.security-insider.de/discretionary-access-control-benutzerbestimmbares-zugriffsmodell-a-725723079d109135b4045fa80aedfa3f/} (дата обращения: 11.03.2026).
+DAC: Was ist Discretionary Access Control? [Электронный ресурс] // Security-Insider. - 2024. - 9 окт. - Режим доступа: \url{https://www.security-insider.de/discretionary-access-control-benutzerbestimmbares-zugriffsmodell-a-725723079d109135b4045fa80aedfa3f/} (дата обращения: 11.03.2026).
 
 \bibitem{dobychina_mac}
-Добычина А. В. Способ управления доступом в системах с различными реализациями мандатного механизма разграничения доступа [Электронный ресурс] / А. В. Добычина, А. Ю. Кузнецов, А. Н. Бегаев // Известия Тульского государственного университета. Технические науки. — 2019. — Режим доступа: \url{https://cyberleninka.ru/article/n/sposob-upravleniya-dostupom-v-sistemah-s-razlichnymi-realizatsiyami-mandatnogo-mehanizma-razgranicheniya-dostupa} (дата обращения: 11.03.2026).
+Добычина А. В. Способ управления доступом в системах с различными реализациями мандатного механизма разграничения доступа [Электронный ресурс] / А. В. Добычина, А. Ю. Кузнецов, А. Н. Бегаев // Известия Тульского государственного университета. Технические науки. - 2019. - Режим доступа: \url{https://cyberleninka.ru/article/n/sposob-upravleniya-dostupom-v-sistemah-s-razlichnymi-realizatsiyami-mandatnogo-mehanizma-razgranicheniya-dostupa} (дата обращения: 11.03.2026).
 
+\bibitem{pf}
+Iyan. Setting up correctly Packet Filter (pf) firewall on any macOS (from Sierra to Big Sur) [Электронный ресурс] // Medium. - 2021. - 23 мар. - Режим доступа: \url{https://iyanmv.medium.com/setting-up-correctly-packet-filter-pf-firewall-on-any-macos-from-sierra-to-big-sur-47e70e062a0e} (дата обращения: 18.03.2026).
+
+\bibitem{chacha20}
+Bernstein D. J. ChaCha, a variant of Salsa20 / D. J. Bernstein // Workshop Record of SASC. - 2008. - С. 3-7.
+\bibitem{blake2b}
+Guo J. Analysis of BLAKE2 / J. Guo, P. Karpman, I. Nikolić, L. Wang, S. Wu // Topics in Cryptology - CT-RSA 2016. - Springer, 2016. - С. 402-421. - DOI: 10.1007/978-3-319-29485-8\_23.
+\bibitem{dh}
+Diffie-Hellman key exchange [Электронный ресурс] // Wikipedia. - Режим доступа: \url{https://en.wikipedia.org/wiki/Diffie-Hellman_key_exchange} (дата обращения: 23.03.2026).
 \end{thebibliography}
 
 \newpage
@@ -4206,4 +5230,1131 @@ SECURITY_LEVEL_NAMES = {v: k for k, v in SECURITY_LEVELS.items()}
         main()
     
 \end{lstlisting}
+
+\newpage
+\addcontentsline{toc}{section}{Приложение В}
+\label{sec:pril4}
+\twosideheading{Исходный код практической работы №4}{Приложение В}
+
+\textbf{setup\_practice4.py}
+\begin{lstlisting}[language=python]
+import os
+import sys
+import subprocess
+from pathlib import Path
+
+ROOT = Path(__file__).parent
+sys.path.insert(0, str(ROOT))
+try:
+    from config import ALLOWED_PING_FROM_IP
+except ImportError:
+    ALLOWED_PING_FROM_IP = os.environ.get("ALLOWED_PING_FROM_IP", "192.168.1.100")
+
+ANCHOR_FILE = "/etc/pf.anchors/practice4"
+PF_CONF = "/etc/pf.conf"
+ANCHOR_MARKER = 'anchor "practice4"'
+LOAD_MARKER = 'load anchor "practice4" from "/etc/pf.anchors/practice4"'
+
+from firewall_rules import get_rules
+
+
+def ensure_anchor_in_pf_conf() -> bool:
+    try:
+        content = Path(PF_CONF).read_text(encoding="utf-8", errors="replace")
+    except OSError as e:
+        print(f"Error reading {PF_CONF}: {e}")
+        return False
+
+    if ANCHOR_MARKER in content and LOAD_MARKER in content:
+        return True
+
+    try:
+        with open(PF_CONF, "a", encoding="utf-8") as f:
+            f.write("\n# practice4 anchor\n")
+            f.write(ANCHOR_MARKER + "\n")
+            f.write(LOAD_MARKER + "\n")
+        print(f"Anchor practice4 added in {PF_CONF}")
+        return True
+    except OSError as e:
+        print(f"Error writing {PF_CONF}: {e}")
+        return False
+
+
+def write_anchor(rules: str) -> bool:
+    try:
+        Path(ANCHOR_FILE).write_text(rules, encoding="utf-8")
+        return True
+    except OSError as e:
+        print(f"Error writing {ANCHOR_FILE}: {e}")
+        print("Run with sudo.")
+        return False
+
+
+def run_pfctl(args: list[str]) -> tuple[int, str]:
+    try:
+        r = subprocess.run(["pfctl"] + args, capture_output=True, text=True, timeout=10)
+        return r.returncode, (r.stdout or "") + (r.stderr or "")
+    except Exception as e:
+        return -1, str(e)
+
+
+def main() -> int:
+    if os.geteuid() != 0:
+        print("Run with sudo: sudo python3 setup_practice4.py")
+        return 1
+
+    if sys.platform != "darwin":
+        print("Error")
+        return 1
+
+    if not ensure_anchor_in_pf_conf():
+        return 1
+
+    if not write_anchor(get_rules()):
+        return 1
+
+    code, out = run_pfctl(["-nf", PF_CONF])
+    if code != 0:
+        print("Error syntax rules:")
+        print(out)
+        return 1
+
+    run_pfctl(["-e"])
+
+    code, out = run_pfctl(["-F", "all", "-q", "-f", PF_CONF])
+    if code != 0:
+        print("Error loading pf:")
+        print(out)
+        return 1
+
+    print("Rules applied. ALLOWED_PING_FROM_IP =", ALLOWED_PING_FROM_IP)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+\end{lstlisting}
+
+\textbf{firewall\_rules.py}
+\begin{lstlisting}[language=python]
+    import os
+    import sys
+    import subprocess
+    from pathlib import Path
+    
+    ROOT = Path(__file__).parent
+    sys.path.insert(0, str(ROOT))
+    try:
+        from config import ALLOWED_PING_FROM_IP
+    except ImportError:
+        ALLOWED_PING_FROM_IP = os.environ.get("ALLOWED_PING_FROM_IP", "192.168.1.100")
+    
+    ANCHOR_FILE = "/etc/pf.anchors/practice4"
+    PF_CONF = "/etc/pf.conf"
+    
+    
+    def get_rules() -> str:
+        return f"""
+    # ALLOWED_PING_FROM_IP = {ALLOWED_PING_FROM_IP}
+    
+    set block-policy drop
+    scrub in all
+    
+    block all
+    
+    pass quick on lo0
+    
+    pass out quick proto udp to any port 53 keep state
+    pass out quick proto tcp to any port 53 keep state
+    
+    pass out quick inet proto icmp all icmp-type 8 code 0 keep state
+    
+    pass in quick inet proto icmp all icmp-type 0 code 0
+    
+    pass in quick inet proto icmp from {ALLOWED_PING_FROM_IP} icmp-type 8 code 0 keep state
+    
+    pass out quick proto tcp to any port {{ 80 443 }} keep state
+    """
+    
+    
+    def get_flush_rules() -> str:
+        return """# Flush all traffic
+    pass all
+    """
+    
+    
+    def run_pfctl(args: list[str]) -> tuple[int, str]:
+        try:
+            r = subprocess.run(["pfctl"] + args, capture_output=True, text=True, timeout=10)
+            return r.returncode, (r.stdout or "") + (r.stderr or "")
+        except Exception as e:
+            return -1, str(e)
+    
+    
+    def apply_rules() -> int:
+        if os.geteuid() != 0:
+            print("Run with sudo.")
+            return 1
+        if sys.platform != "darwin":
+            print("Error")
+            return 1
+    
+        try:
+            Path(ANCHOR_FILE).write_text(get_rules(), encoding="utf-8")
+        except OSError as e:
+            print(f"Error {ANCHOR_FILE}: {e}")
+            return 1
+    
+        code, out = run_pfctl(["-nf", PF_CONF])
+        if code != 0:
+            print("Error:")
+            print(out)
+            return 1
+    
+        run_pfctl(["-e"])
+        code, out = run_pfctl(["-F", "all", "-q", "-f", PF_CONF])
+        if code != 0:
+            print("Error")
+            print(out)
+            return 1
+    
+        print("Rules applied. ALLOWED_PING_FROM_IP =", ALLOWED_PING_FROM_IP)
+        return 0
+    
+    
+    def flush_rules() -> int:
+        if os.geteuid() != 0:
+            print("Run with sudo.")
+            return 1
+    
+        try:
+            Path(ANCHOR_FILE).write_text(get_flush_rules(), encoding="utf-8")
+        except OSError as e:
+            print(f"Error {ANCHOR_FILE}: {e}")
+            return 1
+    
+        run_pfctl(["-f", PF_CONF])
+        print("Rules flushed (pass all).")
+        return 0
+    
+    
+    def show_rules() -> int:
+        code, out = run_pfctl(["-sr"])
+        print(out)
+        return 0 if code == 0 else 1
+    
+    
+    def main() -> int:
+        action = (sys.argv[1] if len(sys.argv) > 1 else "apply").lower()
+    
+        if action == "apply":
+            return apply_rules()
+        elif action == "flush":
+            return flush_rules()
+        elif action == "show":
+            return show_rules()
+        else:
+            print("Usage: sudo python3 firewall_rules.py [apply|flush|show]")
+            return 1
+    
+    
+    if __name__ == "__main__":
+        sys.exit(main())    
+\end{lstlisting}
+\textbf{config.py}
+\begin{lstlisting}[language=python]
+    MY_IP = "192.168.0.2"
+    ALLOWED_PING_FROM_IP = "192.168.0.4"
+    DNS_SERVERS = ["8.8.8.8", "8.8.4.4", "1.1.1.1"]    
+\end{lstlisting}
+
+\newpage
+\addcontentsline{toc}{section}{Приложение Г}
+\label{sec:pril5}
+\twosideheading{Исходный код практической работы №5}{Приложение Г}
+
+\lstset{escapeinside={(*@}{@*)}}
+
+\textbf{add\_user.py}
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import getpass
+import sys
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parent.parent
+if str(_ROOT / "src") not in sys.path:
+    sys.path.insert(0, str(_ROOT / "src"))
+
+from auth import hash_line, load_passwd  # noqa: E402
+
+
+def main() -> None:
+    p = argparse.ArgumentParser()
+    default_passwd = _ROOT / "confdata" / "passwd"
+    p.add_argument("--passwd", type=Path, default=default_passwd)
+    p.add_argument("login")
+    args = p.parse_args()
+    passwd_path = args.passwd.resolve()
+    login = args.login.strip()
+    if not login:
+        print("Login cannot be empty.", file=sys.stderr)
+        sys.exit(1)
+    db = load_passwd(passwd_path)
+    if login in db:
+        print("Ooops! User with this login exists!", file=sys.stderr)
+        sys.exit(1)
+    pw = getpass.getpass("Password: ")
+    passwd_path.parent.mkdir(parents=True, exist_ok=True)
+    line = hash_line(login, pw) + "\n"
+    with passwd_path.open("a", encoding="utf-8") as f:
+        f.write(line)
+    print(f"Added to {passwd_path}")
+
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\textbf{auth.py}
+\begin{lstlisting}[language=Python]
+from __future__ import annotations
+
+import hashlib
+import secrets
+from pathlib import Path
+
+
+def _parse_line(line: str) -> tuple[str, bytes, bytes] | None:
+    line = line.strip()
+    if not line or line.startswith("#"):
+        return None
+    if ":" not in line:
+        return None
+    login, rest = line.split(":", 1)
+    parts = rest.split("$")
+    if len(parts) != 3 or parts[0] != "100000":
+        return None
+    try:
+        salt = bytes.fromhex(parts[1])
+        digest = bytes.fromhex(parts[2])
+    except ValueError:
+        return None
+    return login.strip(), salt, digest
+
+
+def load_passwd(path: Path) -> dict[str, tuple[bytes, bytes]]:
+    out: dict[str, tuple[bytes, bytes]] = {}
+    if not path.is_file():
+        return out
+    for line in path.read_text(encoding="utf-8").splitlines():
+        parsed = _parse_line(line)
+        if parsed:
+            login, salt, digest = parsed
+            out[login] = (salt, digest)
+    return out
+
+
+def verify_password(login: str, password: str, db: dict[str, tuple[bytes, bytes]]) -> bool:
+    if login not in db:
+        return False
+    salt, expected = db[login]
+    got = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 100000)
+    return secrets.compare_digest(got, expected)
+
+
+def hash_line(login: str, password: str) -> str:
+    salt = secrets.token_bytes(16)
+    digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 100000)
+    return f"{login}:100000${salt.hex()}${digest.hex()}"
+\end{lstlisting}
+
+\textbf{client.py}
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import errno
+import getpass
+import json
+import os
+import socket
+import sys
+import threading
+
+from crypto import (
+    dh_client,
+    load_master_key,
+    pack_message,
+    parse_message,
+    read_frame,
+    write_frame,
+)
+
+
+def read_line(sock: socket.socket) -> str:
+    buf = bytearray()
+    while True:
+        chunk = sock.recv(1)
+        if not chunk:
+            raise ConnectionError("connection broken")
+        if chunk == b"\n":
+            break
+        buf.extend(chunk)
+        if len(buf) > 4096:
+            raise ValueError("too long string")
+    return buf.decode("utf-8")
+
+
+def _reader(sock: socket.socket, master_key: bytes) -> None:
+    try:
+        while True:
+            body = read_frame(sock)
+            payload = parse_message(body, master_key=master_key)
+            print(payload.text, flush=True)
+    except OSError as e:
+        if e.errno not in (errno.EBADF, errno.ENOTCONN, errno.ECONNRESET):
+            print(f"[chat] {e}", flush=True)
+    except ValueError as e:
+        err_str = str(e)
+        print(file=sys.stderr)
+        print("=" * 60, file=sys.stderr)
+        print("!!! INTEGRITY CHECK FAILED !!!", file=sys.stderr)
+        print(err_str, file=sys.stderr)
+        print("Disconnected due to integrity violation.", file=sys.stderr)
+        print("=" * 60, file=sys.stderr)
+        sys.stderr.flush()
+        try:
+            sock.shutdown(socket.SHUT_RDWR)
+            sock.close()
+        except OSError:
+            pass
+        os._exit(1)
+    except (ConnectionError, UnicodeError) as e:
+        print(f"[chat] {e}", flush=True)
+
+
+def main() -> None:
+    p = argparse.ArgumentParser()
+    p.add_argument("host", nargs="?", default="localhost")
+    p.add_argument("port", type=int, nargs="?", default=9000)
+    p.add_argument("--user", "-u", default=None)
+    p.add_argument("--password", "-p", default=None)
+    p.add_argument("--key-file", type=str, default=None)
+    p.add_argument("--encrypt", "-e", action="store_true")
+    p.add_argument("--integrity", "-i", action="store_true")
+    p.add_argument("--test-integrity", "-t", action="store_true")
+    p.add_argument("--dh", action="store_true")
+    args = p.parse_args()
+
+    if args.encrypt:
+        if args.dh and args.key_file:
+            raise SystemExit("Either --dh or --key-file")
+        if not args.dh and not args.key_file:
+            raise SystemExit("For --encrypt specify --key-file or --dh")
+    if args.key_file and args.dh:
+        raise SystemExit("Cannot use --key-file and --dh together")
+    if args.test_integrity and not args.integrity:
+        raise SystemExit("--test-integrity only with --integrity")
+
+    if args.encrypt and args.key_file:
+        from pathlib import Path
+
+        master_key = load_master_key(Path(args.key_file))
+    else:
+        master_key = b"\x00" * 32
+
+    user = args.user or input("Login: ")
+    password = args.password
+    if password is None:
+        password = getpass.getpass("Password: ")
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((args.host, args.port))
+
+    auth = json.dumps({"user": user, "pass": password}, ensure_ascii=False)
+    sock.sendall(auth.encode("utf-8") + b"\n")
+
+    resp = read_line(sock)
+    if resp != "OK":
+        if resp == "BUSY":
+            print(
+                "BUSY: Login already in chat. Close another client or use another user.",
+                file=sys.stderr,
+            )
+        else:
+            print(resp, file=sys.stderr)
+        sys.exit(1)
+
+    if args.dh:
+        master_key = dh_client(sock)
+
+    t = threading.Thread(target=_reader, args=(sock, master_key), daemon=True)
+    t.start()
+
+    try:
+        for line in sys.stdin:
+            text = line.rstrip("\n\r")
+            if text == r"\q":
+                body = pack_message(
+                r"\q",
+                master_key=master_key,
+                use_encrypt=args.encrypt,
+                use_integrity=args.integrity,
+                test_bad_hash=args.test_integrity,
+            )
+                write_frame(sock, body)
+                break
+            body = pack_message(
+                text,
+                master_key=master_key,
+                use_encrypt=args.encrypt,
+                use_integrity=args.integrity,
+                test_bad_hash=args.test_integrity,
+            )
+            write_frame(sock, body)
+    except (BrokenPipeError, OSError):
+        pass
+    finally:
+        try:
+            sock.shutdown(socket.SHUT_RDWR)
+        except OSError:
+            pass
+        t.join(timeout=5.0)
+        try:
+            sock.close()
+        except OSError:
+            pass
+
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\textbf{crypto.py}
+\begin{lstlisting}[language=Python]
+from __future__ import annotations
+
+import hashlib
+import os
+import stat
+import struct
+from pathlib import Path
+from typing import NamedTuple
+
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import x25519
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+
+from cryptography.hazmat.primitives import serialization
+
+MAX_MESSAGE_CHARS = 80
+BLAKE2B_DIGEST = 32
+CHACHA_KEY_SIZE = 32
+CHACHA_NONCE_SIZE = 16
+SALT_SIZE = 16
+MIN_ENCRYPT_BLOB = SALT_SIZE + CHACHA_NONCE_SIZE + 1
+
+FLAG_ENCRYPT = 1 << 0
+FLAG_INTEGRITY = 1 << 1
+FLAG_TEST_BAD_HASH = 1 << 2
+
+KIND_DH_CLIENT = 0xC1
+KIND_DH_SERVER = 0xC2
+KIND_USER = 0x01
+
+
+class UserPayload(NamedTuple):
+    text: str
+    encrypt: bool
+    integrity: bool
+    test_bad_hash: bool
+
+
+def _check_key_file_permissions(path: Path) -> None:
+    if os.name == "nt":
+        return
+    st = path.stat()
+    mode = stat.S_IMODE(st.st_mode)
+    if st.st_uid != os.geteuid():
+        raise PermissionError(f"Key file {path} must belong to the current user")
+    if mode & 0o077:
+        raise PermissionError(f"Key file {path}: chmod 400 for owner")
+    if not (mode & stat.S_IRUSR):
+        raise PermissionError(f"Key file {path}: no read for owner")
+
+
+def load_master_key(path: Path) -> bytes:
+    _check_key_file_permissions(path)
+    raw = path.read_text(encoding="utf-8").strip()
+    if len(raw) < 32:
+        raise ValueError("Key in file must be at least 32 characters")
+    return raw.encode("utf-8")
+
+
+def derive_session_key_from_shared_secret(shared_secret: bytes) -> bytes:
+    hkdf = HKDF(algorithm=hashes.SHA256(), length=CHACHA_KEY_SIZE, salt=None, info=b"lab5-x25519-session")
+    return hkdf.derive(shared_secret)
+
+
+def derive_message_key(master_key: bytes, salt: bytes) -> bytes:
+    hkdf = HKDF(
+        algorithm=hashes.SHA256(),
+        length=CHACHA_KEY_SIZE,
+        salt=salt,
+        info=b"lab5-chacha20-msg",
+    )
+    return hkdf.derive(master_key)
+
+
+def chacha20_encrypt(plaintext: bytes, master_key: bytes) -> bytes:
+    if len(plaintext) > MAX_MESSAGE_CHARS * 4:
+        raise ValueError("too long message")
+    salt = os.urandom(SALT_SIZE)
+    msg_key = derive_message_key(master_key, salt)
+    nonce = os.urandom(CHACHA_NONCE_SIZE)
+    cipher = Cipher(algorithms.ChaCha20(msg_key, nonce), mode=None)
+    enc = cipher.encryptor()
+    return salt + nonce + enc.update(plaintext) + enc.finalize()
+
+
+def chacha20_decrypt(blob: bytes, master_key: bytes) -> bytes:
+    if len(blob) < SALT_SIZE + CHACHA_NONCE_SIZE:
+        raise ValueError("invalid packet")
+    salt = blob[:SALT_SIZE]
+    nonce = blob[SALT_SIZE : SALT_SIZE + CHACHA_NONCE_SIZE]
+    ciphertext = blob[SALT_SIZE + CHACHA_NONCE_SIZE :]
+    msg_key = derive_message_key(master_key, salt)
+    cipher = Cipher(algorithms.ChaCha20(msg_key, nonce), mode=None)
+    dec = cipher.decryptor()
+    return dec.update(ciphertext) + dec.finalize()
+
+
+def blake2b_digest(data: bytes) -> bytes:
+    return hashlib.blake2b(data, digest_size=BLAKE2B_DIGEST).digest()
+
+
+def verify_message_text(text: str) -> None:
+    if len(text) > MAX_MESSAGE_CHARS:
+        raise ValueError(f"No more than {MAX_MESSAGE_CHARS} characters")
+
+
+def read_exact(sock, n: int) -> bytes:
+    buf = bytearray()
+    while len(buf) < n:
+        chunk = sock.recv(n - len(buf))
+        if not chunk:
+            raise ConnectionError("connection closed")
+        buf.extend(chunk)
+    return bytes(buf)
+
+
+def write_frame(sock, body: bytes) -> None:
+    sock.sendall(struct.pack("!I", len(body)) + body)
+
+
+def read_frame(sock) -> bytes:
+    (length,) = struct.unpack("!I", read_exact(sock, 4))
+    if length > 0x100000:
+        raise ValueError("invalid frame length")
+    return read_exact(sock, length)
+
+
+def _raw_pub(key: x25519.X25519PublicKey) -> bytes:
+    return key.public_bytes(
+        encoding=serialization.Encoding.Raw,
+        format=serialization.PublicFormat.Raw,
+    )
+
+def dh_client(sock) -> bytes:
+    priv = x25519.X25519PrivateKey.generate()
+    write_frame(sock, bytes([KIND_DH_CLIENT]) + _raw_pub(priv.public_key()))
+    body = read_frame(sock)
+    if len(body) != 33 or body[0] != KIND_DH_SERVER:
+        raise ValueError("Expected DH server")
+    peer = x25519.X25519PublicKey.from_public_bytes(body[1:33])
+    return derive_session_key_from_shared_secret(priv.exchange(peer))
+
+
+def dh_server(sock) -> bytes:
+    body = read_frame(sock)
+    if len(body) != 33 or body[0] != KIND_DH_CLIENT:
+        raise ValueError("Expected DH client")
+    peer = x25519.X25519PublicKey.from_public_bytes(body[1:33])
+    priv = x25519.X25519PrivateKey.generate()
+    write_frame(sock, bytes([KIND_DH_SERVER]) + _raw_pub(priv.public_key()))
+    return derive_session_key_from_shared_secret(priv.exchange(peer))
+
+def pack_message(
+    text: str,
+    *,
+    master_key: bytes,
+    use_encrypt: bool,
+    use_integrity: bool,
+    test_bad_hash: bool,
+) -> bytes:
+    verify_message_text(text)
+    pt = text.encode("utf-8")
+    flags = 0
+    if use_encrypt:
+        flags |= FLAG_ENCRYPT
+    if use_integrity:
+        flags |= FLAG_INTEGRITY
+    if test_bad_hash:
+        flags |= FLAG_TEST_BAD_HASH
+
+    if test_bad_hash and len(pt) > 0:
+        pt_corrupted = bytearray(pt)
+        idx = len(pt_corrupted) // 2
+        pt_corrupted[idx] = (pt_corrupted[idx] + 1) \% 256
+        pt_corrupted = bytes(pt_corrupted)
+    else:
+        pt_corrupted = pt
+
+    inner = bytearray([flags])
+    if use_encrypt:
+        inner.extend(chacha20_encrypt(pt_corrupted, master_key))
+    else:
+        inner.append(len(pt_corrupted))
+        inner.extend(pt_corrupted)
+
+    if use_integrity:
+        h = blake2b_digest(pt)
+        inner.extend(h)
+
+    return bytes([KIND_USER]) + bytes(inner)
+
+
+def parse_message(body: bytes, *, master_key: bytes) -> UserPayload:
+    if not body or body[0] != KIND_USER:
+        raise ValueError("not user packet")
+    pos = 1
+    flags = body[pos]
+    pos += 1
+    encrypt = bool(flags & FLAG_ENCRYPT)
+    integrity = bool(flags & FLAG_INTEGRITY)
+    test_sent = bool(flags & FLAG_TEST_BAD_HASH)
+    recv_hash: bytes | None = None
+
+    if encrypt:
+        blob = body[pos:]
+        if integrity:
+            if len(blob) < MIN_ENCRYPT_BLOB + BLAKE2B_DIGEST:
+                raise ValueError("short packet")
+            ct_part = blob[:-BLAKE2B_DIGEST]
+            recv_hash = blob[-BLAKE2B_DIGEST:]
+        else:
+            if len(blob) < MIN_ENCRYPT_BLOB:
+                raise ValueError("short packet")
+            ct_part = blob
+        pt = chacha20_decrypt(ct_part, master_key)
+        try:
+            text = pt.decode("utf-8")
+        except UnicodeDecodeError:
+            text = pt.decode("utf-8", errors="replace")
+    else:
+        ln = body[pos]
+        pos += 1
+        if integrity:
+            end = len(body) - BLAKE2B_DIGEST
+            recv_hash = body[end : end + BLAKE2B_DIGEST]
+            pt = body[pos:end]
+        else:
+            pt = body[pos : pos + ln]
+        text = pt.decode("utf-8")
+
+    if integrity:
+        expected = blake2b_digest(pt)
+        if recv_hash is None or recv_hash != expected:
+            raise ValueError(
+                f"Integrity check failed: invalid Blake2b. Corrupted data received: {text!r}"
+            )
+
+    verify_message_text(text)
+    return UserPayload(text=text, encrypt=encrypt, integrity=integrity, test_bad_hash=test_sent)
+\end{lstlisting}
+
+\textbf{server.py}
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import socket
+import threading
+from pathlib import Path
+
+_ROOT = Path(__file__).resolve().parent.parent
+
+from auth import load_passwd, verify_password
+from crypto import (
+    dh_server,
+    load_master_key,
+    pack_message,
+    parse_message,
+    read_frame,
+    write_frame,
+)
+
+clients_lock = threading.Lock()
+clients: dict[str, socket.socket] = {}
+client_keys: dict[str, bytes] = {}
+
+_MENTION = re.compile(r"@([A-Za-z0-9_]+)")
+
+
+def _mentioned(text: str) -> list[str]:
+    return _MENTION.findall(text)
+
+
+def _has_mentions(text: str) -> bool:
+    return bool(_MENTION.search(text))
+
+
+def _chat_line(username: str, text: str) -> str:
+    return f"{username} : {text}"
+
+
+def read_line(sock: socket.socket) -> str:
+    buf = bytearray()
+    while True:
+        chunk = sock.recv(1)
+        if not chunk:
+            raise ConnectionError("connection broken while reading line")
+        if chunk == b"\n":
+            break
+        buf.extend(chunk)
+        if len(buf) > 4096:
+            raise ValueError("too long string")
+    return buf.decode("utf-8")
+
+
+def send_line(sock: socket.socket, text: str) -> None:
+    sock.sendall(text.encode("utf-8"))
+
+
+def send_frame_safe(
+    sock: socket.socket,
+    text: str,
+    *,
+    master_key: bytes,
+    encrypt: bool,
+    integrity: bool,
+    test_bad: bool,
+) -> None:
+    body = pack_message(
+        text,
+        master_key=master_key,
+        use_encrypt=encrypt,
+        use_integrity=integrity,
+        test_bad_hash=test_bad,
+    )
+    write_frame(sock, body)
+
+
+def broadcast_system(
+    line: str,
+    *,
+    encrypt: bool,
+    integrity: bool,
+    test_bad: bool,
+    exclude: set[str] | None = None,
+) -> None:
+    exclude = exclude or set()
+    with clients_lock:
+        items = [(u, clients[u], client_keys[u]) for u in clients if u not in exclude]
+    for _u, sock, key in items:
+        try:
+            send_frame_safe(sock, line, master_key=key, encrypt=encrypt, integrity=integrity, test_bad=test_bad)
+        except OSError:
+            pass
+
+
+def send_to_users(
+    names: set[str],
+    line: str,
+    *,
+    encrypt: bool,
+    integrity: bool,
+    test_bad: bool,
+) -> None:
+    with clients_lock:
+        items = [(u, clients[u], client_keys[u]) for u in names if u in clients]
+    for _u, sock, key in items:
+        try:
+            send_frame_safe(sock, line, master_key=key, encrypt=encrypt, integrity=integrity, test_bad=test_bad)
+        except OSError:
+            pass
+
+
+def handle_client(
+    conn: socket.socket,
+    addr: tuple,
+    passwd_path: Path,
+    file_master_key: bytes,
+    encrypt: bool,
+    integrity: bool,
+    test_bad: bool,
+    use_dh: bool,
+) -> None:
+    username: str | None = None
+    left_announced = False
+    try:
+        raw = read_line(conn)
+        try:
+            auth = json.loads(raw)
+            user = str(auth.get("user", "")).strip()
+            password = str(auth.get("pass", ""))
+        except (json.JSONDecodeError, TypeError):
+            print(f"[{addr}] auth FAIL: invalid JSON")
+            send_line(conn, "FAIL\n")
+            return
+
+        db = load_passwd(passwd_path)
+        if not user or not verify_password(user, password, db):
+            print(f"[{addr}] auth FAIL: user={user!r}")
+            send_line(conn, "FAIL\n")
+            return
+
+        with clients_lock:
+            if user in clients:
+                print(f"[{addr}] auth BUSY: {user} already in chat")
+                send_line(conn, "BUSY\n")
+                return
+
+        print(f"[{addr}] auth OK: {user} logged in")
+        send_line(conn, "OK\n")
+
+        if use_dh:
+            session_key = dh_server(conn)
+        else:
+            session_key = file_master_key
+
+        with clients_lock:
+            clients[user] = conn
+            client_keys[user] = session_key
+        username = user
+
+        print(f"[{user}] joined chat")
+
+        while True:
+            body = read_frame(conn)
+            payload = parse_message(body, master_key=client_keys[user])
+            text = payload.text.strip()
+            if text == r"\q":
+                print(f"[{user}] left chat")
+                left_announced = True
+                return
+
+            line_out = _chat_line(user, payload.text)
+            with clients_lock:
+                online = set(clients.keys())
+            if _has_mentions(payload.text):
+                targets = set(_mentioned(payload.text)) & online
+                print(f"[{user}] -> {', '.join(f'@{t}' for t in targets)}: {payload.text[:50]!r}")
+            else:
+                targets = online
+                print(f"[{user}] broadcast: {payload.text[:50]!r}")
+
+            send_to_users(targets, line_out, encrypt=encrypt, integrity=integrity, test_bad=test_bad)
+
+    except ValueError as e:
+        who = username or addr
+        err_msg = str(e)
+        print(f"[{who}] {err_msg}")
+        if username:
+            m = re.search(r"Corrupted data received: (.+)$", err_msg)
+            corrupt_part = m.group(1)[:50] if m else err_msg[:50]
+            notice = (f"!!! Integrity FAIL from {username}: {corrupt_part}")[:76]
+            disconnect_msg = (f"{username} disconnected (integrity error)")[:76]
+            with clients_lock:
+                all_clients = set(clients.keys())
+            if all_clients:
+                send_to_users(all_clients, notice, encrypt=encrypt, integrity=integrity, test_bad=False)
+                send_to_users(all_clients, disconnect_msg, encrypt=encrypt, integrity=integrity, test_bad=False)
+    except (ConnectionError, OSError, UnicodeError) as e:
+        who = username or addr
+        print(f"[{who}] error/disconnect: {e}")
+    finally:
+        if username:
+            with clients_lock:
+                clients.pop(username, None)
+                client_keys.pop(username, None)
+            if not left_announced:
+                print(f"[{username}] disconnected (no (*@\textbackslash @*)q)")
+        try:
+            conn.shutdown(socket.SHUT_RDWR)
+        except OSError:
+            pass
+        conn.close()
+
+
+def main() -> None:
+    p = argparse.ArgumentParser()
+    p.add_argument("--port", "-P", type=int, default=9000)
+    p.add_argument("--passwd", type=Path, default=_ROOT / "confdata" / "passwd")
+    p.add_argument("--key-file", type=Path, default=None)
+    p.add_argument("--encrypt", "-e", action="store_true")
+    p.add_argument("--integrity", "-i", action="store_true")
+    p.add_argument("--test-integrity", "-t", action="store_true")
+    p.add_argument("--dh", action="store_true")
+    args = p.parse_args()
+
+    if args.encrypt:
+        if args.dh and args.key_file:
+            raise SystemExit("Either --dh or --key-file")
+        if not args.dh and not args.key_file:
+            raise SystemExit("For --encrypt specify --key-file or --dh")
+    if args.key_file and args.dh:
+        raise SystemExit("Cannot use --key-file and --dh together")
+    if args.test_integrity and not args.integrity:
+        raise SystemExit("--test-integrity only with --integrity")
+
+    if args.encrypt and args.key_file:
+        file_master_key = load_master_key(args.key_file)
+    else:
+        file_master_key = b"\x00" * 32
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind(("0.0.0.0", args.port))
+    sock.listen(50)
+    print(f"Yaaay! 0.0.0.0:{args.port}", flush=True)
+
+    try:
+        while True:
+            conn, addr = sock.accept()
+            print(f"[server] new connection from {addr}")
+            t = threading.Thread(
+                target=handle_client,
+                args=(conn, addr, args.passwd, file_master_key, args.encrypt, args.integrity, args.test_integrity, args.dh),
+                daemon=True,
+            )
+            t.start()
+    except KeyboardInterrupt:
+        print("\nStop.")
+    finally:
+        sock.close()
+
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\textbf{show\_hash.py}
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import secrets
+import socket
+import sys
+from pathlib import Path
+
+BLAKE2B_DIGEST = 32
+SALT_SIZE = 16
+
+
+def read_line(sock: socket.socket) -> str:
+    buf = bytearray()
+    while True:
+        chunk = sock.recv(1)
+        if not chunk:
+            raise ConnectionError("connection broken")
+        if chunk == b"\n":
+            break
+        buf.extend(chunk)
+        if len(buf) > 4096:
+            raise ValueError("too long string")
+    return buf.decode("utf-8")
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(description="Show session hash (Blake2b with salt)")
+    p.add_argument("host", nargs="?", default="localhost")
+    p.add_argument("port", type=int, nargs="?", default=9000)
+    p.add_argument("--user", "-u", default=None)
+    p.add_argument("--password", "-p", default=None)
+    p.add_argument("--key-file", type=str, default=None)
+    p.add_argument("--dh", action="store_true")
+    args = p.parse_args()
+
+    if args.dh and args.key_file:
+        sys.exit("Cannot use --key-file and --dh together")
+
+    if args.key_file:
+        from crypto import load_master_key
+
+        master_key = load_master_key(Path(args.key_file))
+    else:
+        master_key = b"\x00" * 32
+
+    user = args.user or input("Login: ")
+    if args.password is not None:
+        password = args.password
+    else:
+        import getpass
+
+        password = getpass.getpass("Password: ")
+
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(5)
+        sock.connect((args.host, args.port))
+    except (socket.error, OSError) as e:
+        print("Ooops! Looks like someone forget to run server... (", file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        auth = json.dumps({"user": user, "pass": password}, ensure_ascii=False)
+        sock.sendall(auth.encode("utf-8") + b"\n")
+
+        resp = read_line(sock)
+        if resp != "OK":
+            if resp == "BUSY":
+                print("BUSY: Login already in chat.", file=sys.stderr)
+            else:
+                print(resp, file=sys.stderr)
+            sys.exit(1)
+
+        if args.dh:
+            from crypto import dh_client, read_frame, write_frame
+
+            master_key = dh_client(sock)
+
+        salt = secrets.token_bytes(SALT_SIZE)
+        h = hashlib.blake2b(master_key, salt=salt, digest_size=BLAKE2B_DIGEST).digest()
+        print(f"Your hash: \{salt.hex()\}\$\{h.hex()}\")
+    finally:
+        sock.close()
+
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\textbf{scripts/connect.sh}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python src/client.py -e --key-file confdata/key.txt "$@"
+\end{lstlisting}
+
+\textbf{scripts/start\_server.sh}
+\begin{lstlisting}[language=bash]
+#!/bin/bash
+cd "$(dirname "$0")/.."
+python src/server.py -e --key-file confdata/key.txt
+\end{lstlisting}
+
 \end{document}
