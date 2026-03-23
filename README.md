@@ -5,9 +5,9 @@
 
 ### Данный репозиторий содержит:
 - ## Статьи:
-  - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles);
+  - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles/salimli-computer-vision-for-offside-detection-in-football.pdf);
   - Решение задачи динамической VRP для обеспечения точной подачи такси клиенту (в реализации);
-  - Использование методов компьютерного зрения для обнаружения посторонних объектов на трамвайных путях (в реализации);
+  - [Выделение зоны интересов трамвайных путей на основе их сегментации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles/salimli-identification-of-the-roi-of-tram-tracks-based-on-their-segmentation.pdf);
   - Использование настраиваемых персон и аватаров в LLM-чат-ботах (в реализации).
 - ## Дипломный проект: 
   - Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации (в реализации).
