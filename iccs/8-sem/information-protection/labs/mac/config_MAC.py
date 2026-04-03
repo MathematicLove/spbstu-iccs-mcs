@@ -12,7 +12,7 @@ AUTH_LOG = os.path.join(LOG_DIR, "auth.log")
 ACCESS_LOG = os.path.join(LOG_DIR, "access.log")
 
 # Algohash
-HASH_ALGO = 'sha256'
+HASH_ALGO = 'blake2b'
 
 # ASCII + 1 is char
 PASSWORD_ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()"
