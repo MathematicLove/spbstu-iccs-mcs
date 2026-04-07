@@ -4,5 +4,5 @@
 - lab-3: [Создание инфраструктуры с помощью **heat**, **service**](https://github.com/MathematicLove/trip-planner-bot-spring/tree/main/infra/heat);
 - lab-4: [Деплой приложения на OpenStack instance](https://github.com/MathematicLove/trip-planner-bot-spring/blob/main/infra/Jenkinsfile.deploy);
 - lab-5: [Создание инфраструктуры с помощью terraform и ansible](https://github.com/MathematicLove/trip-planner-bot-spring/tree/main/infra/terraform);
-- lab-6: [Сборка pipeline (build, test, deploy)](https://github.com/MathematicLove/trip-planner-bot-spring/blob/main/infra/Jenkinsfile);
+- lab-6: [Сборка pipeline (infra, build, deploy)](https://github.com/MathematicLove/trip-planner-bot-spring/blob/main/infra/Jenkinsfile);
 - lab-7: Отправка приложения в k8s.
