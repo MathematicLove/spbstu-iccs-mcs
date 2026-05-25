@@ -11,7 +11,7 @@
   - Использование настраиваемых персон и аватаров в LLM-чат-ботах (в реализации).
 ---------------
   **$^1$** - признана одним из лучших докладов в секции.
-- ## Дипломный проект: 
+- ## Дипломный проект (ВКР): 
   - Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации (в реализации).
 - ## [Учебные проекты](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs):
   - ### [**8-ой семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem):
@@ -22,8 +22,7 @@
     - [Генетические алгоритмы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/genetics-algorithms);
     - [Высокоскоростные сетевые технологии суперкомпьютеров](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/high-speed-supercomputer-network-technologies);
     - [Системы исскуственного интеллекта](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/artificial-intelligence-systems);  
-    - [Облачные вычисления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/cloud-computing);
-    - ВКР. (в процессе)
+    - [Облачные вычисления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/cloud-computing).
   - ### [**7-ой семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem):
     - [Генетические алгоритмы (6 типов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/genetics-algorithms);
     - [Методы оптимизации (2 метода одномерной оптимизации, 5 методов градиентного спуска)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/methods-of-optimization);
