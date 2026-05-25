@@ -6,9 +6,11 @@
 ### Данный репозиторий содержит:
 - ## [Статьи](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles):
   - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://www.elibrary.ru/download/elibrary_80243926_22915475.pdf);
-  - [Построение зоны интересов трамвайных путей на основе их сегментации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles/salimli-identification-of-the-roi-of-tram-tracks-based-on-their-segmentation.pdf);
+  - [Построение зоны интересов трамвайных путей на основе их сегментации (386 стр.)](https://elib.spbstu.ru/dl/2/i26-137.pdf/download/i26-137.pdf)**$^1$**;
   - Решение задачи динамической VRP для обеспечения точной подачи такси клиенту (в реализации);
   - Использование настраиваемых персон и аватаров в LLM-чат-ботах (в реализации).
+---------------
+  **$^1$** - признана одним из лучших докладов в секции.
 - ## Дипломный проект: 
   - Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации (в реализации).
 - ## [Учебные проекты](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs):
