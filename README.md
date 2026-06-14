@@ -5,23 +5,22 @@
 
 ### Данный репозиторий содержит:
 - ## [Статьи](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles):
-  - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles/salimli-computer-vision-for-offside-detection-in-football.pdf);
-  - [Построение зоны интересов трамвайных путей на основе их сегментации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles/salimli-identification-of-the-roi-of-tram-tracks-based-on-their-segmentation.pdf);
+  - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://www.elibrary.ru/download/elibrary_80243926_22915475.pdf);
+  - [Построение зоны интереса на основе сегментации <sup>1</sup>](https://www.elibrary.ru/qfcwed);
   - Решение задачи динамической VRP для обеспечения точной подачи такси клиенту (в реализации);
   - Использование настраиваемых персон и аватаров в LLM-чат-ботах (в реализации).
-- ## Дипломный проект: 
+---------------
+  <strong><p><sup>1</sup> - Признан одним из лучших докладов в секции.</strong></p>
+- ## Дипломный проект (ВКР): 
   - Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации (в реализации).
 - ## [Учебные проекты](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs):
   - ### [**8-ой семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem):
-    - [Защита информации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/information-protection);
-    - [Генетические алгоритмы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/genetics-algorithms);
-    - [Методы исследовательской работы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/methods-of-research-work);
-    - [Защита информации](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/information-protection);
-    - [Генетические алгоритмы](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/genetics-algorithms);
-    - [Высокоскоростные сетевые технологии суперкомпьютеров](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/high-speed-supercomputer-network-technologies);
-    - [Системы исскуственного интеллекта](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/artificial-intelligence-systems);  
-    - [Облачные вычисления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/cloud-computing);
-    - ВКР. (в процессе)
+    - [Методы исследовательской работы (Когнетивное мышление и чат-боты)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/methods-of-research-work);
+    - [Защита информации (ФСТЭК, AUTH, MAC/DAC, Firewall, Client-server secured)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/information-protection);
+    - [Генетические алгоритмы (`tune()` для подбора гиперпараметров)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/genetics-algorithms);
+    - [Высокоскоростные сетевые технологии суперкомпьютеров (CUDA vs MPI)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/high-speed-supercomputer-network-technologies);
+    - [Системы исскуственного интеллекта (NumPy. Scikit-learn, AutoGrad, LR, etc.)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/artificial-intelligence-systems);  
+    - [Облачные вычисления (YandexCloud, Terraform, Ansible, Jenkins, OpenStack, Heat)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/cloud-computing).
   - ### [**7-ой семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem):
     - [Генетические алгоритмы (6 типов)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/genetics-algorithms);
     - [Методы оптимизации (2 метода одномерной оптимизации, 5 методов градиентного спуска)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/7-sem/methods-of-optimization);
