@@ -6,10 +6,14 @@ env/
 *.sqlite3
 *.db
 
+
+*.MF
 *.DS_Store
 *.gradle
 *.vscode
 *.idea
+
+*problems-report.html
 
 # Для JavaScript/Node.js
 node_modules/
