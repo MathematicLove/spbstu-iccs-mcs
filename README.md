@@ -11,8 +11,8 @@
   - Использование настраиваемых персон и аватаров в LLM-чат-ботах (в реализации).
 ---------------
   <strong><p><sup>1</sup> - Признан одним из лучших докладов в секции.</strong></p>
-- ## Дипломный проект (ВКР): 
-  - Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации (в реализации).
+- ## [Дипломный проект (ВКР)](https://github.com/MathematicLove/tram-dynamic-roi-tracker): 
+  - [Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации](https://github.com/MathematicLove/tram-dynamic-roi-tracker).
 - ## [Учебные проекты](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs):
   - ### [**8-ой семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem):
     - [Методы исследовательской работы (Когнетивное мышление и чат-боты)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/8-sem/methods-of-research-work);
