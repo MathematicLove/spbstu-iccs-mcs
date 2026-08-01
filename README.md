@@ -4,9 +4,10 @@
 <h2 align="center">02.03.01: Математика и компьютерные науки</h2>
 <h2 align="center">Системы искусственного интеллекта и суперкомпьютерные технологии</h2>
 
+<h3 align="center">GPA: 4.2/5</h3>
+
 <h3 align="center">Выпуск: 2026 г.</h3>
 
-### Данный репозиторий содержит:
 - ## [Статьи](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles):
   - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://www.elibrary.ru/download/elibrary_80243926_22915475.pdf);
   - [Построение зоны интереса на основе сегментации <sup>1</sup>](https://www.elibrary.ru/qfcwed).
