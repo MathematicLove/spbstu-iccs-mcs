@@ -9,9 +9,7 @@
 ### Данный репозиторий содержит:
 - ## [Статьи](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles):
   - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://www.elibrary.ru/download/elibrary_80243926_22915475.pdf);
-  - [Построение зоны интереса на основе сегментации <sup>1</sup>](https://www.elibrary.ru/qfcwed);
-  - Решение задачи динамической VRP для обеспечения точной подачи такси клиенту (в реализации);
-  - Использование настраиваемых персон и аватаров в LLM-чат-ботах (в реализации).
+  - [Построение зоны интереса на основе сегментации <sup>1</sup>](https://www.elibrary.ru/qfcwed).
 ---------------
   <strong><p><sup>1</sup> - Признан одним из лучших докладов в секции.</strong></p>
 - ## [Дипломный проект (ВКР)](https://github.com/MathematicLove/tram-dynamic-roi-tracker): 
