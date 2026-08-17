@@ -3,28 +3,22 @@
 set -o nounset
 
 print_usage() {
-  cat <<'EOF'
-Нужно так:
-  unixScript.sh [арг] <директ> <команд> [арг команды]
-
-Опции:
-  -h Показать справку и выйти.
-  -D <N> Ограничить глубину обхода (find -maxdepth N).
-  -m <GLOB> Включать только файлы, совпадающие с шаблоном.
-  -e <GLOB> Исключать файлы по шаблону.
-  --help То же самое что -h.
-
-Справка:
-  ./unixScript.sh -h
-  ./unixScript.sh --help
+    cat <<'EOF'
+    Usage:
+        deep.sh [args] <dir> <comand> [args]
+    Options: 
+        -h, --help -- show help message
+        -D <N> -- limit traversal (deep)
+        -m <GLOB> -- include only files that mathc pattern
+        -e <GLOB> -- exclude files matching the pattern
 EOF
 }
 
 for arg in "$@"; do
-  if [[ "$arg" == "--help" ]]; then
-    print_usage
-    exit 0
-  fi
+    if [[ "$arg" == "--help" ]]; then
+        print_usage
+        exit 0
+    fi
 done
 
 MAXDEPTH=""
@@ -32,47 +26,47 @@ INCLUDES=()
 EXCLUDES=()
 
 while getopts ":hD:m:e:" opt; do
-  case "$opt" in
-    h) print_usage; exit 0 ;;
-    D)
-      if [[ ! "$OPTARG" =~ ^[0-9]+$ ]]; then
-        echo "Ошибка: -D требует неотрицательное целое, получено: '$OPTARG'" >&2
-        exit 2
-      fi
-      MAXDEPTH="$OPTARG"
-      ;;
-    m) INCLUDES+=("$OPTARG") ;;
-    e) EXCLUDES+=("$OPTARG") ;;
-    \?) echo "Неизвестная опция: -$OPTARG" >&2; exit 2 ;;
-    :)  echo "Опция -$OPTARG требует аргумент" >&2; exit 2 ;;
-  esac
+    case "$opt" in
+        h) print_usage; exit 0 ;;
+        D)
+            if [[ ! "$OPTARG" =~ ^[0-9]+$ ]]; then
+                echo "Error: -D must be greater than 0, but get: 'OPTARG'" >&2
+                exit 2
+            fi
+            MAXDEPTH="$OPTARG"
+             ;;
+        m) INCLUDES+=("$OPTARG") ;;
+        e) EXCLUDES+=("$OPTARG") ;;
+        \?) echo "Unknow argument: -$OPTARG, use --help" >&2; exit 2 ;;
+        :) echo "Option -$OPTARG need arguments" >&2; exit 2 ;;
+    esac
 done
 shift $((OPTIND-1))
 
 if [[ $# -lt 2 ]]; then
-  echo "Ошибка: необходимо указать <DIRECTORY> и <COMMAND> [ARGS...]" >&2
-  echo "Смотри: -h" >&2
-  exit 2
+    echo "Error: need to write correct <DIRECTORY> and <COMMAND> [ARGS]" >&2  
+    echo "See: --help or -h" >&2 
+    exit 2
 fi
 
 DIRECTORY=$1; shift
 if [[ ! -d "$DIRECTORY" ]]; then
-  echo "Ошибка: директория '$DIRECTORY' не существует или недоступна" >&2
+  echo "Error: Directory '$DIRECTORY' does not exist or is unavailable" >&2
   exit 2
 fi
 if [[ ! -r "$DIRECTORY" ]]; then
-  echo "Ошибка: нет прав на чтение директории '$DIRECTORY'" >&2
+  echo "Error: No permission to read the directory '$DIRECTORY'" >&2
   exit 2
 fi
 
 CMD=( "$@" )
 if [[ ${#CMD[@]} -eq 0 ]]; then
-  echo "Ошибка: не указана команда" >&2
+  echo "Error: command not specified" >&2
   exit 2
 fi
 
 if ! command -v "${CMD[0]}" >/dev/null 2>&1; then
-  echo "Ошибка: команда '${CMD[0]}' не найдена" >&2
+  echo "Error: command '${CMD[0]}' not found" >&2
   exit 127
 fi
 
@@ -105,14 +99,14 @@ run_on_file() {
 }
 
 if ! command -v find >/dev/null 2>&1; then
-  echo "Ошибка: 'find' недоступен." >&2
+  echo "Error: 'find' is not available." >&2
   exit 127
 fi
 
 TOTAL=0; OK=0; FAIL=0
 
 FIFO_PATH=$(mktemp -u)
-mkfifo "$FIFO_PATH" || { echo "Не удалось создать FIFO" >&2; exit 1; }
+mkfifo "$FIFO_PATH" || { echo "Failed to create FIFO" >&2; exit 1; }
 ( find "${FIND_ARGS[@]}" -print0 > "$FIFO_PATH" ) &
 FIND_PID=$!
 
@@ -125,14 +119,14 @@ while IFS= read -r -d '' FILE <&3; do
     (( OK++ ))
   else
     (( FAIL++ ))
-    printf 'Команда завершилась с ошибкой для файла: %s\n' "$FILE" >&2
+    printf 'The command failed with an error for file: %s\n' "$FILE" >&2
   fi
 done
 
 wait "$FIND_PID"
 exec 3<&-
 
-printf 'Сработало: файлов: %d, успешно: %d, с ошибкой: %d\n' "$TOTAL" "$OK" "$FAIL"
+printf 'Done: files: %d, successful: %d, with error: %d\n' "$TOTAL" "$OK" "$FAIL"
 [[ $FAIL -gt 0 ]] && exit 1
 
 exit 0
