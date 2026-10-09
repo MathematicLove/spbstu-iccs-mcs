@@ -11,8 +11,9 @@
 - ## [Статьи](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/articles):
   - [Методы компьютерного зрения для обнаружения положения вне игры в футболе](https://www.elibrary.ru/download/elibrary_80243926_22915475.pdf);
   - [Построение зоны интереса на основе сегментации <sup>1</sup>](https://www.elibrary.ru/qfcwed).
+  <p><sup>1</sup> - <a href="https://mathematiclove.github.io/my-cv/certificates/spbstu-science-week.jpg" target="_blank">Признан одним из лучших докладов</a> в секции.</p>
 ---------------
-  <strong><p><sup>1</sup> - Признан одним из лучших докладов в секции.</strong></p>
+  
 - ## [Дипломный проект (ВКР)](https://github.com/MathematicLove/tram-dynamic-roi-tracker): 
   - [Алгоритм детекции посторонних объектов в области трамвайных путей на основе их сегментации](https://github.com/MathematicLove/tram-dynamic-roi-tracker).
 - ## [Учебные проекты](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs):
