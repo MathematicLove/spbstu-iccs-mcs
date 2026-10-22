@@ -50,10 +50,7 @@
     - [Программирование на языке Python (тг-бот парсинга товаров)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/programming-on-python);
     - [Функциональное программирование на языке Haskell (TXT2IMG)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/haskell);
     - [Семенары на английском языке (Upper-intermediate level, Literature review)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/english);
-    - [Параллельное программирование на языке Java (+ Scala)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/parallel-programming-on-java);
-    - Математическая логика (**н/д**);
-    - Теория вероятности (Вероятностный эксперемент, Классическая/Геометрическая вероятность, Теория меры, Случайные величины, Ч-Х случайных величин, Случайные Вектора, ЦПТ, ЗБЧ, Цепи Маркова) (**н/д**);
-    - Технологии разработки программного обеспечения (ТЗ, IDEF0) (**н/д**).
+    - [Параллельное программирование на языке Java (+ Scala)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/5-sem/parallel-programming-on-java).
 
   - ### [**4-ый семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem):
     - [Научно-исследовательская работа (OpenMP, OpenMPI)](https://github.com/MathematicLove/fano-encode-openmpi-openmp);
@@ -62,43 +59,17 @@
     - [Программирование микроконтроллеры (STM32)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/microcontrollers);
     - [Теория автоматического управления](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/automatic-control-theory);
     - [Теория графов (алгоритмы на графах)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/graph-theory);
-    - [Цифровая культура (тг-бот IMG2TXT)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/digital-culture/bot);
-    - Английский язык intermediate level (**н/д**);
-    - Основы проектной деятельности (тг-бот);
-    - Физическая культура.
+    - [Цифровая культура (тг-бот IMG2TXT)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/4-sem/digital-culture/bot).
+      
   - ### [**3-ий семестр**](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem):
     - [Объектно-ориентированное программирование (картотека)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/oop-basics);
     - [Дискретная математика (большая арифметика)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/discrete-mathematics/big-and-small-arithmetic);
-    - [Программирование на языке C++ (игра дурак)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/programming-on-c%2B%2B);
-    - Безопасность жизнедеятельности (**н/д**);
-    - Иностранный язык: Базовый курс (**н/д**);
-    - Основы архитектуры ЦВМ (**н/д**);
-    - Теория автоматического управления (**н/д**);
-    - Технологии социально-значимых инициатив (Soft skills) (**н/д**);
-    - Физическая культура (**н/д**).
-  - ### **2-ой семестр**: **н/д**.
+    - [Программирование на языке C++ (игра дурак)](https://github.com/MathematicLove/spbstu-iccs-mcs/tree/main/iccs/3-sem/programming-on-c%2B%2B).
+
+  - ### **2-ой семестр**:
     - [Введение в профессиональную деятельность (квантовый компьютер)](https://tema.spbstu.ru/vvedenie_v_professionalnuu_deyatelnost_2022/);
-    - Высшая математика (**н/д**); 
-    - Иностранный язык: Базовый курс (pre-intermediate level) (**н/д**);
-    - Научно-исследовательская работа (Qt + C++) (**н/д**);
-    - Основы критического мышления (Логика) (**н/д**);
-    - Программирование и алгоритмизация (на C++) (**н/д**);
-    - Технологии цифровой промышленности (OpenEDU) (**н/д**);
-    - Физика (Электричество и Магнетизм, Оптика) (**н/д**);
-    - Экономическая культура (**н/д**);
-    - Философия (**н/д**);
-    - Физическая культура (**н/д**).
-  - ### **1-ый семестр**: **н/д**.
-    - Физика (Механика, термодинамика) (**н/д**);
-    - Математический анализ (**н/д**);
-    - Линейная алгебра и аналитическая геометрия (**н/д**);
-    - Английский язык (**н/д**);
-    - Физическая культура (**н/д**);
-    - Цифровая культура (Основы математической логики) (**н/д**);
-    - Алгоритмизация и программирование (на C) (**н/д**);
-    - Безопасность жизнедеятельности (**н/д**);
-    - Гуманитарные проблемы суперкомпьютерных вычислений (**н/д**);
-    - История (**н/д**);
-    - Курсовое проектирование по основам программирования (**н/д**);
-    - Цифровой практикум (LaTeX) (**н/д**);
-    - Экономика (**н/д**).
+
+
+<h2 align="center">Магистратура</h2>
+
+[Работы магистратуры](https://github.com/MathematicLove/spbstu-iccs-mcs-magistracy)
